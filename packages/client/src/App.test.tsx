@@ -1,14 +1,9 @@
-import App from './App'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react';
+import { SignInPage } from './pages';
 
-const appContent = 'Вот тут будет жить ваше приложение :)'
-
-// @ts-ignore
-global.fetch = jest.fn(() =>
-  Promise.resolve({ json: () => Promise.resolve('hey') })
-)
+const appContent = 'SignInPage';
 
 test('Example test', async () => {
-  render(<App />)
-  expect(screen.getByText(appContent)).toBeDefined()
-})
+  render(<SignInPage />);
+  expect(screen.getByText(appContent)).toBeDefined();
+});
