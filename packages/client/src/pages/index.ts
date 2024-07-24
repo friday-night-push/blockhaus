@@ -10,3 +10,4 @@ export * from './GameSetupPage';
 export * from './GamePage';
 export * from './ProfilePage';
 export * from './GamePausePage';
+export * from './ErrorBoundaryPage';
