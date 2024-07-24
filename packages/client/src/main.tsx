@@ -14,6 +14,7 @@ import {
   ResetPasswordPage,
   SignInPage,
   SignUpPage,
+  ErrorBoundaryPage,
 } from './pages';
 
 const router = createBrowserRouter([
@@ -70,6 +71,11 @@ const router = createBrowserRouter([
   {
     path: '/leader-board',
     element: <LeaderBoardPage />,
+    errorElement: <ErrorPage404 />,
+  },
+  {
+    path: '/error-boundary',
+    element: <ErrorBoundaryPage />,
     errorElement: <ErrorPage404 />,
   },
 ]);

@@ -1,0 +1,30 @@
+import { FC, useEffect } from 'react';
+import ErrorBoundary from '../../services/error/error-doundary';
+
+const NormalComponent: FC = () => {
+  return <div>normal</div>;
+};
+
+const ErrorComponent: FC = () => {
+  useEffect(() => {
+    throw new Error('Error from component');
+  }, []);
+
+  return <div>error</div>;
+};
+
+export const ErrorBoundaryPage = () => {
+  return (
+    <>
+      <div>ErrorBoundaryPage - test page for error boundary</div>
+      <hr />
+      <ErrorBoundary>
+        <NormalComponent />
+      </ErrorBoundary>
+      <hr />
+      <ErrorBoundary>
+        <ErrorComponent />
+      </ErrorBoundary>
+    </>
+  );
+};
