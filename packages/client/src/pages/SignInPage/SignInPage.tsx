@@ -41,12 +41,13 @@ export const SignInPage = () => {
       <hr />
       <div>Login: {login}</div>
       <div>Password: {password}</div>
-      <button onClick={auth}>Sign in</button>
-
+      <button onClick={auth}>Sign in</button> - login with those user
+      credentials
       <div>
-        <Link to="/signup">Register</Link>
+        <p>&nbsp;</p>
+        <Link to="/signup">Register</Link> - registering user with those random
+        user credentials
       </div>
-
       <hr />
       <div>
         <strong>Send login data</strong>
@@ -57,6 +58,10 @@ export const SignInPage = () => {
         <strong>Login user data</strong>
       </div>
       <pre>{JSON.stringify(user, null, '    ')}</pre>
+      <div>
+        <Link to="/error-boundary">Error boundary page</Link> - demonstration of
+        error boundary behavior
+      </div>
     </>
   );
 };

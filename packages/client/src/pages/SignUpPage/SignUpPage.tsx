@@ -58,7 +58,8 @@ export const SignUpPage = () => {
       </div>
       <pre>{JSON.stringify(user, null, '    ')}</pre>
       <hr />
-      <button onClick={logout}>Logout</button>
+      <button onClick={logout}>Logout</button> - This buttom need if reason is
+      "User already in system"
     </>
   );
 };
