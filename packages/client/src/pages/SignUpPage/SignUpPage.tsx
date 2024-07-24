@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { TSignUpRequest, TUser } from '../../shared/types/user';
 import AuthAPI from '../../services/api/auth-api';
 import { Link } from 'react-router-dom';
+import Helpers from '../../utils/helpers';
 
 const authAPI = new AuthAPI();
 
@@ -31,7 +32,7 @@ export const SignUpPage = () => {
   };
 
   const errorHandler = (err: unknown) => {
-    console.error('EEEEEEEEEEEE', err);
+    Helpers.Log('ERROR', err);
   };
 
   function logout(): void {
