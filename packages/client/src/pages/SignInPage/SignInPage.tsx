@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { TSignInRequest, TUser } from '../../shared/types/user';
 import AuthAPI from '../../services/api/auth-api';
-import { Link } from 'react-router-dom';
+import Helpers from '../../utils/helpers';
 
 const authAPI = new AuthAPI();
 
@@ -32,7 +34,7 @@ export const SignInPage = () => {
   };
 
   const errorHandler = (err: unknown) => {
-    console.error('EEEEEEEEEEEE', err);
+    Helpers.Log('ERROR', err);
   };
 
   return (
