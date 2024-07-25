@@ -1,9 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { SignInPage } from './pages';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { routes } from './router';
 
-const appContent = 'SignInPage';
+const router = createMemoryRouter(routes, {
+  initialEntries: ['/'],
+  initialIndex: 0,
+});
 
-test('Example test', async () => {
-  render(<SignInPage />);
-  expect(screen.getByText(appContent)).toBeDefined();
+test('Signin loading page test', async () => {
+  render(<RouterProvider router={router} />);
+  expect(screen.getByText('SignInPage')).toBeDefined();
 });
