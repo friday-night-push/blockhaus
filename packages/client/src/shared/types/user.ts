@@ -22,3 +22,5 @@ export type TSignInRequest = {
   login: string;
   password: string;
 };
+
+export type TErrorFn = (e: unknown) => void;
