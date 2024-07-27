@@ -7,7 +7,7 @@ const router = createMemoryRouter(routes, {
   initialIndex: 0,
 });
 
-test('Signin loading page test', async () => {
+test('Sign in loading page test', async () => {
   render(<RouterProvider router={router} />);
   expect(screen.getByText('SignInPage')).toBeDefined();
 });
