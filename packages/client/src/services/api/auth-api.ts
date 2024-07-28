@@ -3,7 +3,7 @@ import {
   TSignInRequest,
   TUser,
   TErrorFn,
-} from '../../shared/types/user';
+} from 'src/shared/types/user';
 import BaseAPI from './base-api';
 
 export default class AuthAPI extends BaseAPI {

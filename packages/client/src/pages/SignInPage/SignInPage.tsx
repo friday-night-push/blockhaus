@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { TSignInRequest, TUser } from '../../shared/types/user';
-import AuthAPI from '../../services/api/auth-api';
-import Helpers from '../../utils/helpers';
+import { TSignInRequest, TUser } from 'src/shared/types/user';
+import AuthAPI from 'src/services/api/auth-api';
+import Helpers from 'src/utils/helpers';
 
 const authAPI = new AuthAPI();
 
