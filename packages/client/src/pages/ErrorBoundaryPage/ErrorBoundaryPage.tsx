@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react';
+
 import ErrorBoundary from 'src/services/error/error-boundary';
 
 const NormalComponent: FC = () => {
