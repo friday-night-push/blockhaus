@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import Helpers from '../../utils/helpers';
+import Helpers from 'src/utils/helpers';
 
 interface Props {
   children?: ReactNode;
