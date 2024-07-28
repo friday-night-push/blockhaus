@@ -1,4 +1,8 @@
 import React from 'react';
+
+import '@gravity-ui/uikit/styles/fonts.css';
+import '@gravity-ui/uikit/styles/styles.css';
+
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
