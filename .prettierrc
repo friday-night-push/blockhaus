@@ -2,9 +2,9 @@
   "singleQuote": true,
   "trailingComma": "es5",
   "semi": true,
-  "arrowParens": "avoid",
-  "bracketSameLine": true,
-  "useTabs": false,
   "bracketSpacing": true,
+  "bracketSameLine": true,
+  "arrowParens": "avoid",
+  "useTabs": false,
   "endOfLine": "lf"
 }
