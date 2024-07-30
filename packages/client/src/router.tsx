@@ -17,16 +17,22 @@ import {
   topicsLoader,
   ForumTopicPage,
   topicInfo,
+  GameMenuPage,
 } from './pages';
 
 const routes: RouteObject[] = [
   {
     path: '/',
+    element: <GameMenuPage />,
+    errorElement: <ErrorPage404 />,
+  },
+  {
+    path: '/sign-in',
     element: <SignInPage />,
     errorElement: <ErrorPage404 />,
   },
   {
-    path: '/signup',
+    path: '/sign-up',
     element: <SignUpPage />,
     errorElement: <ErrorPage404 />,
   },
@@ -43,11 +49,6 @@ const routes: RouteObject[] = [
   {
     path: '/profile',
     element: <ProfilePage />,
-    errorElement: <ErrorPage404 />,
-  },
-  {
-    path: '/game-menu',
-    element: <GameResultPage />,
     errorElement: <ErrorPage404 />,
   },
   {

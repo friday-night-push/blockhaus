@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Flex, Link, Text } from '@gravity-ui/uikit';
 
+import { Logo } from 'src/components/atoms';
+import { Form } from 'src/components/molecules';
 import AuthAPI from 'src/services/api/auth-api';
 import { TSignUpRequest, TUser } from 'src/shared/types/user';
 import Helpers from 'src/utils/helpers';
+
+import { inputs, validationSchema } from './SignUpPage.constants';
 
 const authAPI = new AuthAPI();
 
@@ -12,22 +16,9 @@ export const SignUpPage = () => {
   const [user, setUser] = useState<TUser>({} as TUser);
   const [data, setData] = useState<TSignUpRequest>({} as TSignUpRequest);
 
-  useEffect(() => {
-    const login = Math.floor(Math.random() * 1000);
-
-    const _data: TSignUpRequest = {
-      email: `a${login}@mail.mail`,
-      first_name: `Fname_${login}`,
-      second_name: `Sname_${login}`,
-      login: `l${login}`,
-      password: '123!!321',
-      phone: `+79994447${login}`,
-    };
-
-    setData(_data);
-
-    authAPI.signup(_data, updUserData, errorHandler);
-  }, []);
+  const signup = async (data: TSignUpRequest) => {
+    authAPI.signup(data, updUserData, errorHandler);
+  };
 
   const updUserData = (u: TUser) => {
     setUser(u);
@@ -37,32 +28,24 @@ export const SignUpPage = () => {
     Helpers.Log('ERROR', err);
   };
 
-  function logout(): void {
-    authAPI.logout(logoutHandler, errorHandler);
-  }
-
-  const logoutHandler = () => {
-    setUser({} as TUser);
-  };
-
   return (
-    <>
-      <div>SignUpPage</div>
-      <hr />
-      <Link to="/">Return to login</Link>
-      <hr />
-      <div>
-        <strong>New user data</strong>
-      </div>
-      <pre>{JSON.stringify(data, null, '    ')}</pre>
-      <hr />
-      <div>
-        <strong>Register user data</strong>
-      </div>
-      <pre>{JSON.stringify(user, null, '    ')}</pre>
-      <hr />
-      <button onClick={logout}>Logout</button> - This buttom need if reason is
-      "User already in system"
-    </>
+    <Flex
+      minHeight={'100vh'}
+      maxWidth={'340px'}
+      direction={'column'}
+      alignItems={'center'}
+      justifyContent={'center'}
+      gap={4}>
+      <Logo size="small" />
+      <Form
+        initialValues={data}
+        inputs={inputs}
+        validationSchema={validationSchema}
+        onSubmit={signup}
+      />
+      <Text variant={'body-2'}>
+        Signed up already? <Link href={'/sign-in'}>Sign In</Link>
+      </Text>
+    </Flex>
   );
 };

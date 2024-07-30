@@ -42,9 +42,9 @@ module.exports = {
         warnOnUnassignedImports: true,
         pathGroups: [
           {
-            "pattern": "react",
-            "group": "builtin",
-            "position": "before"
+            pattern: 'react',
+            group: 'builtin',
+            position: 'before',
           },
           {
             pattern: './**/*.css',
@@ -52,13 +52,13 @@ module.exports = {
             position: 'after',
           },
           {
-            pattern: 'src/components**',
+            pattern: 'src/**',
             group: 'internal',
             position: 'before',
           },
         ],
         'newlines-between': 'always-and-inside-groups',
-        "pathGroupsExcludedImportTypes": ["react"]
+        pathGroupsExcludedImportTypes: ['react'],
       },
     ],
     'no-multiple-empty-lines': 1,
