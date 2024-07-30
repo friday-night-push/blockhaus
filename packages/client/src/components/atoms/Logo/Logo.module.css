@@ -1,0 +1,11 @@
+.logo {
+  display: flex;
+}
+
+.logo[data-size='normal'] {
+  width: 340px;
+}
+
+.logo[data-size='small'] {
+  width: 240px;
+}
