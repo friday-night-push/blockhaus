@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import {
   ErrorPage404,
@@ -13,9 +13,13 @@ import {
   SignInPage,
   SignUpPage,
   ErrorBoundaryPage,
+  ForumPage,
+  topicsLoader,
+  ForumTopicPage,
+  topicInfo,
 } from './pages';
 
-const routes = [
+const routes: RouteObject[] = [
   {
     path: '/',
     element: <SignInPage />,
@@ -75,6 +79,18 @@ const routes = [
     path: '/error-boundary',
     element: <ErrorBoundaryPage />,
     errorElement: <ErrorPage404 />,
+  },
+  {
+    path: '/forum',
+    element: <ForumPage />,
+    errorElement: <ErrorPage404 />,
+    loader: topicsLoader,
+  },
+  {
+    path: 'forum/:topicId/:page?',
+    element: <ForumTopicPage />,
+    errorElement: <ErrorPage404 />,
+    loader: topicInfo,
   },
 ];
 

@@ -11,3 +11,5 @@ export * from './GamePage';
 export * from './ProfilePage';
 export * from './GamePausePage';
 export * from './ErrorBoundaryPage';
+export * from './ForumPage';
+export * from './ForumTopicPage';
