@@ -1,8 +1,11 @@
+import { User } from '@gravity-ui/uikit';
+
 import logoWithBlocks from 'src/assets/logo-w-blocks.svg';
 
 import { Container, MenuItem, MenuItemProps } from 'src/components/atoms';
 
 import { Copyright } from '../../components/molecules';
+import { AppContext } from '../../components/organisms/App/App.context';
 
 const MENU_ITEMS: MenuItemProps[] = [
   { label: 'play', href: '/game' },
@@ -27,9 +30,23 @@ export const GameMenuPage = () => {
         alignItems={'center'}
         justifyContent={'center'}
         gap={4}>
-        {MENU_ITEMS.map(item => (
-          <MenuItem key={item.label} {...item} />
-        ))}
+        <AppContext.Consumer>
+          {appData => (
+            <>
+              {appData.user && (
+                <User
+                  size={'xl'}
+                  avatar={appData.user?.avatar}
+                  name={appData.user?.first_name}
+                  description={appData.user?.email}
+                />
+              )}
+              {MENU_ITEMS.map(item => (
+                <MenuItem key={item.label} {...item} />
+              ))}
+            </>
+          )}
+        </AppContext.Consumer>
       </Container>
       <Copyright />
     </Container>
