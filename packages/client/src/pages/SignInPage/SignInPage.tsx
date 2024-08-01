@@ -14,7 +14,7 @@ import {
   validationSchema,
 } from './SignInPage.constants';
 
-const authAPI = new AuthAPI();
+export const authAPI = new AuthAPI();
 
 export const SignInPage = () => {
   const [user, setUser] = useState<TUser>({} as TUser);
