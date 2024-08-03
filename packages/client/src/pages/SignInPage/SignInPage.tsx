@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
-import { Col, Container, Flex, Link, Text } from '@gravity-ui/uikit';
+import { Flex, Link, Text } from '@gravity-ui/uikit';
 
-import { Logo } from 'src/components/atoms';
+import { useNavigate } from 'react-router-dom';
+
+import { Button, Container, Logo } from 'src/components/atoms';
 import { Form } from 'src/components/molecules';
 import AuthAPI from 'src/services/api/auth-api';
 import { TSignInRequest, TUser } from 'src/shared/types/user';
@@ -19,6 +21,8 @@ export const authAPI = new AuthAPI();
 export const SignInPage = () => {
   const [user, setUser] = useState<TUser>({} as TUser);
   const [data, setData] = useState<TSignInRequest>({} as TSignInRequest);
+
+  const navigate = useNavigate();
 
   const auth = () => {
     const _data: TSignInRequest = USER_DATA_MOCK;
@@ -40,8 +44,21 @@ export const SignInPage = () => {
     Helpers.Log('ERROR', err);
   };
 
+  const goToSignUp = () => {
+    navigate('/sign-up');
+  };
+
+  const goToMenu = () => {
+    navigate('/');
+  };
+
   return (
-    <Col>
+    <Container
+      minHeight={'100vh'}
+      direction={'column'}
+      alignItems={'center'}
+      justifyContent={'center'}
+      gap={8}>
       <Flex
         minHeight={'100vh'}
         width={'100%'}
@@ -57,10 +74,13 @@ export const SignInPage = () => {
           validationSchema={validationSchema}
           onSubmit={auth}
         />
-        <Text variant={'body-2'}>
-          First time here? <Link href={'/sign-up'}>Sign up</Link>
-        </Text>
+        <Button view={'flat'} onClick={goToSignUp}>
+          First time here? Sign up
+        </Button>
+        <Button view={'flat'} onClick={goToMenu}>
+          Back to Menu
+        </Button>
       </Flex>
-    </Col>
+    </Container>
   );
 };

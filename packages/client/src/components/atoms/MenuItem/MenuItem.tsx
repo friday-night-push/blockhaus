@@ -1,4 +1,5 @@
-import { Link, Text } from '@gravity-ui/uikit';
+import { Menu } from '@gravity-ui/uikit';
+import { useNavigate } from 'react-router-dom';
 
 export type MenuItemProps = {
   label: string;
@@ -6,11 +7,11 @@ export type MenuItemProps = {
 };
 
 export const MenuItem = ({ label, href }: MenuItemProps) => {
-  return (
-    <Text variant={'display-1'}>
-      <Link view={'primary'} href={href}>
-        {label}
-      </Link>
-    </Text>
-  );
+  const navigate = useNavigate();
+
+  const goToHref = () => {
+    navigate(href);
+  };
+
+  return <Menu.Item onClick={goToHref}>{label}</Menu.Item>;
 };
