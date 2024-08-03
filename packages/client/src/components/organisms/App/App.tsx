@@ -13,13 +13,23 @@ import { AppContext } from './App.context';
 
 export const App = () => {
   const [user, setUser] = useState<TUser>({} as TUser);
+  const [loading, setLoading] = useState(true);
 
   const appData = {
     user,
+    loading,
   };
 
-  const isAuthenticated = () => {
-    authAPI.getuser(updateUser, errorHandler).then(data => console.log(data));
+  const isAuthenticated = async () => {
+    setLoading(true);
+
+    try {
+      await authAPI.getuser(updateUser, errorHandler);
+    } catch (err) {
+      errorHandler(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateUser = (user: TUser) => {
