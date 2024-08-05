@@ -1,22 +1,29 @@
+import React from 'react';
+
+import { Text } from '@gravity-ui/uikit';
 import { FormikErrors, FormikHelpers, FormikValues, useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { Button, Container, Input, InputProps } from 'src/components/atoms';
 
-interface FormProps<T> {
-  initialValues: T;
-  validationSchema: Yup.Schema<T>;
-  onSubmit: (values: T, formikHelpers: FormikHelpers<T>) => void;
-  inputs?: InputProps[];
-}
-
 import styles from './Form.module.css';
 
+interface FormProps<T> {
+  initialValues?: T;
+  validationSchema: Yup.Schema<T>;
+  onSubmit: (values: T, formikHelpers: FormikHelpers<T>) => void;
+  isSubmitting?: boolean;
+  inputs?: InputProps[];
+  errorMessage?: string;
+}
+
 export const Form = <T extends FormikValues>({
-  initialValues,
+  initialValues = {} as T,
   validationSchema,
   onSubmit,
+  isSubmitting,
   inputs,
+  errorMessage,
 }: FormProps<T>) => {
   const formik = useFormik<T>({
     initialValues: initialValues,
@@ -27,15 +34,12 @@ export const Form = <T extends FormikValues>({
   return (
     <form onSubmit={formik.handleSubmit} className={styles.form}>
       <Container direction="column" alignItems="center">
-        {inputs?.map((input, i) => (
+        {inputs?.map(input => (
           <Input
             key={input.name}
-            view={'clear'}
             {...input}
             size={'xl'}
-            value={
-              formik.values[input.name] || formik.initialValues[input.name]
-            }
+            value={formik.values[input.name] || ''}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             validationState={
@@ -45,11 +49,15 @@ export const Form = <T extends FormikValues>({
             }
             errorMessage={formik.errors[input.name] as FormikErrors<string>}
             errorPlacement={'inside'}
-            autoFocus={i === 0}
           />
         ))}
       </Container>
-      <Button view={'action'} type="submit">
+      {errorMessage && (
+        <Text variant={'body-short'} color={'danger'}>
+          {errorMessage}
+        </Text>
+      )}
+      <Button view={'action'} type="submit" loading={isSubmitting}>
         Submit
       </Button>
     </form>

@@ -7,7 +7,6 @@ export type InputProps = {
 export const Input = ({
   label,
   name,
-  value = '',
   type = 'text',
   onChange,
   ...props
@@ -17,7 +16,6 @@ export const Input = ({
       label={label}
       name={name}
       type={type}
-      value={value}
       onChange={onChange}
       size="xl"
       view="normal"

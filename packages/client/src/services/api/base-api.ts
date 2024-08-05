@@ -1,5 +1,7 @@
+import { BASE_API_URL } from 'src/utils/constants';
+
 export default class BaseAPI {
-  static host = 'https://ya-praktikum.tech/api/v2';
+  static host = BASE_API_URL;
 
   post<TRequest>(url: string, data: TRequest) {
     return fetch(BaseAPI.host + url, {
