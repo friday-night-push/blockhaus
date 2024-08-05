@@ -1,4 +1,5 @@
 import { LoaderFunction, useLoaderData, useParams } from 'react-router-dom';
+
 import { CommentType, TopicType } from './ForumTopicPage.types';
 
 // Simulating a request to the server
@@ -8,8 +9,7 @@ export const topicInfo: LoaderFunction = async ({
   return {
     id: 1,
     name: 'Announcement',
-    text: `Info about topic ${params.topicId} `,
-    // It's temporary logic, just to remove comments for 'Complaints' page
+    text: `Info about topic ${params.topicId} `, // It's temporary logic, just to remove comments for 'Complaints' page
     ...(params.topicId === '1' && {
       comments: [
         {
@@ -24,7 +24,7 @@ export const topicInfo: LoaderFunction = async ({
 
 export const ForumTopicPage = () => {
   const topicInfo = useLoaderData() as TopicType;
-  const { topicId, page } = useParams();
+  const { topicId } = useParams();
 
   return (
     <div>

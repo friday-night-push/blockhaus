@@ -1,62 +1,59 @@
-import { Menu, Skeleton, User } from '@gravity-ui/uikit';
+import { useContext } from 'react';
 
-import logoWithBlocks from 'src/assets/logo-w-blocks.svg';
+import { Menu } from '@gravity-ui/uikit';
 
-import { Container, MenuItem, MenuItemProps } from 'src/components/atoms';
+import { useNavigate } from 'react-router-dom';
 
-import { Copyright } from 'src/components/molecules';
+import {
+  Container,
+  Copyright,
+  Logo,
+  MenuItem,
+  MenuItemProps,
+  Page,
+  User,
+} from 'src/components';
 
-import { AppContext } from 'src/components/organisms/App/App.context';
+import { AuthContext } from 'src/hoc';
+import { PAGE_ROUTES } from 'src/utils/constants';
 
 const MENU_ITEMS: MenuItemProps[] = [
-  { label: 'play', href: '/game' },
+  { label: 'play', href: PAGE_ROUTES.GAME },
   {
-    label: 'sign in',
-    href: '/sign-in',
+    label: 'leaderboards',
+    href: PAGE_ROUTES.LEADER_BOARD,
   },
-  { label: 'about', href: '/about' },
 ];
 
 export const GameMenuPage = () => {
+  const { user, setUser, userIsLoading } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   return (
-    <Container
-      minHeight={'100vh'}
-      direction={'column'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      gap={8}>
-      <img src={logoWithBlocks} alt="" />
-      <Container
-        direction={'column'}
-        alignItems={'center'}
-        justifyContent={'center'}
-        gap={4}>
-        <AppContext.Consumer>
-          {appData => (
-            <>
-              {appData.user &&
-                (appData.loading ? (
-                  <Skeleton />
-                ) : (
-                  <User
-                    size={'xl'}
-                    avatar={{ imgUrl: appData.user?.avatar }}
-                    name={appData.user?.first_name}
-                    description={appData.user?.email}
-                  />
-                ))}
-              <Menu size={'xl'}>
-                <Container direction={'column'} alignItems={'center'}>
-                  {MENU_ITEMS.map(item => (
-                    <MenuItem key={item.label} {...item} />
-                  ))}
-                </Container>
-              </Menu>
-            </>
+    <Page>
+      <Logo isFull size="auto" />
+      <Menu size={'xl'}>
+        <Container direction={'column'} alignItems={'center'}>
+          {user && user.id ? (
+            <User
+              user={user}
+              setUser={setUser}
+              userIsLoading={userIsLoading}
+              isFullSize
+            />
+          ) : (
+            <MenuItem
+              label={'sign in'}
+              onClick={() => navigate(PAGE_ROUTES.SIGN_IN)}
+            />
           )}
-        </AppContext.Consumer>
-      </Container>
+          {MENU_ITEMS.map(item => (
+            <MenuItem key={item.label} {...item} />
+          ))}
+        </Container>
+      </Menu>
       <Copyright />
-    </Container>
+    </Page>
   );
 };
