@@ -20,7 +20,8 @@
       "src": ["./src/*"]
     },
     "types": [
-      "vite/client"
+      "vite/client",
+      "jest"
     ]
   },
   "include": ["src"],

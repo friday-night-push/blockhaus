@@ -1,43 +1,41 @@
-import { useState } from 'react';
+import React, { useContext } from 'react';
 
-import { Flex, Link, Text } from '@gravity-ui/uikit';
+import { Text } from '@gravity-ui/uikit';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-import { useNavigate } from 'react-router-dom';
-
-import { Button, Container, Logo } from 'src/components/atoms';
-import { Form } from 'src/components/molecules';
+import { Button, Container, Form, Logo, Page } from 'src/components';
+import { AuthContext } from 'src/hoc';
 import AuthAPI from 'src/services/api/auth-api';
 import { TSignInRequest, TUser } from 'src/shared/types/user';
+import { PAGE_ROUTES } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';
 
-import {
-  inputs,
-  USER_DATA_MOCK,
-  validationSchema,
-} from './SignInPage.constants';
+import { inputs, validationSchema } from './SignInPage.constants';
 
 export const authAPI = new AuthAPI();
 
-export const SignInPage = () => {
-  const [user, setUser] = useState<TUser>({} as TUser);
-  const [data, setData] = useState<TSignInRequest>({} as TSignInRequest);
+export const SignInPage: React.FC = () => {
+  const { user, setUser, userIsLoading } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const auth = () => {
-    const _data: TSignInRequest = USER_DATA_MOCK;
-
-    setData(_data);
-
-    authAPI.signin(_data, isOk, errorHandler);
+  const auth = async (formData: TSignInRequest) => {
+    try {
+      await authAPI.signin(formData, isOk, errorHandler);
+    } catch (err) {
+      console.log(err, 'happend');
+      Helpers.Log('ERROR', err);
+    }
   };
 
   const isOk = () => {
     authAPI.getuser(updUserData, errorHandler);
   };
 
-  const updUserData = (u: TUser) => {
-    setUser(u);
+  const updUserData = (user: TUser) => {
+    if (setUser) {
+      setUser(user);
+    }
   };
 
   const errorHandler = (err: unknown) => {
@@ -45,42 +43,40 @@ export const SignInPage = () => {
   };
 
   const goToSignUp = () => {
-    navigate('/sign-up');
+    navigate(PAGE_ROUTES.SIGN_UP);
   };
 
-  const goToMenu = () => {
-    navigate('/');
+  const goBack = () => {
+    navigate(-1);
   };
 
   return (
-    <Container
-      minHeight={'100vh'}
-      direction={'column'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      gap={8}>
-      <Flex
-        minHeight={'100vh'}
-        width={'100%'}
-        maxWidth={'340px'}
-        direction={'column'}
-        alignItems={'center'}
-        justifyContent={'center'}
-        gap={4}>
-        <Logo size="small" />
-        <Form
-          initialValues={data}
-          inputs={inputs}
-          validationSchema={validationSchema}
-          onSubmit={auth}
-        />
-        <Button view={'flat'} onClick={goToSignUp}>
-          First time here? Sign up
-        </Button>
-        <Button view={'flat'} onClick={goToMenu}>
-          Back to Menu
-        </Button>
-      </Flex>
-    </Container>
+    <Page>
+      {!user?.id && !userIsLoading ? (
+        <>
+          <Logo size="sm" />
+          <Container direction="column" alignItems="center">
+            <Text variant="display-2">Sign in</Text>
+            <Text variant="subheader-2" style={{ textAlign: 'center' }}>
+              Back again? Just sign in to keep your results showing up on the
+              leaderboards
+            </Text>
+          </Container>
+          <Form
+            inputs={inputs}
+            validationSchema={validationSchema}
+            onSubmit={auth}
+          />
+          <Button view="flat" onClick={goToSignUp}>
+            First time here? Sign up
+          </Button>
+          <Button view="flat" onClick={goBack}>
+            Back
+          </Button>
+        </>
+      ) : (
+        <Navigate to={PAGE_ROUTES.MENU} />
+      )}
+    </Page>
   );
 };

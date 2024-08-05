@@ -1,5 +1,7 @@
 import { Link, LoaderFunction, useLoaderData } from 'react-router-dom';
+
 import { TopicsType } from './ForumPage.types';
+import { PAGE_ROUTES } from '../../utils/constants';
 
 // Simulating a request to the server
 export const topicsLoader: LoaderFunction = async (): Promise<TopicsType[]> => {
@@ -23,7 +25,8 @@ export const ForumPage = () => {
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       {topics.map(topic => (
         <>
-          <Link to={`/forum/${topic.id}${topic.commentCount ? '/1' : ''}`}>
+          <Link
+            to={`${PAGE_ROUTES.FORUM}/${topic.id}${topic.commentCount ? '/1' : ''}`}>
             {topic.name}
           </Link>
         </>
