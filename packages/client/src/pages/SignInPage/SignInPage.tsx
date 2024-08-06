@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Text } from '@gravity-ui/uikit';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -16,16 +16,12 @@ export const authAPI = new AuthAPI();
 
 export const SignInPage: React.FC = () => {
   const { user, setUser, userIsLoading } = useContext(AuthContext);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const navigate = useNavigate();
 
   const auth = async (formData: TSignInRequest) => {
-    try {
-      await authAPI.signin(formData, isOk, errorHandler);
-    } catch (err) {
-      console.log(err, 'happend');
-      Helpers.Log('ERROR', err);
-    }
+    await authAPI.signin(formData, isOk, errorHandler);
   };
 
   const isOk = () => {
@@ -39,6 +35,7 @@ export const SignInPage: React.FC = () => {
   };
 
   const errorHandler = (err: unknown) => {
+    setError(String(err));
     Helpers.Log('ERROR', err);
   };
 
@@ -66,6 +63,7 @@ export const SignInPage: React.FC = () => {
             inputs={inputs}
             validationSchema={validationSchema}
             onSubmit={auth}
+            errorMessage={error}
           />
           <Button view="flat" onClick={goToSignUp}>
             First time here? Sign up
