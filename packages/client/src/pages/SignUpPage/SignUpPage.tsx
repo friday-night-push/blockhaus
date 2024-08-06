@@ -6,44 +6,25 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { Container, Page } from 'src/components';
 import { Button, Logo } from 'src/components/atoms';
 import { Form } from 'src/components/molecules';
+import { AuthContext } from 'src/hoc';
 import AuthAPI from 'src/services/api/auth-api';
 import { TSignUpRequest, TUser } from 'src/shared/types/user';
+import { PAGE_ROUTES } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';
 
 import { inputs, validationSchema } from './SignUpPage.constants';
-import { AuthContext } from '../../hoc';
-import { PAGE_ROUTES } from '../../utils/constants';
 
 const authAPI = new AuthAPI();
 
 export const SignUpPage = () => {
-  const { user, setUser, userIsLoading, setUserIsLoading } =
-    useContext(AuthContext);
+  const { user, setUser, userIsLoading } = useContext(AuthContext);
 
   const [error, setError] = useState<string | undefined>(undefined);
 
   const navigate = useNavigate();
 
   const signup = async (data: TSignUpRequest) => {
-    if (setUserIsLoading) {
-      setUserIsLoading(true);
-    }
-
-    try {
-      const res = await authAPI.signup(data, updUserData, errorHandler);
-
-      if (res) {
-        navigate(PAGE_ROUTES.SIGN_IN);
-      } else {
-        setError('Something went wrong');
-      }
-    } catch (error) {
-      Helpers.Log('ERROR', error);
-    } finally {
-      if (setUserIsLoading) {
-        setUserIsLoading(false);
-      }
-    }
+    await authAPI.signup(data, updUserData, errorHandler);
   };
 
   const updUserData = (u: TUser) => {
@@ -53,6 +34,7 @@ export const SignUpPage = () => {
   };
 
   const errorHandler = (err: unknown) => {
+    setError(String(err));
     Helpers.Log('ERROR', err);
   };
 
