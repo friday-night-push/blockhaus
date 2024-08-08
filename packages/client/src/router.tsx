@@ -1,7 +1,12 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
+import { ProtectedRoute } from './hoc';
 import {
-  ErrorPage404,
+  ErrorBoundaryPage,
+  ErrorPage,
+  ForumPage,
+  ForumTopicPage,
+  GameMenuPage,
   GamePage,
   GamePausePage,
   GameResultPage,
@@ -12,84 +17,82 @@ import {
   ResetPasswordPage,
   SignInPage,
   SignUpPage,
-  ErrorBoundaryPage,
-  ForumPage,
-  topicsLoader,
-  ForumTopicPage,
   topicInfo,
+  topicsLoader,
 } from './pages';
+import { PAGE_ROUTES } from './utils/constants';
 
 const routes: RouteObject[] = [
   {
-    path: '/',
+    path: PAGE_ROUTES.MENU,
+    element: <GameMenuPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PAGE_ROUTES.SIGN_IN,
     element: <SignInPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/signup',
+    path: PAGE_ROUTES.SIGN_UP,
     element: <SignUpPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/reset-password',
+    path: PAGE_ROUTES.RESET_PAGE,
     element: <ResetPasswordPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/recover-password',
+    path: PAGE_ROUTES.RECOVER_PASSWORD,
     element: <RecoverPasswordPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/profile',
-    element: <ProfilePage />,
-    errorElement: <ErrorPage404 />,
+    path: PAGE_ROUTES.PROFILE,
+    element: <ProtectedRoute element={<ProfilePage />} />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/game-menu',
-    element: <GameResultPage />,
-    errorElement: <ErrorPage404 />,
-  },
-  {
-    path: '/game',
+    path: PAGE_ROUTES.GAME,
     element: <GamePage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/game-pause',
+    path: PAGE_ROUTES.GAME_PAUSE,
     element: <GamePausePage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/game-result',
+    path: PAGE_ROUTES.GAME_RESULT,
     element: <GameResultPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/game-setup',
+    path: PAGE_ROUTES.GAME_SETUP,
     element: <GameSetupPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/leader-board',
+    path: PAGE_ROUTES.LEADER_BOARD,
     element: <LeaderBoardPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/error-boundary',
+    path: PAGE_ROUTES.ERROR_BOUNDARY,
     element: <ErrorBoundaryPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
   },
   {
-    path: '/forum',
+    path: PAGE_ROUTES.FORUM,
     element: <ForumPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
     loader: topicsLoader,
   },
   {
-    path: 'forum/:topicId/:page?',
+    path: PAGE_ROUTES.FORUM_TOPIC,
     element: <ForumTopicPage />,
-    errorElement: <ErrorPage404 />,
+    errorElement: <ErrorPage />,
     loader: topicInfo,
   },
 ];

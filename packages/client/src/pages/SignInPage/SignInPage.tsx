@@ -1,69 +1,80 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
 
-import { TSignInRequest, TUser } from '../../shared/types/user';
-import AuthAPI from '../../services/api/auth-api';
-import Helpers from '../../utils/helpers';
+import { Text } from '@gravity-ui/uikit';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const authAPI = new AuthAPI();
+import { Button, Container, Form, Logo, Page } from 'src/components';
+import { AuthContext } from 'src/hoc';
+import AuthAPI from 'src/services/api/auth-api';
+import { TSignInRequest, TUser } from 'src/shared/types/user';
+import { PAGE_ROUTES } from 'src/utils/constants';
+import Helpers from 'src/utils/helpers';
 
-export const SignInPage = () => {
-  const [user, setUser] = useState<TUser>({} as TUser);
-  const [data, setData] = useState<TSignInRequest>({} as TSignInRequest);
+import { inputs, validationSchema } from './SignInPage.constants';
 
-  const login = 'l586';
-  const password = '123!!321';
+export const authAPI = new AuthAPI();
 
-  const auth = () => {
-    const _data: TSignInRequest = {
-      login,
-      password,
-    };
+export const SignInPage: React.FC = () => {
+  const { user, setUser, userIsLoading } = useContext(AuthContext);
+  const [error, setError] = useState<string | undefined>(undefined);
 
-    setData(_data);
+  const navigate = useNavigate();
 
-    authAPI.signin(_data, isOk, errorHandler);
+  const auth = async (formData: TSignInRequest) => {
+    await authAPI.signin(formData, isOk, errorHandler);
   };
 
   const isOk = () => {
     authAPI.getuser(updUserData, errorHandler);
   };
 
-  const updUserData = (u: TUser) => {
-    setUser(u);
+  const updUserData = (user: TUser) => {
+    if (setUser) {
+      setUser(user);
+    }
   };
 
   const errorHandler = (err: unknown) => {
+    setError(String(err));
     Helpers.Log('ERROR', err);
   };
 
+  const goToSignUp = () => {
+    navigate(PAGE_ROUTES.SIGN_UP);
+  };
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <>
-      <div>SignInPage</div>
-      <hr />
-      <div>Login: {login}</div>
-      <div>Password: {password}</div>
-      <button onClick={auth}>Sign in</button> - login with those user
-      credentials
-      <div>
-        <p>&nbsp;</p>
-        <Link to="/signup">Register</Link> - registering user with those random
-        user credentials
-      </div>
-      <hr />
-      <div>
-        <strong>Send login data</strong>
-      </div>
-      <pre>{JSON.stringify(data, null, '    ')}</pre>
-      <hr />
-      <div>
-        <strong>Login user data</strong>
-      </div>
-      <pre>{JSON.stringify(user, null, '    ')}</pre>
-      <div>
-        <Link to="/error-boundary">Error boundary page</Link> - demonstration of
-        error boundary behavior
-      </div>
-    </>
+    <Page>
+      {!user?.id && !userIsLoading ? (
+        <>
+          <Logo size="sm" />
+          <Container direction="column" alignItems="center">
+            <Text variant="display-2">Sign in</Text>
+            <Text variant="subheader-2" style={{ textAlign: 'center' }}>
+              Back again? Just sign in to keep your results showing up on the
+              leaderboards
+            </Text>
+          </Container>
+          <Form
+            inputs={inputs}
+            validationSchema={validationSchema}
+            onSubmit={auth}
+            errorMessage={error}
+          />
+          <Button view="flat" onClick={goToSignUp}>
+            First time here? Sign up
+          </Button>
+          <Button view="flat" onClick={goBack}>
+            Back
+          </Button>
+        </>
+      ) : (
+        <Navigate to={PAGE_ROUTES.MENU} />
+      )}
+    </Page>
   );
 };

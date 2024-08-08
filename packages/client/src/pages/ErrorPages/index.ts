@@ -1,2 +1,1 @@
-export * from './ErrorPage404';
-export * from './ErrorPage500';
+export * from './ErrorPage';

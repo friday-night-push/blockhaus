@@ -1,0 +1,15 @@
+.logo {
+  display: flex;
+}
+
+.logo[data-size='auto'] {
+  width: auto;
+}
+
+.logo[data-size='md'] {
+  width: 340px;
+}
+
+.logo[data-size='sm'] {
+  width: 240px;
+}

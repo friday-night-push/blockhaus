@@ -1,21 +1,26 @@
 import React from 'react';
+
+import { ThemeProvider } from '@gravity-ui/uikit';
+
+import '@gravity-ui/uikit/styles/fonts.css';
+import '@gravity-ui/uikit/styles/styles.css';
+
 import ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './router';
+
 import { Provider } from 'react-redux';
+
+import { App } from './components';
+
 import { store } from './store/store';
 
 import './index.css';
 
-const App = () => {
-  return <RouterProvider router={router} />;
-};
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ThemeProvider theme={'light'}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );

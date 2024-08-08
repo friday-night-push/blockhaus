@@ -1,66 +1,78 @@
-import { useEffect, useState } from 'react';
-import { TSignUpRequest, TUser } from '../../shared/types/user';
-import AuthAPI from '../../services/api/auth-api';
-import { Link } from 'react-router-dom';
-import Helpers from '../../utils/helpers';
+import React, { useContext, useState } from 'react';
+
+import { Text } from '@gravity-ui/uikit';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+import { Container, Page } from 'src/components';
+import { Button, Logo } from 'src/components/atoms';
+import { Form } from 'src/components/molecules';
+import { AuthContext } from 'src/hoc';
+import AuthAPI from 'src/services/api/auth-api';
+import { TSignUpRequest, TUser } from 'src/shared/types/user';
+import { PAGE_ROUTES } from 'src/utils/constants';
+import Helpers from 'src/utils/helpers';
+
+import { inputs, validationSchema } from './SignUpPage.constants';
 
 const authAPI = new AuthAPI();
 
 export const SignUpPage = () => {
-  const [user, setUser] = useState<TUser>({} as TUser);
-  const [data, setData] = useState<TSignUpRequest>({} as TSignUpRequest);
+  const { user, setUser, userIsLoading } = useContext(AuthContext);
 
-  useEffect(() => {
-    const login = Math.floor(Math.random() * 1000);
+  const [error, setError] = useState<string | undefined>(undefined);
 
-    const _data: TSignUpRequest = {
-      email: `a${login}@mail.mail`,
-      first_name: `Fname_${login}`,
-      second_name: `Sname_${login}`,
-      login: `l${login}`,
-      password: '123!!321',
-      phone: `+79994447${login}`,
-    };
+  const navigate = useNavigate();
 
-    setData(_data);
-
-    authAPI.signup(_data, updUserData, errorHandler);
-  }, []);
+  const signup = async (data: TSignUpRequest) => {
+    await authAPI.signup(data, updUserData, errorHandler);
+  };
 
   const updUserData = (u: TUser) => {
-    setUser(u);
+    if (setUser) {
+      setUser(u);
+    }
   };
 
   const errorHandler = (err: unknown) => {
+    setError(String(err));
     Helpers.Log('ERROR', err);
   };
 
-  function logout(): void {
-    authAPI.logout(logoutHandler, errorHandler);
-  }
+  const goToSignIn = () => {
+    navigate(PAGE_ROUTES.SIGN_IN);
+  };
 
-  const logoutHandler = () => {
-    setUser({} as TUser);
+  const goBack = () => {
+    navigate(-1);
   };
 
   return (
-    <>
-      <div>SignUpPage</div>
-      <hr />
-      <Link to="/">Return to login</Link>
-      <hr />
-      <div>
-        <strong>New user data</strong>
-      </div>
-      <pre>{JSON.stringify(data, null, '    ')}</pre>
-      <hr />
-      <div>
-        <strong>Register user data</strong>
-      </div>
-      <pre>{JSON.stringify(user, null, '    ')}</pre>
-      <hr />
-      <button onClick={logout}>Logout</button> - This buttom need if reason is
-      "User already in system"
-    </>
+    <Page>
+      {!user?.id && !userIsLoading ? (
+        <>
+          <Logo size="sm" />
+          <Container direction="column" alignItems="center">
+            <Text variant="display-2">Sign up</Text>
+            <Text variant="subheader-2" style={{ textAlign: 'center' }}>
+              New here? Dive in! Just fill in the form and let the good times
+              roll.
+            </Text>
+          </Container>
+          <Form
+            inputs={inputs}
+            validationSchema={validationSchema}
+            onSubmit={signup}
+            isSubmitting={userIsLoading}
+            errorMessage={error}
+          />
+          <Button view={'flat'} onClick={goToSignIn}>
+            Signed up already? Sign In
+          </Button>
+          <Button onClick={goBack}>Back</Button>
+        </>
+      ) : (
+        <Navigate to={PAGE_ROUTES.MENU} />
+      )}
+    </Page>
   );
 };
