@@ -1,8 +1,11 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import type { ChangeEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Text } from '@gravity-ui/uikit';
 
-import { Container, Input, InputProps } from 'src/components';
+import { Container } from 'src/components/atoms/Container';
+import type { InputProps } from 'src/components/atoms/Input';
+import { Input } from 'src/components/atoms/Input';
 
 type EditableTextProps = Omit<InputProps, 'onChange'> & {
   value: string;

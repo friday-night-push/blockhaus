@@ -1,4 +1,5 @@
-import { Flex, FlexProps } from '@gravity-ui/uikit';
+import type { FlexProps } from '@gravity-ui/uikit';
+import { Flex } from '@gravity-ui/uikit';
 
 export type ContainerProps = FlexProps;
 
