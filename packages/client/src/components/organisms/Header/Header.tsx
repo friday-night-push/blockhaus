@@ -4,9 +4,10 @@ import { ArrowLeft } from '@gravity-ui/icons';
 import { Icon } from '@gravity-ui/uikit';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Container, User } from 'src/components';
-
-import { AuthContext } from 'src/hoc';
+import { Button } from 'src/components/atoms/Button';
+import { Container } from 'src/components/atoms/Container';
+import { User } from 'src/components/molecules/User';
+import { AuthContext } from 'src/hoc/AuthProvider';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 export type HeaderProps = {

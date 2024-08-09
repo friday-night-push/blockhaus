@@ -25,6 +25,7 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
+    '@typescript-eslint/consistent-type-imports': 'error',
     'import/order': [
       'error',
       {

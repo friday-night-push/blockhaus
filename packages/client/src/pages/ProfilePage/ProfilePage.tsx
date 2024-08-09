@@ -3,8 +3,11 @@ import { useContext, useEffect, useState } from 'react';
 import { Avatar, Loader, Text } from '@gravity-ui/uikit';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, EditableText, InputProps, Page } from 'src/components';
-import { AuthContext } from 'src/hoc';
+import { Button } from 'src/components/atoms/Button';
+import type { InputProps } from 'src/components/atoms/Input';
+import { EditableText } from 'src/components/molecules/EditableText';
+import { Page } from 'src/components/organisms/Page';
+import { AuthContext } from 'src/hoc/AuthProvider';
 import { RESOURCE_URL } from 'src/utils/constants';
 
 const profileFormFields: InputProps[] = [

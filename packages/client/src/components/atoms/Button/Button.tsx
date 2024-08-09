@@ -1,4 +1,5 @@
-import { Button as ButtonComponent, ButtonProps } from '@gravity-ui/uikit';
+import type { ButtonProps } from '@gravity-ui/uikit';
+import { Button as ButtonComponent } from '@gravity-ui/uikit';
 
 export const Button = ({
   type = 'button',
