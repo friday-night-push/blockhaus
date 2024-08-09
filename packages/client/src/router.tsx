@@ -85,13 +85,13 @@ const routes: RouteObject[] = [
   },
   {
     path: PAGE_ROUTES.FORUM,
-    element: <ForumPage />,
+    element: <ProtectedRoute element={<ForumPage />} />,
     errorElement: <ErrorPage />,
     loader: topicsLoader,
   },
   {
     path: PAGE_ROUTES.FORUM_TOPIC,
-    element: <ForumTopicPage />,
+    element: <ProtectedRoute element={<ForumTopicPage />} />,
     errorElement: <ErrorPage />,
     loader: topicInfo,
   },

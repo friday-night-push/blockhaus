@@ -1,17 +1,18 @@
 import { Text } from '@gravity-ui/uikit';
 
-import { useNavigate } from 'react-router-dom';
+import {
+  isRouteErrorResponse,
+  useNavigate,
+  useRouteError,
+} from 'react-router-dom';
 
 import { Button, Container, Page } from 'src/components';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
-export type ErrorCode = '404' | '500';
-
-export type ErrorPageProps = {
-  errorCode?: ErrorCode;
-};
-
-const errorMessages = {
+const errorMessages: Record<
+  number,
+  { title: string; code: string; message?: string }
+> = {
   404: {
     title: 'Oh No!',
     code: '#404',
@@ -22,12 +23,35 @@ const errorMessages = {
     code: '#500',
     message: 'We know about it and we’re working on it!',
   },
+  1000: {
+    title: 'Panic!',
+    code: 'Panic!!',
+  },
 };
 
-export const ErrorPage = ({ errorCode = '404' }: ErrorPageProps) => {
+export const ErrorPage = () => {
   const navigate = useNavigate();
+  const error = useRouteError();
 
-  const { title, code, message } = errorMessages[errorCode];
+  let msg = '';
+  let errorCode = 1000;
+
+  if (isRouteErrorResponse(error)) {
+    switch (error.status) {
+      case 404:
+        errorCode = 404;
+        break;
+      case 500:
+        errorCode = 500;
+        break;
+      default:
+        msg = error.statusText;
+    }
+  } else {
+    msg = error as string;
+  }
+
+  const { title, code, message = msg } = errorMessages[errorCode];
 
   const onReturn = () => {
     navigate(PAGE_ROUTES.MENU);
