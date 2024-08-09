@@ -1,5 +1,5 @@
-import logoWithBlocks from 'src/assets/logo-w-blocks.svg';
-import logo from 'src/assets/logo.svg';
+import logoWithBlocks from 'src/assets/logos/blockhaus-full.svg';
+import logo from 'src/assets/logos/blockhaus.svg';
 
 import styles from './Logo.module.css';
 
