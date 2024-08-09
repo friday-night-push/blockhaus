@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import { defineConfig } from 'vite';
 dotenv.config();
 
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
@@ -25,6 +24,27 @@ export default defineConfig({
   resolve: {
     alias: {
       src: path.resolve(__dirname, 'src'),
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        app: './index.html',
+        serviceWorker: './src/service-worker.ts',
+      },
+      output: {
+        entryFileNames: assetInfo => {
+          return assetInfo.name === 'serviceWorker'
+            ? '[name].js'
+            : 'assets/js/[name]-[hash].js';
+        },
+      },
+      onwarn(warning, warn) {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          return;
+        }
+        warn(warning);
+      },
     },
   },
 });
