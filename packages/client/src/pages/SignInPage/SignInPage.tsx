@@ -24,8 +24,10 @@ export const SignInPage: React.FC = () => {
     await authAPI.signin(formData, isOk, errorHandler);
   };
 
-  const isOk = () => {
-    authAPI.getuser(updUserData, errorHandler);
+  const isOk = (response: Response) => {
+    if (response.ok) {
+      authAPI.getuser(updUserData, errorHandler);
+    }
   };
 
   const updUserData = (user: TUser) => {
