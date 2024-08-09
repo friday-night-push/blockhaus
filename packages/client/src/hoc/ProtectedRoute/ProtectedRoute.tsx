@@ -3,8 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from 'src/hoc/AuthProvider';
-
-import { PAGE_ROUTES } from '../../utils/constants';
+import { PAGE_ROUTES } from 'src/utils/constants';
 
 interface ProtectedRouteProps {
   element: JSX.Element;

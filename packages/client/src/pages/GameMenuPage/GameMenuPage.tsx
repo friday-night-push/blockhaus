@@ -4,17 +4,14 @@ import { Menu } from '@gravity-ui/uikit';
 
 import { useNavigate } from 'react-router-dom';
 
-import {
-  Container,
-  Copyright,
-  Logo,
-  MenuItem,
-  MenuItemProps,
-  Page,
-  User,
-} from 'src/components';
-
-import { AuthContext } from 'src/hoc';
+import { Container } from 'src/components/atoms/Container';
+import { Logo } from 'src/components/atoms/Logo';
+import type { MenuItemProps } from 'src/components/atoms/MenuItem';
+import { MenuItem } from 'src/components/atoms/MenuItem';
+import { Copyright } from 'src/components/molecules/Copyright';
+import { User } from 'src/components/molecules/User';
+import { Page } from 'src/components/organisms/Page';
+import { AuthContext } from 'src/hoc/AuthProvider';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 const MENU_ITEMS: MenuItemProps[] = [

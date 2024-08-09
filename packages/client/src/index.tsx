@@ -9,11 +9,9 @@ import ReactDOM from 'react-dom/client';
 
 import { Provider } from 'react-redux';
 
+import { App } from 'src/components/organisms/App';
+import { store } from 'src/store';
 import { registerServiceWorker } from 'src/utils/service-worker';
-
-import { App } from './components';
-import { store } from './store';
-import { registerServiceWorker } from './utils/setup-service-worker';
 
 import './index.css';
 

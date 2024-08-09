@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { InputProps } from 'src/components/atoms';
+import type { InputProps } from 'src/components/atoms/Input';
 
 export const USER_DATA_MOCK = {
   login: 'l586',

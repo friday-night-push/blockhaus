@@ -1,4 +1,5 @@
-import { TextInput, TextInputProps } from '@gravity-ui/uikit';
+import type { TextInputProps } from '@gravity-ui/uikit';
+import { TextInput } from '@gravity-ui/uikit';
 
 export type InputProps = {
   name: string;

@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { InputProps } from '../../components';
+import type { InputProps } from 'src/components/atoms/Input';
 
 export const inputs: InputProps[] = [
   { name: 'email', label: 'Email', type: 'email', autoComplete: 'email' },
