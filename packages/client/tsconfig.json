@@ -3,7 +3,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "webworker"],
     "jsx": "react-jsx",
     "allowJs": false,
     "resolveJsonModule": true,
@@ -19,10 +19,7 @@
     "paths": {
       "src": ["./src/*"]
     },
-    "types": [
-      "vite/client",
-      "jest"
-    ]
+    "types": ["vite/client", "jest"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
