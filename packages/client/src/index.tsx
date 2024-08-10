@@ -11,11 +11,18 @@ import { Provider } from 'react-redux';
 
 import { App } from 'src/components/organisms/App';
 import { store } from 'src/store';
-import { registerServiceWorker } from 'src/utils/service-worker';
+import {
+  registerServiceWorker,
+  unregisterServiceWorker,
+} from 'src/utils/service-worker';
 
 import './index.css';
 
-registerServiceWorker();
+if (import.meta.env.PROD) {
+  registerServiceWorker();
+} else {
+  unregisterServiceWorker();
+}
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
