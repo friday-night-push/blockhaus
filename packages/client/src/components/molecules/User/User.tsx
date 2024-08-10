@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
-import { authAPI } from 'src/pages/SignInPage';
+import { authAPI } from 'src/hoc/AuthProvider';
 import type { Nullable } from 'src/shared/types/global';
 import type { TUser } from 'src/shared/types/user';
 
