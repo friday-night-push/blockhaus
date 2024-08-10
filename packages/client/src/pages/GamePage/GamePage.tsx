@@ -2,6 +2,10 @@ import { useEffect, useRef } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import { PAGE_ROUTES } from 'src/utils/constants';
+
+import { loadSprites } from 'src/utils/loadSprites';
+
 import {
   GpConst,
   SPRITES,
@@ -15,10 +19,6 @@ import {
 import { TFigure, TRectClickHandler } from './GamePage.types';
 
 import { GpUtils } from './GamePage.utils';
-
-import { PAGE_ROUTES } from 'src/utils/constants';
-
-import { loadSprites } from 'src/utils/loadSprites';
 
 let startTimer: NodeJS.Timeout;
 
