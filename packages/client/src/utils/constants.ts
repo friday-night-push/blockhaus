@@ -1,5 +1,3 @@
-import bar from 'src/assets/bar.png';
-
 export const BASE_API_URL = 'https://ya-praktikum.tech/api/v2';
 
 export const RESOURCE_URL = BASE_API_URL + '/resources';
@@ -20,7 +18,3 @@ export enum PAGE_ROUTES {
   FORUM = '/forum',
   FORUM_TOPIC = '/forum/:topicId/:page?',
 }
-
-export const SPRITES = {
-  BAR: bar,
-};
