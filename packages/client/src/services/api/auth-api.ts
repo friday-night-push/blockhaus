@@ -5,7 +5,7 @@ import {
   TUser,
 } from 'src/shared/types/user';
 
-import { getJsonOrThrow, getResponseOrThrow } from 'src/utils';
+import { getResponseOrThrow } from 'src/utils';
 
 import BaseAPI from './base-api';
 
@@ -16,7 +16,7 @@ export default class AuthAPI extends BaseAPI {
     errorCb: TErrorFn
   ): Promise<unknown> {
     return this.post<TSignUpRequest>('/auth/signup', data)
-      .then(response => getJsonOrThrow(response))
+      .then(async response => await (await getResponseOrThrow(response)).json())
       .then(cb)
       .catch(errorCb);
   }
@@ -34,7 +34,7 @@ export default class AuthAPI extends BaseAPI {
 
   getuser(cb: (u: TUser) => void, errorCb: TErrorFn): Promise<unknown> {
     return this.get('/auth/user')
-      .then(response => getJsonOrThrow(response))
+      .then(async response => await (await getResponseOrThrow(response)).json())
       .then(cb)
       .catch(errorCb);
   }
