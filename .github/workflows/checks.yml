@@ -1,11 +1,11 @@
-name: Lint
+name: Lint, Test and Build
 
 on:
   pull_request:
   push:
     branches:
       - main
-      - dev
+      - develop
 
 jobs:
   eslint:
@@ -23,3 +23,5 @@ jobs:
         run: yarn lint
       - name: Test
         run: yarn test
+      - name: Build
+        run: yarn build
