@@ -43,7 +43,7 @@ export const GamePage = () => {
   let selectedField: number[] = [];
   const figures: TFigure[] = [];
 
-  const score = 0;
+  let score = 0;
 
   // drag and drop
   let isDrag = false;
@@ -104,6 +104,7 @@ export const GamePage = () => {
       if (dragFigure) {
         for (let i = 0; i < 9; i++) {
           if (cubeDatas[dragFigure.num][i] != 0) {
+            score++;
             const sx = i % 3;
             const sy = Math.floor(i / 3);
             field[(putX + sx) * 10 + (putY + sy)] =
