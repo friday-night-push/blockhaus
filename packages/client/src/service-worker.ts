@@ -1,4 +1,6 @@
-export const serviceWorker = self as unknown as ServiceWorkerGlobalScope;
+declare const self: ServiceWorkerGlobalScope;
+
+export const serviceWorker = self;
 
 const REPORTING = false;
 const CACHE_NAME = 'blockhaus-cache-v1.0.0';
@@ -7,79 +9,65 @@ const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/game',
-  '/about',
-  '/leaderboard',
+  '/leader-board',
   '/profile',
 ];
-const CACHE_CONTENT_TYPES = [
-  'script',
-  'style',
-  'font',
-  'image',
-  'audio',
-  'manifest',
-];
+
+const CACHE_CONTENT_TYPES = ['script', 'style', 'font', 'image', 'manifest'];
+
 const FALLBACK_BODY = `
-  <h1>Интернеты упали! Но это неточно...</h1>
-  <h2>Обнови страницу или вернись на главную</h2>
+  <div style="
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-family: sans-serif;
+  ">
+    <div>
+      <h1 style="font-size: 2em; margin-bottom: 0.5em;">Uh-oh, Looks Like You’re Offline!</h1>
+      <p style="font-size: 1.2em; margin-top: 0;">We’ll keep things cozy until you’re back online.</p>
+    </div>
+  </div>
 `;
+
 const FALLBACK_HEADERS = {
   headers: { 'Content-Type': 'text/html; charset=utf-8' },
 };
-// Таймауты запросов в зависимости от наличия кеша
 const FETCH_CACHED_TIMEOUT = 5000;
 const FETCH_NETWORK_TIMEOUT = 15000;
 
-/** Для логирования. */
 function logStatus<T>(msg: string, obj: T | null = null) {
   if (REPORTING) {
     console.log(msg, obj);
   }
 }
 
-/** Проверяет нужно ли кешировать запрос. */
 function shouldUseCache(req: Request) {
-  // Чтобы не проходили запросы типа chrome-extension://
   if (!req.url.match(/^http/)) {
     return false;
   }
 
-  // Запросы к API не кешируются
-  if (req.url.includes('/api/')) {
-    return false;
-  }
-
-  return true;
+  return !req.url.includes('/api/');
 }
 
 function shouldServeCacheInstantly(req: Request) {
-  // Проверка на тип контента (upd: некоторые браузеры не считают mp3 за audio)
   if (CACHE_CONTENT_TYPES.includes(req.destination)) {
     return true;
   }
 
-  // Запросы к страницам (upd: некоторые браузеры не относят html к типу document)
-  if (
+  return !(
     req.destination === 'document' ||
     req.url[req.url.length - 1] === '/' ||
     req.url.match(/\/[A-Za-z0-9_-]+$/)
-  ) {
-    return false;
-  }
-
-  return true;
+  );
 }
 
-// При установке воркера кешируем часть данных (статику)
 serviceWorker.addEventListener('install', (event: ExtendableEvent) => {
   logStatus('SW: installing', event);
 
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      // `addAll()` собирает и кеширует статику по указанному массиву ссылок
       .then(cache => cache.addAll(PRECACHE_URLS))
-      // `skipWaiting()` для активации SW сразу, а не после перезагрузки страницы
       .then(() => {
         serviceWorker.skipWaiting();
         logStatus('SW: cache added & skipped waiting');
@@ -87,18 +75,12 @@ serviceWorker.addEventListener('install', (event: ExtendableEvent) => {
   );
 });
 
-// Активация происходит только после того, как предыдущая версия SW была удалена из браузера
 serviceWorker.addEventListener('activate', (event: ExtendableEvent) => {
   logStatus('SW: activating', event);
 
-  event.waitUntil(
-    // `clients.claim()` позволяет SW начать перехватывать запросы с самого начала,
-    // это работает вместе с `skipWaiting()` в `install`, позволяя использовать `fallback` с самых первых запросов
-    serviceWorker.clients.claim()
-  );
+  event.waitUntil(serviceWorker.clients.claim());
 });
 
-// Стратегия `stale-while-revalidate` (сначала отдаём кеш, а если есть свежее из сети - обновляем кеш и досылаем)
 serviceWorker.addEventListener('fetch', (event: FetchEvent) => {
   if (!shouldUseCache(event.request)) {
     return;
@@ -111,7 +93,6 @@ serviceWorker.addEventListener('fetch', (event: FetchEvent) => {
       .open(CACHE_NAME)
       .then(cache =>
         cache.match(event.request).then(cachedResponse => {
-          // Делаем запрос для обновления кеша с таймаутом
           const abortController = new AbortController();
           const abortTimeout = setTimeout(
             () => abortController.abort(),
@@ -122,7 +103,6 @@ serviceWorker.addEventListener('fetch', (event: FetchEvent) => {
           })
             .then(networkResponse => {
               clearTimeout(abortTimeout);
-              // Кладём ответ в кеш, если он содержит что-то субстантивное
               if (
                 networkResponse.status >= 200 &&
                 networkResponse.status < 300
@@ -143,13 +123,11 @@ serviceWorker.addEventListener('fetch', (event: FetchEvent) => {
               );
             });
 
-          // Если есть кеш, возвращаем его, не дожидаясь ответа из сети (кроме определённых случаев)
           if (cachedResponse && shouldServeCacheInstantly(event.request)) {
             logStatus('SW: return cached response', event.request.url);
             return cachedResponse;
           }
 
-          // Если нет кеша, ждём и возвращаем ответ из сети
           logStatus('SW: return network response', event.request.url);
           return fetchedResponse;
         })
