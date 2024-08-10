@@ -9,7 +9,7 @@ export default class BaseAPI {
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
-      credentials: credentials == 'include' ? 'include' : 'same-origin',
+      credentials: credentials === 'include' ? 'include' : 'same-origin',
       body: JSON.stringify(data),
     });
   }

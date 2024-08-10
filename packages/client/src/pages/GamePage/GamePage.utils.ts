@@ -14,10 +14,6 @@ export class GpUtils {
   public static getContext(
     canvasRef: React.MutableRefObject<HTMLCanvasElement | null>
   ) {
-if (!canvas) {
-  throw new Error('Canvas is null');
-}
-
     const canvas = canvasRef.current;
     if (!canvas) {
       throw 'Canvas is null';
