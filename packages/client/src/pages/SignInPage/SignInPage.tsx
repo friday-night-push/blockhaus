@@ -8,15 +8,12 @@ import { Container } from 'src/components/atoms/Container';
 import { Logo } from 'src/components/atoms/Logo';
 import { Form } from 'src/components/molecules/Form';
 import { Page } from 'src/components/organisms/Page';
-import { AuthContext } from 'src/hoc/AuthProvider';
-import AuthAPI from 'src/services/api/auth-api';
+import { authAPI, AuthContext } from 'src/hoc/AuthProvider';
 import type { TSignInRequest, TUser } from 'src/shared/types/user';
 import { PAGE_ROUTES } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';
 
 import { inputs, validationSchema } from './SignInPage.constants';
-
-export const authAPI = new AuthAPI();
 
 export const SignInPage: React.FC = () => {
   const { user, setUser, userIsLoading } = useContext(AuthContext);
