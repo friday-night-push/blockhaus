@@ -1,31 +1,14 @@
 import {
-  defaultWidth,
-  defaultHeight,
-  cubeDatas,
-  GpConst,
-  cubeSizes,
+  PAUSE,
+  DEFAULT_WIDTH,
+  DEFAULT_HEIGHT,
+  CUBE_DATAS,
 } from './GamePage.constants';
 
 import { TFigure } from './GamePage.types';
 
-export class GpUtils {
+export class GpDraw {
   //
-
-  public static getContext(
-    canvasRef: React.MutableRefObject<HTMLCanvasElement | null>
-  ) {
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      throw 'Canvas is null';
-    }
-
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    if (!ctx) {
-      throw 'Canvas context is null';
-    }
-
-    return { canvas, ctx };
-  }
 
   public static DrawField(
     ctx: CanvasRenderingContext2D,
@@ -46,10 +29,10 @@ export class GpUtils {
     for (let i = 0; i < 10; i++) {
       // столбец
       for (let j = 0; j < 10; j++) {
-        const x = i * defaultWidth + drawX;
-        const y = j * defaultHeight + drawY;
+        const x = i * DEFAULT_WIDTH + drawX;
+        const y = j * DEFAULT_HEIGHT + drawY;
         if (field[i * 10 + j] != -1)
-          GpUtils.DrawCube(ctx, cubes, x, y, field[i * 10 + j]);
+          GpDraw.DrawCube(ctx, cubes, x, y, field[i * 10 + j]);
       }
     }
   }
@@ -61,10 +44,10 @@ export class GpUtils {
       0,
       32,
       32,
-      GpConst.Bar.x,
-      GpConst.Bar.y,
-      GpConst.Bar.width,
-      GpConst.Bar.height
+      PAUSE.x,
+      PAUSE.y,
+      PAUSE.width,
+      PAUSE.height
     );
   }
 
@@ -83,8 +66,8 @@ export class GpUtils {
       60,
       x,
       y,
-      defaultWidth,
-      defaultHeight
+      DEFAULT_WIDTH,
+      DEFAULT_HEIGHT
     );
   }
 
@@ -97,13 +80,13 @@ export class GpUtils {
   ) {
     // рисование фигуры
     for (let i = 0; i < 9; i++) {
-      if (cubeDatas[count][i] != 0) {
-        GpUtils.DrawCube(
+      if (CUBE_DATAS[count][i] != 0) {
+        GpDraw.DrawCube(
           ctx,
           cubes,
-          x + (i % 3) * defaultWidth,
-          y + Math.floor(i / 3) * defaultHeight,
-          cubeDatas[count][i]
+          x + (i % 3) * DEFAULT_WIDTH,
+          y + Math.floor(i / 3) * DEFAULT_HEIGHT,
+          CUBE_DATAS[count][i]
         );
       }
     }
@@ -133,7 +116,7 @@ export class GpUtils {
     figures: TFigure[]
   ) {
     for (let i = 0; i < figures.length; i++) {
-      GpUtils.DrawFigure(
+      GpDraw.DrawFigure(
         ctx,
         cubes,
         figures[i].moveX,
@@ -141,25 +124,5 @@ export class GpUtils {
         figures[i].num
       );
     }
-  }
-
-  public static GenerateFigure(num: number): TFigure {
-    const f: TFigure = {
-      num,
-      x: 0,
-      y: 0,
-      moveX: 0,
-      moveY: 0,
-      shiftX: 0,
-      shiftY: 0,
-      width: 0,
-      height: 0,
-    };
-
-    console.info(cubeSizes[num]);
-
-    f.width = cubeSizes[num].x * defaultWidth;
-    f.height = cubeSizes[num].y * defaultHeight;
-    return f;
   }
 }
