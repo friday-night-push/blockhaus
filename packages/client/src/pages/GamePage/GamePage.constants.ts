@@ -6,12 +6,12 @@ import pause from 'src/assets/pause.png';
 
 import { TPos } from './GamePage.types';
 
-const defaultWidth = 30;
-const defaultHeight = 30;
-const shiftVertical = -150;
-const shiftHorizontal = 0;
+const DEFAULT_WIDTH = 30;
+const DEFAULT_HEIGHT = 30;
+const SHIFT_VERTICAL = -150;
+const SHIFT_HORIZONTAL = 0;
 
-export const SPRITES = {
+const SPRITES = {
   BAR: bar,
   CUBES: cubes,
   PAUSE: pause,
@@ -19,16 +19,14 @@ export const SPRITES = {
   BG: bg,
 };
 
-class GpConst {
-  public static Bar = {
-    x: 20,
-    y: 20,
-    width: 32,
-    height: 32,
-  };
-}
+const PAUSE = {
+  x: 20,
+  y: 20,
+  width: 32,
+  height: 32,
+};
 
-const cubeSizes: TPos[] = [
+const CUBE_SIZES: TPos[] = [
   // прямая вертикальная
   { x: 1, y: 1 },
   { x: 1, y: 2 },
@@ -77,7 +75,7 @@ const cubeSizes: TPos[] = [
   { x: 3, y: 2 },
 ];
 
-const cubeDatas = [
+const CUBE_DATAS = [
   // прямая вертикальная
   [2, 0, 0, 0, 0, 0, 0, 0, 0],
   [2, 0, 0, 2, 0, 0, 0, 0, 0],
@@ -127,11 +125,12 @@ const cubeDatas = [
 ];
 
 export {
-  GpConst,
-  defaultWidth,
-  defaultHeight,
-  shiftVertical,
-  shiftHorizontal,
-  cubeDatas,
-  cubeSizes,
+  SPRITES,
+  PAUSE,
+  DEFAULT_WIDTH,
+  DEFAULT_HEIGHT,
+  SHIFT_VERTICAL,
+  SHIFT_HORIZONTAL,
+  CUBE_DATAS,
+  CUBE_SIZES,
 };
