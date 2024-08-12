@@ -1,13 +1,34 @@
-import { Text } from '@gravity-ui/uikit';
+import { useEffect, useRef } from 'react';
 
-import { Container, Page } from 'src/components';
+import { useNavigate } from 'react-router-dom';
+
+import { PAGE_ROUTES } from 'src/utils/constants';
+
+import Game from './Game';
+
+let startTimer: NodeJS.Timeout;
 
 export const GamePage = () => {
-  return (
-    <Page withHeader hasBackButton isFullWidth>
-      <Container grow centerContent>
-        <Text variant={'display-4'}>The place where game will live</Text>
-      </Container>
-    </Page>
-  );
+  const navigate = useNavigate();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  let game: Game;
+
+  useEffect(() => {
+    clearTimeout(startTimer);
+    startTimer = setTimeout(Initialize, 100);
+  }, []);
+
+  function Initialize() {
+    game = new Game(canvasRef);
+    game.Init();
+    game.SetPauseHandler(pauseGame);
+    game.Start();
+  }
+
+  function pauseGame() {
+    navigate(PAGE_ROUTES.GAME_PAUSE);
+  }
+
+  return <canvas ref={canvasRef} className="canvas"></canvas>;
 };

@@ -16,24 +16,25 @@ export default class AuthAPI extends BaseAPI {
     errorCb: TErrorFn
   ): Promise<unknown> {
     return this.post<TSignUpRequest>('/auth/signup', data)
-      .then(response => getResponseOrThrow(response))
+      .then(async response => await (await getResponseOrThrow(response)).json())
       .then(cb)
       .catch(errorCb);
   }
 
   signin(
     data: TSignInRequest,
-    cb: () => void,
+    cb: (p: Response) => void,
     errorCb: TErrorFn
   ): Promise<unknown> {
-    return this.post<TSignInRequest>('/auth/signin', data)
+    return this.post<TSignInRequest>('/auth/signin', data) //, 'same-origin')
+      .then(response => getResponseOrThrow(response))
       .then(cb)
       .catch(errorCb);
   }
 
   getuser(cb: (u: TUser) => void, errorCb: TErrorFn): Promise<unknown> {
     return this.get('/auth/user')
-      .then(response => getResponseOrThrow(response))
+      .then(async response => await (await getResponseOrThrow(response)).json())
       .then(cb)
       .catch(errorCb);
   }

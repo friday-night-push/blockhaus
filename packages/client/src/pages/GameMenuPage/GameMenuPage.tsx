@@ -18,7 +18,8 @@ import { AuthContext } from 'src/hoc';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 const MENU_ITEMS: MenuItemProps[] = [
-  { label: 'play', href: PAGE_ROUTES.GAME },
+  { label: 'play the endless game', href: PAGE_ROUTES.GAME },
+  { label: 'play for time', href: PAGE_ROUTES.GAME },
   {
     label: 'leaderboards',
     href: PAGE_ROUTES.LEADER_BOARD,

@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import { App } from './components';
+import { store } from './store';
 
 import { store } from './store/store';
 
