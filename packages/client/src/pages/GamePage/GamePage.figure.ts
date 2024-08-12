@@ -5,7 +5,7 @@ import {
   CUBE_DATAS,
 } from './GamePage.constants';
 
-import { TFigure } from './GamePage.types';
+import type { TFigure } from './GamePage.types';
 
 export class GpFigure {
   //
