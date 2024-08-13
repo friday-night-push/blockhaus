@@ -1,8 +1,10 @@
 import path from 'path';
 
 import react from '@vitejs/plugin-react';
+
 import dotenv from 'dotenv';
 import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 dotenv.config();
 
 export default defineConfig({
@@ -17,7 +19,22 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly',
     },
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      devOptions: {
+        enabled: true,
+        navigateFallback: './offline',
+      },
+      workbox: {
+        cacheId: 'blockhaus',
+        globDirectory: 'dist',
+        globPatterns: ['**/*.{html,js,css,png,svg,jpg,jpeg}'],
+        navigateFallback: './offline.html',
+      },
+    }),
+  ],
   esbuild: {
     logOverride: { 'this-is-undefined-in-esm': 'silent' },
   },
