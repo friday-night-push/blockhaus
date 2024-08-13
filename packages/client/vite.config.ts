@@ -30,14 +30,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: './index.html',
-        serviceWorker: './src/service-worker.ts',
-      },
-      output: {
-        entryFileNames: assetInfo => {
-          return assetInfo.name === 'serviceWorker'
-            ? '[name].js'
-            : 'assets/js/[name]-[hash].js';
-        },
+        offline: './offline.html',
       },
       onwarn(warning, warn) {
         if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
