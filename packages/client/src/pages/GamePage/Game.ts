@@ -45,21 +45,8 @@ export default class Game {
   private putX = 0;
   private putY = 0;
 
-  // обработчики
-  private pauseHandler: () => void = () => {
-    /* do nothing */
-  };
-
   // массив объектов, по который будет оцениваться куда кликнули и какой вызывать обработчик
-  private CLICK_HANDLERS: TRectClickHandler[] = [
-    {
-      x1: PAUSE.x,
-      y1: PAUSE.y,
-      x2: PAUSE.x + PAUSE.width,
-      y2: PAUSE.y + PAUSE.height,
-      handler: this.pauseHandler.bind(this),
-    } as TRectClickHandler,
-  ];
+  private CLICK_HANDLERS: TRectClickHandler[] = [];
 
   constructor(canvasRef: React.MutableRefObject<HTMLCanvasElement | null>) {
     this.canvasRef = canvasRef;
@@ -74,8 +61,6 @@ export default class Game {
   }
 
   Start() {
-    console.info('Start');
-
     this.addEvents();
 
     this.field = new Array(100).fill(0);
@@ -90,7 +75,14 @@ export default class Game {
   }
 
   SetPauseHandler(handler: () => void) {
-    this.pauseHandler = handler;
+    const rect: TRectClickHandler = {
+      x1: PAUSE.x,
+      y1: PAUSE.y,
+      x2: PAUSE.x + PAUSE.width,
+      y2: PAUSE.y + PAUSE.height,
+      handler: handler,
+    } as TRectClickHandler;
+    this.CLICK_HANDLERS.push(rect);
   }
 
   private animate() {
@@ -145,7 +137,10 @@ export default class Game {
       const x = event.x;
       const y = event.y;
       this.CLICK_HANDLERS.forEach((rch: TRectClickHandler) => {
+        console.info(x, y);
+        console.info(rch);
         if (x >= rch.x1 && x <= rch.x2 && y >= rch.y1 && y <= rch.y2) {
+          console.info('click', rch.handler);
           rch.handler();
         }
       });
@@ -248,7 +243,6 @@ export default class Game {
   }
 
   private resize() {
-    console.info('resize');
     if (this.canvas) {
       this.canvas.width = document.documentElement.clientWidth;
       this.canvas.height = document.documentElement.clientHeight - 5;
