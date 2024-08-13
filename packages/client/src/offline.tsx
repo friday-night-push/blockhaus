@@ -7,19 +7,14 @@ import '@gravity-ui/uikit/styles/styles.css';
 
 import ReactDOM from 'react-dom/client';
 
-import { Provider } from 'react-redux';
-
-import { App } from 'src/components/organisms/App';
-import { store } from 'src/store';
+import { OfflinePage } from './pages/OfflinePage';
 
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={'light'}>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <OfflinePage />
     </ThemeProvider>
   </React.StrictMode>
 );
