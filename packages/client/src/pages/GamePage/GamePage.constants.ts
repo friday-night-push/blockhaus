@@ -1,7 +1,6 @@
 import bar from 'src/assets/bar.png';
 import bg from 'src/assets/bg.jpg';
 import coin from 'src/assets/coin.png';
-import cubes from 'src/assets/cubes.png';
 import pause from 'src/assets/pause.png';
 
 import { TPos } from './GamePage.types';
@@ -13,7 +12,6 @@ const SHIFT_HORIZONTAL = 0;
 
 const SPRITES = {
   BAR: bar,
-  CUBES: cubes,
   PAUSE: pause,
   COIN: coin,
   BG: bg,
@@ -124,6 +122,21 @@ const CUBE_DATAS = [
   [0, 10, 10, 10, 10, 0, 0, 0, 0],
 ];
 
+const CUBE_COLORS = [
+  'white',
+  'silver',
+  'red',
+  'blue',
+  'green',
+  'yellow',
+  'purple',
+  'orange',
+  'cyan',
+  'magenta',
+  'lime',
+  'turquoise',
+];
+
 export {
   SPRITES,
   PAUSE,
@@ -133,4 +146,5 @@ export {
   SHIFT_HORIZONTAL,
   CUBE_DATAS,
   CUBE_SIZES,
+  CUBE_COLORS,
 };

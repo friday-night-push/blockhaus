@@ -33,7 +33,7 @@ export class GpFigure {
     const figures: TFigure[] = [];
 
     let sum = 0;
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       let num = 0;
 
       do {
