@@ -3,6 +3,7 @@ import {
   DEFAULT_WIDTH,
   DEFAULT_HEIGHT,
   CUBE_DATAS,
+  CUBE_COLORS,
 } from './GamePage.constants';
 
 import type { TFigure } from './GamePage.types';
@@ -12,7 +13,6 @@ export class GpDraw {
 
   public static DrawField(
     ctx: CanvasRenderingContext2D,
-    cubes: HTMLImageElement,
     drawX: number,
     drawY: number,
     wField: number,
@@ -32,7 +32,7 @@ export class GpDraw {
         const x = i * DEFAULT_WIDTH + drawX;
         const y = j * DEFAULT_HEIGHT + drawY;
         if (field[i * 10 + j] != -1)
-          GpDraw.DrawCube(ctx, cubes, x, y, field[i * 10 + j]);
+          GpDraw.DrawCube(ctx, x, y, field[i * 10 + j]);
       }
     }
   }
@@ -53,22 +53,16 @@ export class GpDraw {
 
   public static DrawCube(
     ctx: CanvasRenderingContext2D,
-    cubes: HTMLImageElement,
     x: number,
     y: number,
     num: number
   ) {
-    ctx.drawImage(
-      cubes,
-      num * 60,
-      0,
-      60,
-      60,
-      x,
-      y,
-      DEFAULT_WIDTH,
-      DEFAULT_HEIGHT
-    );
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
+    ctx.fillStyle = CUBE_COLORS[num];
+    ctx.fillRect(x + 1, y + 1, DEFAULT_WIDTH - 2, DEFAULT_HEIGHT - 2);
   }
 
   public static DrawFigure(
@@ -83,7 +77,6 @@ export class GpDraw {
       if (CUBE_DATAS[count][i] != 0) {
         GpDraw.DrawCube(
           ctx,
-          cubes,
           x + (i % 3) * DEFAULT_WIDTH,
           y + Math.floor(i / 3) * DEFAULT_HEIGHT,
           CUBE_DATAS[count][i]

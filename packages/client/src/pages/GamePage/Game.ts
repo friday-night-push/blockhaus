@@ -103,7 +103,6 @@ export default class Game {
 
       GpDraw.DrawField(
         this.ctx,
-        this.sprites.CUBES,
         this.drawX,
         this.drawY,
         this.wField,
@@ -112,7 +111,6 @@ export default class Game {
       );
       GpDraw.DrawField(
         this.ctx,
-        this.sprites.CUBES,
         this.drawX,
         this.drawY,
         this.wField,
