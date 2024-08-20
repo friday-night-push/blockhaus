@@ -8,4 +8,9 @@ export default {
   globals: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
+  moduleNameMapper: {
+    '^.+\\.css$': 'identity-obj-proxy',
+    '^.+\\.svg$': 'jest-svg-transformer',
+    'src/(.*)$': '<rootDir>/src/$1',
+  },
 };
