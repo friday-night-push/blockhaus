@@ -36,7 +36,13 @@ const AllTheProviders = (props: AllTheProvidersProps) => {
 const customRender = (
   ui: ReactElement,
   options?: Omit<RenderOptions, 'wrapper'> & { authState?: AuthState }
-) => render(ui, { wrapper: AllTheProviders, ...options });
+) =>
+  render(ui, {
+    wrapper: (props: AllTheProvidersProps) => (
+      <AllTheProviders {...props} {...options} />
+    ),
+    ...options,
+  });
 
 export * from '@testing-library/react';
 export { customRender as render };
