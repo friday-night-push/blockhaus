@@ -9,7 +9,11 @@ const config: Config = {
   testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
   globals: {
     __SERVER_PORT__: process.env.SERVER_PORT,
+    'ts-jest': {
+      isolatedModules: true,
+    },
   },
+  maxWorkers: 1,
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     '^.+\\.css$': 'identity-obj-proxy',
