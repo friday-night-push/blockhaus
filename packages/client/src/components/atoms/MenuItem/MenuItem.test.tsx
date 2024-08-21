@@ -1,13 +1,8 @@
 import { render, screen, fireEvent } from 'src/utils/tests';
 
+import { mockedUseNavigate } from 'src/utils/tests/mocks';
+
 import { MenuItem } from './MenuItem';
-
-const mockedUseNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockedUseNavigate,
-}));
 
 describe('MenuItem', () => {
   beforeEach(() => {
