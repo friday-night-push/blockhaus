@@ -1,12 +1,17 @@
 import type { ReactElement } from 'react';
 import React from 'react';
 
+import { ThemeProvider } from '@gravity-ui/uikit';
 import type { RenderOptions } from '@testing-library/react';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return <BrowserRouter>{children}</BrowserRouter>;
+  return (
+    <ThemeProvider theme={'light'}>
+      <BrowserRouter>{children}</BrowserRouter>
+    </ThemeProvider>
+  );
 };
 
 const customRender = (
