@@ -13,3 +13,10 @@ if (!globalThis.Response) {
   // @ts-expect-error response is not defined in jsdom
   globalThis.Response = jest.fn();
 }
+
+global['Request'] = jest.fn().mockImplementation(() => ({
+  signal: {
+    removeEventListener: jest.fn(),
+    addEventListener: jest.fn(),
+  },
+}));
