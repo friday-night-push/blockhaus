@@ -8,3 +8,8 @@ window.ResizeObserver = jest.fn().mockImplementation(() => ({
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
+
+if (!globalThis.Response) {
+  // @ts-expect-error response is not defined in jsdom
+  globalThis.Response = jest.fn();
+}
