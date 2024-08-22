@@ -7,7 +7,7 @@ import { PAGE_ROUTES } from 'src/utils/constants';
 
 import { ForumPage, topicsLoader } from './ForumPage';
 
-test('renders topics and links correctly', async () => {
+test('renders topics links', async () => {
   const routes = [
     {
       path: PAGE_ROUTES.FORUM,
