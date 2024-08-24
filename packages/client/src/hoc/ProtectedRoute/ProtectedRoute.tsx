@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { useAuth } from 'src/hoc/AuthProvider';
+import { useAuth } from 'src/hooks/use-auth';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 interface ProtectedRouteProps {
