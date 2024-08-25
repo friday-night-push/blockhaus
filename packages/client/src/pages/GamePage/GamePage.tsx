@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 import Game from './Game';
+import { FullscreenToggle } from '../../components/organisms';
 
 let startTimer: NodeJS.Timeout;
 
@@ -30,5 +31,9 @@ export const GamePage = () => {
     navigate(PAGE_ROUTES.GAME_PAUSE);
   }
 
-  return <canvas ref={canvasRef} className="canvas"></canvas>;
+  return (
+    <FullscreenToggle>
+      <canvas ref={canvasRef} className="canvas"></canvas>;
+    </FullscreenToggle>
+  );
 };
