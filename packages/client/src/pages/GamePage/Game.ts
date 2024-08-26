@@ -14,7 +14,7 @@ import { GpDraw } from './GamePage.draw';
 
 import { GpFigure } from './GamePage.figure';
 
-import { TFigure, TRectClickHandler } from './GamePage.types';
+import type { TFigure, TRectClickHandler } from './GamePage.types';
 
 export default class Game {
   private canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;

@@ -1,11 +1,12 @@
 import path from 'path';
 
 import react from '@vitejs/plugin-react';
+
 import dotenv from 'dotenv';
 import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 dotenv.config();
 
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
@@ -18,13 +19,42 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly',
     },
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      devOptions: {
+        enabled: true,
+        navigateFallback: './offline',
+      },
+      workbox: {
+        cacheId: 'blockhaus',
+        globDirectory: 'dist',
+        globPatterns: ['**/*.{html,js,css,png,svg,jpg,jpeg}'],
+        navigateFallback: './offline.html',
+      },
+    }),
+  ],
   esbuild: {
     logOverride: { 'this-is-undefined-in-esm': 'silent' },
   },
   resolve: {
     alias: {
       src: path.resolve(__dirname, 'src'),
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        app: './index.html',
+        offline: './offline.html',
+      },
+      onwarn(warning, warn) {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          return;
+        }
+        warn(warning);
+      },
     },
   },
 });

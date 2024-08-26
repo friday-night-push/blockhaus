@@ -1,7 +1,7 @@
-import logoWithBlocks from 'src/assets/logo-w-blocks.svg';
-import logo from 'src/assets/logo.svg';
+import { useMemo } from 'react';
 
-import styles from './Logo.module.css';
+import logoWithBlocks from 'src/assets/logos/blockhaus-full.svg';
+import logo from 'src/assets/logos/blockhaus.svg';
 
 export type LogoProps = {
   size?: 'auto' | 'sm' | 'md';
@@ -9,10 +9,22 @@ export type LogoProps = {
 };
 
 export const Logo = ({ size = 'md', isFull = false }: LogoProps) => {
+  const width = useMemo(() => {
+    switch (size) {
+      case 'auto':
+        return 'auto';
+      case 'sm':
+        return '240px';
+      case 'md':
+        return '340px';
+      default:
+        return '340px';
+    }
+  }, [size]);
+
   return (
     <img
-      className={styles.logo}
-      data-size={size}
+      style={{ display: 'flex', width }}
       src={isFull ? logoWithBlocks : logo}
       alt="Blockhaus"
     />

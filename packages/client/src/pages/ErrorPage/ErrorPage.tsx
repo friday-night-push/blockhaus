@@ -6,7 +6,9 @@ import {
   useRouteError,
 } from 'react-router-dom';
 
-import { Button, Container, Page } from 'src/components';
+import { Button } from 'src/components/atoms/Button';
+import { Container } from 'src/components/atoms/Container';
+import { Page } from 'src/components/organisms/Page';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 const errorMessages: Record<

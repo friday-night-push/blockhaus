@@ -1,4 +1,6 @@
-import { Container, Header } from 'src/components';
+import { Container } from 'src/components/atoms/Container';
+
+import { Header } from 'src/components/organisms/Header';
 
 export type PageProps = {
   withHeader?: boolean;

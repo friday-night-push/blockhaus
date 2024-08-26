@@ -10,10 +10,11 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Container } from 'src/components';
-import { authAPI } from 'src/pages';
-import { Nullable } from 'src/shared/types/global';
-import { TUser } from 'src/shared/types/user';
+import { Button } from 'src/components/atoms/Button';
+import { Container } from 'src/components/atoms/Container';
+import { authAPI } from 'src/hoc/AuthProvider';
+import type { Nullable } from 'src/shared/types/global';
+import type { TUser } from 'src/shared/types/user';
 
 import { BASE_API_URL, PAGE_ROUTES, RESOURCE_URL } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';

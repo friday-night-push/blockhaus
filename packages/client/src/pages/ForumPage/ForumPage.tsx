@@ -1,7 +1,9 @@
-import { Link, LoaderFunction, useLoaderData } from 'react-router-dom';
+import type { LoaderFunction } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
-import { TopicsType } from './ForumPage.types';
-import { PAGE_ROUTES } from '../../utils/constants';
+import { PAGE_ROUTES } from 'src/utils/constants';
+
+import type { TopicsType } from './ForumPage.types';
 
 // Simulating a request to the server
 export const topicsLoader: LoaderFunction = async (): Promise<TopicsType[]> => {
@@ -18,6 +20,7 @@ export const topicsLoader: LoaderFunction = async (): Promise<TopicsType[]> => {
     },
   ];
 };
+
 export const ForumPage = () => {
   const topics = useLoaderData() as TopicsType[];
 

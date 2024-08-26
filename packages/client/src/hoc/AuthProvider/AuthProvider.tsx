@@ -1,11 +1,15 @@
-import { ReactNode, useContext, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { AuthContext, AuthContextType } from 'src/hoc';
-
-import { authAPI } from 'src/pages';
-import { Nullable } from 'src/shared/types/global';
-import { TUser } from 'src/shared/types/user';
+import AuthAPI from 'src/services/api/auth-api';
+import type { Nullable } from 'src/shared/types/global';
+import type { TUser } from 'src/shared/types/user';
 import Helpers from 'src/utils/helpers';
+
+import type { AuthContextType } from './AuthProvider.context';
+import { AuthContext } from './AuthProvider.context';
+
+export const authAPI = new AuthAPI();
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<Nullable<TUser>>(null);

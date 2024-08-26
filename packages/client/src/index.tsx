@@ -9,8 +9,8 @@ import ReactDOM from 'react-dom/client';
 
 import { Provider } from 'react-redux';
 
-import { App } from './components';
-import { store } from './store';
+import { App } from 'src/components/organisms/App';
+import { store } from 'src/store';
 
 import './index.css';
 
