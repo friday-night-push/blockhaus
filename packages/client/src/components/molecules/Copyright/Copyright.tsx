@@ -1,8 +1,8 @@
 import { Link, Text } from '@gravity-ui/uikit';
 
-import fnpLogo from 'src/assets/fnp-logo.svg';
-import ypLogo from 'src/assets/yp-logo.svg';
-import { Container } from 'src/components/atoms';
+import fnpLogo from 'src/assets/logos/fnp.svg';
+import ypLogo from 'src/assets/logos/practicum.svg';
+import { Container } from 'src/components/atoms/Container';
 
 export const Copyright = () => {
   return (

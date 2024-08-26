@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Text, UserLabel } from '@gravity-ui/uikit';
 
-import { Container, Page } from 'src/components';
+import { Container } from 'src/components/atoms/Container';
+import { Page } from 'src/components/organisms/Page';
 
 import { LEADERBOARD_MOCK } from './LeaderBoardPage.mock';
 

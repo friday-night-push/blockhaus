@@ -3,7 +3,7 @@ import bg from 'src/assets/bg.jpg';
 import coin from 'src/assets/coin.png';
 import pause from 'src/assets/pause.png';
 
-import { TPos } from './GamePage.types';
+import type { TPos } from './GamePage.types';
 
 const DEFAULT_WIDTH = 30;
 const DEFAULT_HEIGHT = 30;

@@ -1,7 +1,8 @@
-import { createContext, Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { createContext } from 'react';
 
-import { Nullable } from 'src/shared/types/global';
-import { TUser } from 'src/shared/types/user';
+import type { Nullable } from 'src/shared/types/global';
+import type { TUser } from 'src/shared/types/user';
 
 export interface AuthContextType {
   user: Nullable<TUser>;

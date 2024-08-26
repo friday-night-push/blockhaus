@@ -1,6 +1,7 @@
-import { LoaderFunction, useLoaderData, useParams } from 'react-router-dom';
+import type { LoaderFunction } from 'react-router-dom';
+import { useLoaderData, useParams } from 'react-router-dom';
 
-import { CommentType, TopicType } from './ForumTopicPage.types';
+import type { CommentType, TopicType } from './ForumTopicPage.types';
 
 // Simulating a request to the server
 export const topicInfo: LoaderFunction = async ({

@@ -1,25 +1,24 @@
-import { createBrowserRouter, RouteObject } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import { ProtectedRoute } from './hoc';
-import {
-  ErrorBoundaryPage,
-  ErrorPage,
-  ForumPage,
-  ForumTopicPage,
-  GameMenuPage,
-  GamePage,
-  GamePausePage,
-  GameResultPage,
-  GameSetupPage,
-  LeaderBoardPage,
-  ProfilePage,
-  RecoverPasswordPage,
-  ResetPasswordPage,
-  SignInPage,
-  SignUpPage,
-  topicInfo,
-  topicsLoader,
-} from './pages';
+import { ProtectedRoute } from 'src/hoc/ProtectedRoute';
+
+import { ErrorBoundaryPage } from 'src/pages/ErrorBoundaryPage';
+import { ErrorPage } from 'src/pages/ErrorPage';
+import { ForumPage, topicsLoader } from 'src/pages/ForumPage';
+import { ForumTopicPage, topicInfo } from 'src/pages/ForumTopicPage';
+import { GameMenuPage } from 'src/pages/GameMenuPage';
+import { GamePage } from 'src/pages/GamePage';
+import { GamePausePage } from 'src/pages/GamePausePage';
+import { GameResultPage } from 'src/pages/GameResultPage';
+import { GameSetupPage } from 'src/pages/GameSetupPage';
+import { LeaderBoardPage } from 'src/pages/LeaderBoardPage';
+import { ProfilePage } from 'src/pages/ProfilePage';
+import { RecoverPasswordPage } from 'src/pages/RecoverPasswordPage';
+import { ResetPasswordPage } from 'src/pages/ResetPasswordPage';
+import { SignInPage } from 'src/pages/SignInPage';
+import { SignUpPage } from 'src/pages/SignUpPage';
+
 import { PAGE_ROUTES } from './utils/constants';
 
 const routes: RouteObject[] = [

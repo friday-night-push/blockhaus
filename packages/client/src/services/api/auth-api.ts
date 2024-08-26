@@ -1,11 +1,11 @@
-import {
+import type {
   TErrorFn,
   TSignInRequest,
   TSignUpRequest,
   TUser,
 } from 'src/shared/types/user';
 
-import { getResponseOrThrow } from 'src/utils';
+import { getResponseOrThrow } from 'src/utils/get-response-or-throw';
 
 import BaseAPI from './base-api';
 
