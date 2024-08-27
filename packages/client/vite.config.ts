@@ -23,10 +23,6 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      devOptions: {
-        enabled: true,
-        navigateFallback: './offline',
-      },
       workbox: {
         cacheId: 'blockhaus',
         globDirectory: 'dist',
