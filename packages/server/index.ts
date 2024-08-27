@@ -51,7 +51,6 @@ async function startServer() {
     try {
       let template: string;
       let ssr: SSR;
-
       if (isDev) {
         template = fs.readFileSync(
           path.resolve(srcPath, 'index.html'),
@@ -72,7 +71,6 @@ async function startServer() {
       }
 
       const { html } = await ssr.render(url);
-      console.log(html);
 
       res
         .status(200)
