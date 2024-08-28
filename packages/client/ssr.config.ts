@@ -13,7 +13,6 @@ export default defineConfig({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['@gravity-ui/uikit'],
       output: {
         dir: 'dist-ssr',
       },
@@ -30,11 +29,7 @@ export default defineConfig({
       src: path.resolve(__dirname, 'src'),
     },
   },
-  optimizeDeps: {
-    include: ['@gravity-ui/uikit'],
-  },
   ssr: {
     format: 'cjs',
-    external: ['@gravity-ui/uikit'],
   },
 });
