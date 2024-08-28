@@ -33,6 +33,9 @@ async function startServer() {
       server: { middlewareMode: true },
       root: srcPath,
       appType: 'custom',
+      ssr: {
+        noExternal: ['@gravity-ui/uikit'],
+      },
     });
     app.use(vite.middlewares);
   } else {
