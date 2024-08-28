@@ -12,8 +12,6 @@ import { Provider } from 'react-redux';
 import { App } from 'src/components/organisms/App';
 import { store } from 'src/store';
 
-import TestApp from './test-app';
-
 import './index.css';
 
 ReactDOM.hydrateRoot(
@@ -24,6 +22,5 @@ ReactDOM.hydrateRoot(
         <App />
       </Provider>
     </ThemeProvider>
-    {/*<TestApp />*/}
   </React.StrictMode>
 );
