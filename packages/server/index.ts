@@ -28,7 +28,7 @@ async function startServer() {
 
   const distPath = path.dirname(require.resolve('client/dist/index.html'));
   const srcPath = path.dirname(require.resolve('client/index.html'));
-  const ssrPath = path.dirname(require.resolve('client/dist-ssr/ssr.cjs'));
+  const ssrPath = require.resolve('client/dist-ssr/ssr.cjs');
 
   app.use(cors());
   app.use('/api/v1', apiRouter);
