@@ -2,12 +2,16 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import type { NextFunction, Request, Response } from 'express';
+import jsesc from 'jsesc';
 import type { ViteDevServer } from 'vite';
 
 import { isDev } from '../utils';
 
 interface SSR {
-  render: (req: Request, res: Response) => Promise<{ html: string }>;
+  render: (
+    req: Request,
+    res: Response
+  ) => Promise<{ html: string; preloadedState: Record<string, unknown> }>;
 }
 
 interface SSRRouteOptions {
@@ -43,12 +47,20 @@ export function ssrRoute(options: SSRRouteOptions) {
         ssr = await import(ssrPath);
       }
 
-      const { html } = await ssr.render(req, res);
+      const { html, preloadedState } = await ssr.render(req, res);
 
       res
         .status(200)
         .set({ 'Content-Type': 'text/html' })
-        .send(template.replace(`<!--ssr-outlet-->`, html));
+        .send(
+          template.replace(`<!--ssr-outlet-->`, html).replace(
+            '<!--preloaded-state-->',
+            jsesc(JSON.stringify(preloadedState), {
+              json: true,
+              isScriptContext: true,
+            })
+          )
+        );
     } catch (error) {
       if (isDev && vite) {
         vite.ssrFixStacktrace(error as Error);
