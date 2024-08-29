@@ -1,19 +1,37 @@
+import { combineReducers } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+
+import { useDispatch } from 'react-redux';
 
 import { api } from './api';
 import exampleReducer from './slice';
 
-export const store = configureStore({
-  reducer: {
-    example: exampleReducer,
-    [api.reducerPath]: api.reducer,
-  },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(api.middleware),
+const rootReducer = combineReducers({
+  example: exampleReducer,
+  [api.reducerPath]: api.reducer,
 });
 
-setupListeners(store.dispatch);
+export function createStore() {
+  const preloadedState =
+    typeof window !== 'undefined' ? window.__PRELOADED_STATE__ : undefined;
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+  if (preloadedState) {
+    delete window.__PRELOADED_STATE__;
+  }
+
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware().concat(api.middleware),
+    preloadedState,
+  });
+
+  setupListeners(store.dispatch);
+
+  return store;
+}
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = ReturnType<typeof createStore>['dispatch'];
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
