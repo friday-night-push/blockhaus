@@ -26,6 +26,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/no-var-requires': 0,
     'import/order': [
       'error',
       {
@@ -64,4 +65,5 @@ module.exports = {
     ],
     'no-multiple-empty-lines': 1,
   },
+  ignorePatterns: ['dist'],
 };
