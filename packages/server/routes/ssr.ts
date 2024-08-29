@@ -7,7 +7,7 @@ import type { ViteDevServer } from 'vite';
 import { isDev } from '../utils';
 
 interface SSR {
-  render: (uri: string) => Promise<{ html: string }>;
+  render: (req: Request, res: Response) => Promise<{ html: string }>;
 }
 
 interface SSRRouteOptions {
@@ -43,7 +43,7 @@ export function ssrRoute(options: SSRRouteOptions) {
         ssr = await import(ssrPath);
       }
 
-      const { html } = await ssr.render(url);
+      const { html } = await ssr.render(req, res);
 
       res
         .status(200)
