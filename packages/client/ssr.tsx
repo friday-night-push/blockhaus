@@ -4,6 +4,7 @@ import React from 'react';
 import type { Request, Response } from 'express';
 import { renderToString } from 'react-dom/server';
 
+import { Provider } from 'react-redux';
 import {
   createStaticRouter,
   createStaticHandler,
@@ -11,6 +12,7 @@ import {
 
 import { App } from './src/components/organisms/App';
 import { routes } from './src/router';
+import { createStore } from './src/store';
 
 const handler = createStaticHandler(routes);
 
@@ -50,6 +52,9 @@ export function createFetchRequest(req: Request, res: Response) {
 }
 
 export async function render(req: Request, res: Response) {
+  const store = createStore();
+  const initialState = store.getState();
+
   const fetchRequest = createFetchRequest(req, res);
   const context = await handler.query(fetchRequest);
 
@@ -62,8 +67,11 @@ export async function render(req: Request, res: Response) {
   return {
     html: renderToString(
       <React.StrictMode>
-        <App router={router} />
+        <Provider store={store}>
+          <App router={router} />
+        </Provider>
       </React.StrictMode>
     ),
+    preloadedState: initialState,
   };
 }
