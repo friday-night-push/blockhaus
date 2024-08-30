@@ -18,6 +18,8 @@ import { ResetPasswordPage } from 'src/pages/ResetPasswordPage';
 import { SignInPage } from 'src/pages/SignInPage';
 import { SignUpPage } from 'src/pages/SignUpPage';
 
+import { FullscreenToggle } from './components/organisms';
+
 import { PAGE_ROUTES } from './utils/constants';
 
 export const routes: RouteObject[] = [
@@ -53,7 +55,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: PAGE_ROUTES.GAME,
-    element: <GamePage />,
+    element: <FullscreenToggle children={<GamePage />} />,
     errorElement: <ErrorPage />,
   },
   {
