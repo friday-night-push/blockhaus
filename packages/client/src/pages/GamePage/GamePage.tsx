@@ -12,7 +12,7 @@ let isFullscreen = false;
 export interface GamePageProps {
   toggleFullscreen: (
     canvasRef: React.RefObject<HTMLCanvasElement>,
-    isFullscreen: boolean
+    isFS: boolean
   ) => boolean;
 }
 
