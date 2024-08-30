@@ -42,7 +42,6 @@ export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
   function toggleFS() {
     isFullscreen = toggleFullscreen(canvasRef, isFullscreen);
     game.SetToggleIcon(isFullscreen);
-    console.info('aaaaaaaaaaaaaaa', isFullscreen);
   }
 
   return <canvas ref={canvasRef} className="canvas"></canvas>;
