@@ -1,5 +1,4 @@
 import type { RouteObject } from 'react-router-dom';
-import { createBrowserRouter } from 'react-router-dom';
 
 import { ProtectedRoute } from 'src/hoc/ProtectedRoute';
 
@@ -23,7 +22,7 @@ import { FullscreenToggle } from './components/organisms';
 
 import { PAGE_ROUTES } from './utils/constants';
 
-const routes: RouteObject[] = [
+export const routes: RouteObject[] = [
   {
     path: PAGE_ROUTES.MENU,
     element: <GameMenuPage />,
@@ -97,7 +96,3 @@ const routes: RouteObject[] = [
     loader: topicInfo,
   },
 ];
-
-const router = createBrowserRouter(routes);
-
-export { routes, router };

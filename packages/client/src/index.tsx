@@ -1,25 +1,32 @@
 import React from 'react';
 
-import { ThemeProvider } from '@gravity-ui/uikit';
-
-import '@gravity-ui/uikit/styles/fonts.css';
-import '@gravity-ui/uikit/styles/styles.css';
-
 import ReactDOM from 'react-dom/client';
 
 import { Provider } from 'react-redux';
 
+import { createBrowserRouter } from 'react-router-dom';
+
 import { App } from 'src/components/organisms/App';
-import { store } from 'src/store';
+import { routes } from 'src/router';
+import { createStore } from 'src/store';
 
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const store = createStore();
+const router = createBrowserRouter(routes);
+
+const root = document.getElementById('root') as HTMLElement;
+
+const app = (
   <React.StrictMode>
-    <ThemeProvider theme={'light'}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <App router={router} />
+    </Provider>
   </React.StrictMode>
 );
+
+if (root.innerHTML === '<!--ssr-outlet-->') {
+  ReactDOM.createRoot(root).render(app);
+} else {
+  ReactDOM.hydrateRoot(root, app);
+}
