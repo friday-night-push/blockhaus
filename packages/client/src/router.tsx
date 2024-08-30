@@ -55,7 +55,17 @@ export const routes: RouteObject[] = [
   },
   {
     path: PAGE_ROUTES.GAME,
-    element: <FullscreenToggle children={<GamePage />} />,
+    element: (
+      <FullscreenToggle
+        children={
+          <GamePage
+            toggleFullscreen={function (canvasRef: any, isFS: any): boolean {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        }
+      />
+    ),
     errorElement: <ErrorPage />,
   },
   {
