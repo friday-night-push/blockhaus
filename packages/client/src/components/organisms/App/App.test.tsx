@@ -1,8 +1,14 @@
-import { describe, expect, test } from '@jest/globals';
+import { render, screen } from '@testing-library/react';
+import { createBrowserRouter } from 'react-router-dom';
 
-// TODO: Find out a reason why tests fail
-describe('mock', () => {
-  test('mock to pass CI/CD', () => {
-    expect(true).toBe(true);
+import { routes } from 'src/router';
+
+import { App } from './App';
+
+describe('App', () => {
+  it('should render', () => {
+    const router = createBrowserRouter(routes);
+    render(<App router={router} />);
+    expect(screen.getByText(/ade in 2024 by/i)).toBeInTheDocument();
   });
 });

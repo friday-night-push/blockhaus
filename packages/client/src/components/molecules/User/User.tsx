@@ -89,11 +89,16 @@ export const User = ({
                 <Button
                   view="flat-secondary"
                   size="xl"
-                  onClick={() => navigate(PAGE_ROUTES.PROFILE)}>
+                  onClick={() => navigate(PAGE_ROUTES.PROFILE)}
+                  qa={'edit-button'}>
                   <Icon data={Pencil} />
                 </Button>
               )}
-              <Button view="flat-danger" size="xl" onClick={onSignOut}>
+              <Button
+                view="flat-danger"
+                size="xl"
+                onClick={onSignOut}
+                qa={'sign-out-button'}>
                 <Icon data={ArrowRightFromSquare} />
               </Button>
             </Container>

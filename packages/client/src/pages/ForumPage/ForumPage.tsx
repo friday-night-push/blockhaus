@@ -27,12 +27,11 @@ export const ForumPage = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       {topics.map(topic => (
-        <>
-          <Link
-            to={`${PAGE_ROUTES.FORUM}/${topic.id}${topic.commentCount ? '/1' : ''}`}>
-            {topic.name}
-          </Link>
-        </>
+        <Link
+          key={topic.id}
+          to={`${PAGE_ROUTES.FORUM}/${topic.id}${topic.commentCount ? '/1' : ''}`}>
+          {topic.name}
+        </Link>
       ))}
     </div>
   );

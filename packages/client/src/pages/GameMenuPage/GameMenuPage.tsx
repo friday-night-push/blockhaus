@@ -14,7 +14,7 @@ import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
-const MENU_ITEMS: MenuItemProps[] = [
+export const MENU_ITEMS: MenuItemProps[] = [
   { label: 'play the endless game', href: PAGE_ROUTES.GAME },
   { label: 'play for time', href: PAGE_ROUTES.GAME },
   {
