@@ -1,5 +1,6 @@
 import {
   PAUSE,
+  TOGGLE,
   DEFAULT_WIDTH,
   DEFAULT_HEIGHT,
   CUBE_DATAS,
@@ -37,9 +38,12 @@ export class GpDraw {
     }
   }
 
-  public static DrawBar(ctx: CanvasRenderingContext2D, bar: HTMLImageElement) {
+  public static DrawPause(
+    ctx: CanvasRenderingContext2D,
+    pause: HTMLImageElement
+  ) {
     ctx.drawImage(
-      bar,
+      pause,
       0,
       0,
       32,
@@ -48,6 +52,23 @@ export class GpDraw {
       PAUSE.y,
       PAUSE.width,
       PAUSE.height
+    );
+  }
+
+  public static DrawToggle(
+    ctx: CanvasRenderingContext2D,
+    toggle: HTMLImageElement
+  ) {
+    ctx.drawImage(
+      toggle,
+      0,
+      0,
+      32,
+      32,
+      TOGGLE.x,
+      TOGGLE.y,
+      TOGGLE.width,
+      TOGGLE.height
     );
   }
 

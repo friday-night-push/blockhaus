@@ -3,6 +3,7 @@ import { loadSprites } from 'src/utils/loadSprites';
 import {
   SPRITES,
   PAUSE,
+  TOGGLE,
   CUBE_DATAS,
   DEFAULT_HEIGHT,
   DEFAULT_WIDTH,
@@ -45,6 +46,8 @@ export default class Game {
   private putX = 0;
   private putY = 0;
 
+  private isToggleIcon = false;
+
   // массив объектов, по который будет оцениваться куда кликнули и какой вызывать обработчик
   private CLICK_HANDLERS: TRectClickHandler[] = [];
 
@@ -68,8 +71,8 @@ export default class Game {
 
     loadSprites(SPRITES).then((s: Record<string, HTMLImageElement>) => {
       this.sprites = s;
-      this.resize();
       this.figures = GpFigure.RandomFigures(this.centerWin.x);
+      this.resize();
       this.animate();
     });
   }
@@ -83,6 +86,21 @@ export default class Game {
       handler: handler,
     } as TRectClickHandler;
     this.CLICK_HANDLERS.push(rect);
+  }
+
+  SetToggleFullscreenHandler(handler: () => void) {
+    const rect: TRectClickHandler = {
+      x1: TOGGLE.x,
+      y1: TOGGLE.y,
+      x2: TOGGLE.x + TOGGLE.width,
+      y2: TOGGLE.y + TOGGLE.height,
+      handler: handler,
+    } as TRectClickHandler;
+    this.CLICK_HANDLERS.push(rect);
+  }
+
+  SetToggleIcon(isFS: boolean) {
+    this.isToggleIcon = isFS;
   }
 
   private animate() {
@@ -99,7 +117,11 @@ export default class Game {
         this.canvasHeight
       );
 
-      GpDraw.DrawBar(this.ctx, this.sprites.PAUSE);
+      GpDraw.DrawPause(this.ctx, this.sprites.PAUSE);
+      GpDraw.DrawToggle(
+        this.ctx,
+        this.isToggleIcon ? this.sprites.TOGGLEOFF : this.sprites.TOGGLEON
+      );
 
       GpDraw.DrawField(
         this.ctx,
@@ -254,6 +276,11 @@ export default class Game {
 
       this.drawX = this.centerWin.x - this.wField / 2 + SHIFT_HORIZONTAL;
       this.drawY = this.centerWin.y - this.hField / 2 + SHIFT_VERTICAL;
+
+      this.figures = GpFigure.UpdateCoordFigures(
+        this.centerWin.x,
+        this.figures
+      );
     }
   }
 }

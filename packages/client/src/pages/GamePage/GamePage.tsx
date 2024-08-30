@@ -5,11 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 import Game from './Game';
-import { FullscreenToggle } from '../../components/organisms';
 
 let startTimer: NodeJS.Timeout;
+let isFullscreen = false;
 
-export const GamePage = () => {
+export interface GamePageProps {
+  toggleFullscreen: (
+    canvasRef: React.RefObject<HTMLCanvasElement>,
+    isFS: boolean
+  ) => boolean;
+}
+
+export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -24,6 +31,7 @@ export const GamePage = () => {
     game = new Game(canvasRef);
     game.Init();
     game.SetPauseHandler(pauseGame);
+    game.SetToggleFullscreenHandler(toggleFS);
     game.Start();
   }
 
@@ -31,9 +39,10 @@ export const GamePage = () => {
     navigate(PAGE_ROUTES.GAME_PAUSE);
   }
 
-  return (
-    <FullscreenToggle>
-      <canvas ref={canvasRef} className="canvas"></canvas>;
-    </FullscreenToggle>
-  );
+  function toggleFS() {
+    isFullscreen = toggleFullscreen(canvasRef, isFullscreen);
+    game.SetToggleIcon(isFullscreen);
+  }
+
+  return <canvas ref={canvasRef} className="canvas"></canvas>;
 };

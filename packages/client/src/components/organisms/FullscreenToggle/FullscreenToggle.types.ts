@@ -1,7 +1,5 @@
-import type { ReactNode } from 'react';
-
 export interface FullscreenToggleProps {
-  children: ReactNode;
+  children: React.ReactElement<any>;
 }
 
 export interface ExtendedHTMLDivElement extends HTMLDivElement {
