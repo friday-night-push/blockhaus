@@ -2,6 +2,8 @@ import bar from 'src/assets/bar.png';
 import bg from 'src/assets/bg.jpg';
 import coin from 'src/assets/coin.png';
 import pause from 'src/assets/pause.png';
+import toggleoff from 'src/assets/toggleoff.png';
+import toggleon from 'src/assets/toggleon.png';
 
 import type { TPos } from './GamePage.types';
 
@@ -15,10 +17,19 @@ const SPRITES = {
   PAUSE: pause,
   COIN: coin,
   BG: bg,
+  TOGGLEON: toggleon,
+  TOGGLEOFF: toggleoff,
 };
 
 const PAUSE = {
   x: 20,
+  y: 20,
+  width: 32,
+  height: 32,
+};
+
+const TOGGLE = {
+  x: 72,
   y: 20,
   width: 32,
   height: 32,
@@ -140,6 +151,7 @@ const CUBE_COLORS = [
 export {
   SPRITES,
   PAUSE,
+  TOGGLE,
   DEFAULT_WIDTH,
   DEFAULT_HEIGHT,
   SHIFT_VERTICAL,

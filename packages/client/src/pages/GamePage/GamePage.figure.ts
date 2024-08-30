@@ -66,4 +66,23 @@ export class GpFigure {
 
     return figures;
   }
+
+  public static UpdateCoordFigures(centerWinX: number, figures: TFigure[]) {
+    function rf(a: number, b: TFigure) {
+      return a + b.width + 50;
+    }
+
+    let l = 0;
+    const figuresShift = (figures.reduce(rf, 0) - 50) / 2;
+
+    figures.forEach((f: TFigure) => {
+      f.x = centerWinX + l - figuresShift;
+      l += f.width + 50;
+
+      f.moveX = f.x;
+      f.moveY = f.y;
+    });
+
+    return figures;
+  }
 }
