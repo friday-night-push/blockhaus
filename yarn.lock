@@ -1080,15 +1080,20 @@
   resolved "https://registry.yarnpkg.com/@gravity-ui/i18n/-/i18n-1.6.0.tgz#a8bfa461bdedc82da2f2532aaa6f8dae0edf2f52"
   integrity sha512-ftMLGZy7migLEtPkZa8jM6onipIeEOnEg9976RRpg3f39H+Q2bYYAGMjU+NJpWQ90ZDp6ztYLt5WAMEg248tEg==
 
-"@gravity-ui/icons@^2.10.0", "@gravity-ui/icons@^2.8.1":
+"@gravity-ui/icons@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@gravity-ui/icons/-/icons-2.11.0.tgz#f0520e4c714736675b567e69aa9cbef93f208da7"
+  integrity sha512-kRiemFztlFV4iUcsbdGRM/2ozK6XZYkzOV4hIzSmNDqtXpEoumm7LhzOLCiugN68YQrazzJLksq4Ho8lpjkVrg==
+
+"@gravity-ui/icons@^2.8.1":
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/@gravity-ui/icons/-/icons-2.10.0.tgz#aa0d083d22012b43c4e3062d7499fe40d969b9f2"
   integrity sha512-xS0G4+TM7cD2cCKS4wVc01c4lLe/OreKjm4sHwrOtJWH4EawaRbpkuwtgUDcUvY2EryIcI6lgV+8o714m6lcyQ==
 
-"@gravity-ui/uikit@^6.22.0":
-  version "6.23.0"
-  resolved "https://registry.yarnpkg.com/@gravity-ui/uikit/-/uikit-6.23.0.tgz#7438ec27e0be7b37b427ce988d4d98e7d3d9f3bb"
-  integrity sha512-v+1QPL+IdaGxv3tuEUHaRSzK5Hp/XNJv3EQxMIMFSV4ojtvio6sQAlzLIYALGN/IULWRwlfF0cqG/TavOo9yog==
+"@gravity-ui/uikit@^6.23.1":
+  version "6.23.1"
+  resolved "https://registry.yarnpkg.com/@gravity-ui/uikit/-/uikit-6.23.1.tgz#37f2bba84317f1e911099c8df57547b5c011dd8d"
+  integrity sha512-hR/ckbTlmW9xuFzcjvdCBHhsH0MP1LOdCwylZQnZjUIiismExymQBeWFDpI51OFTas6aZS8jWmkRlKRMzAsKmw==
   dependencies:
     "@bem-react/classname" "^1.6.0"
     "@gravity-ui/i18n" "^1.3.0"

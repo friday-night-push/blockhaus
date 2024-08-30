@@ -4,10 +4,16 @@ import { useNavigate } from 'react-router-dom';
 export type MenuItemProps = {
   label: string;
   href?: string;
+  theme?: 'normal' | 'danger';
   onClick?: () => void;
 };
 
-export const MenuItem = ({ label, href, onClick }: MenuItemProps) => {
+export const MenuItem = ({
+  label,
+  href,
+  theme = 'normal',
+  onClick,
+}: MenuItemProps) => {
   const navigate = useNavigate();
 
   const goToHref = () => {
@@ -18,7 +24,7 @@ export const MenuItem = ({ label, href, onClick }: MenuItemProps) => {
 
   return (
     <Menu.Item
-      theme={'normal'}
+      theme={theme}
       style={{ minHeight: '50px' }}
       onClick={onClick || goToHref}>
       <Text variant={'display-2'}>{label}</Text>

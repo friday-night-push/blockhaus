@@ -17,12 +17,6 @@ export const inputs: InputProps[] = [
     autoComplete: 'family-name',
   },
   { name: 'login', label: 'Login', type: 'text', autoComplete: 'username' },
-  {
-    name: 'password',
-    label: 'Password',
-    type: 'password',
-    autoComplete: 'new-password',
-  },
   { name: 'phone', label: 'Phone', type: 'tel', autoComplete: 'tel' },
 ];
 

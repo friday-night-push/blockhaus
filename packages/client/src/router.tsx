@@ -2,6 +2,7 @@ import type { RouteObject } from 'react-router-dom';
 
 import { ProtectedRoute } from 'src/hoc/ProtectedRoute';
 
+import { ChangePassword } from 'src/pages/ChangePassword';
 import { ErrorBoundaryPage } from 'src/pages/ErrorBoundaryPage';
 import { ErrorPage } from 'src/pages/ErrorPage';
 import { ForumPage, topicsLoader } from 'src/pages/ForumPage';
@@ -14,7 +15,6 @@ import { GameSetupPage } from 'src/pages/GameSetupPage';
 import { LeaderBoardPage } from 'src/pages/LeaderBoardPage';
 import { ProfilePage } from 'src/pages/ProfilePage';
 import { RecoverPasswordPage } from 'src/pages/RecoverPasswordPage';
-import { ResetPasswordPage } from 'src/pages/ResetPasswordPage';
 import { SignInPage } from 'src/pages/SignInPage';
 import { SignUpPage } from 'src/pages/SignUpPage';
 
@@ -39,8 +39,8 @@ export const routes: RouteObject[] = [
     errorElement: <ErrorPage />,
   },
   {
-    path: PAGE_ROUTES.RESET_PAGE,
-    element: <ResetPasswordPage />,
+    path: PAGE_ROUTES.CHANGE_PASSWORD,
+    element: <ChangePassword />,
     errorElement: <ErrorPage />,
   },
   {

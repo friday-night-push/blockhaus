@@ -1,11 +1,12 @@
 import type { ChangeEvent } from 'react';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Text } from '@gravity-ui/uikit';
 
 import { Container } from 'src/components/atoms/Container';
 import type { InputProps } from 'src/components/atoms/Input';
 import { Input } from 'src/components/atoms/Input';
+import { validationSchema } from 'src/pages/ProfilePage/ProfilePage.constants';
 
 type EditableTextProps = Omit<InputProps, 'onChange'> & {
   value: string;
@@ -39,19 +40,32 @@ export const EditableText = ({
   };
 
   return (
-    <Container alignItems={'center'} gap={3} height={'50px'} width={'100%'}>
-      <Text variant={'subheader-2'}>{label}</Text>
+    <Container
+      alignItems={'center'}
+      gap={3}
+      height={'50px'}
+      width={'100%'}
+      grow>
+      <Text variant={'subheader-2'} style={{ whiteSpace: 'nowrap' }}>
+        {label}
+      </Text>
       {isEditing ? (
         <Input
           name={name}
           type={type}
           value={currentValue}
+          view={'clear'}
           onChange={handleChange}
           onBlur={handleBlur}
+          validationState={validationSchema[name] && 'invalid'}
+          errorMessage={}
           autoFocus
         />
       ) : (
-        <Text variant={'body-2'} onClick={() => setIsEditing(true)}>
+        <Text
+          variant={'body-2'}
+          color={'secondary'}
+          onClick={() => setIsEditing(true)}>
           {currentValue || 'Click to edit'}
         </Text>
       )}

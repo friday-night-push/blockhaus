@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { Loader } from '@gravity-ui/uikit';
 import { useNavigate } from 'react-router-dom';
 
+import { Page } from 'src/components/organisms/Page';
 import { useAuth } from 'src/hooks/use-auth';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
@@ -15,7 +17,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   const navigate = useNavigate();
 
   if (userIsLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Page>
+        <Loader size={'l'} />
+      </Page>
+    );
   }
 
   if (!user || !user.id) {

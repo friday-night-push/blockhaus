@@ -1,83 +1,41 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
-import { Avatar, Loader, Text } from '@gravity-ui/uikit';
+import { Pencil } from '@gravity-ui/icons';
+import { Avatar, Icon, Loader, Text, useFileInput } from '@gravity-ui/uikit';
+import { Field, Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from 'src/components/atoms/Button';
-import type { InputProps } from 'src/components/atoms/Input';
-import { EditableText } from 'src/components/molecules/EditableText';
+import { Container } from 'src/components/atoms/Container';
+import { Input } from 'src/components/atoms/Input';
 import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
+import { inputs } from 'src/pages/ProfilePage/ProfilePage.constants';
 import { RESOURCE_URL } from 'src/utils/constants';
-
-const profileFormFields: InputProps[] = [
-  { name: 'email', label: 'Email', type: 'email', autoComplete: 'email' },
-  {
-    name: 'first_name',
-    label: 'First Name',
-    type: 'text',
-    autoComplete: 'given-name',
-  },
-  {
-    name: 'second_name',
-    label: 'Second Name',
-    type: 'text',
-    autoComplete: 'family-name',
-  },
-  { name: 'login', label: 'Login', type: 'text', autoComplete: 'username' },
-  {
-    name: 'phone',
-    label: 'Phone',
-    type: 'text',
-    autoComplete: 'phone',
-  },
-];
 
 export const ProfilePage = () => {
   const { user, userIsLoading } = useContext(AuthContext);
+  const [isChanging, setIsChanging] = useState(false);
+
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState<Record<string, string>>({});
-  const [originalData, setOriginalData] = useState<Record<string, string>>({});
-  const [isChanged, setIsChanged] = useState(false);
-
-  useEffect(() => {
-    if (user) {
-      const userData = profileFormFields.reduce(
-        (acc, field) => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          acc[field.name] = user[field.name] || '';
-          return acc;
-        },
-        {} as Record<string, string>
-      );
-      console.log('Initial formData:', userData); // Debugging line
-      setFormData(userData);
-      setOriginalData(userData);
-    }
-  }, [user]);
-
-  const handleChange = (name: string, value: string) => {
-    setFormData(prev => {
-      const newFormData = { ...prev, [name]: value };
-      console.log('Updated formData:', newFormData); // Debugging line
-      setIsChanged(
-        JSON.stringify(newFormData) !== JSON.stringify(originalData)
-      );
-      return newFormData;
-    });
-  };
-
-  const handleSave = () => {
-    if (isChanged) {
-      // Send updated data to the server
-      console.log('Updated data:', formData);
-    }
-  };
+  const onUpdate = useCallback((files: File[]) => console.log(files), []);
+  const { controlProps, triggerProps } = useFileInput({ onUpdate });
 
   const goBack = () => {
     navigate(-1);
+  };
+
+  const goToChangePassword = () => {
+    navigate('/change-password');
+  };
+
+  const handleEdit = () => {
+    setIsChanging(true);
+  };
+
+  const handleSubmit = (values: unknown) => {
+    console.log(values);
   };
 
   return (
@@ -86,31 +44,58 @@ export const ProfilePage = () => {
         <Loader />
       ) : (
         <>
-          <Avatar
-            size={'xl'}
-            imgUrl={user?.avatar ? `${RESOURCE_URL}${user?.avatar}` : undefined}
-            text={user?.display_name || user?.first_name}
-          />
-          <Text variant={'display-1'}>
-            {user?.display_name || `${user?.first_name} ${user?.second_name}`}
-          </Text>
-          <Text variant={'subheader-1'}>{user?.email}</Text>
-          <form>
-            {profileFormFields.map(({ name, label, type, autoComplete }) => (
-              <EditableText
-                key={name}
-                name={name}
-                label={label || ''}
-                type={type}
-                autoComplete={autoComplete}
-                value={formData[name]}
-                onChange={handleChange}
+          <Container direction={'column'} gap={'2'} alignItems={'center'}>
+            <input {...controlProps} />
+            <Button
+              style={{ height: '50px', width: '50px' }}
+              pin={'circle-circle'}
+              view={'flat'}
+              {...triggerProps}>
+              <Avatar
+                size='xl'
+                imgUrl={
+                  user?.avatar ? `${RESOURCE_URL}${user.avatar}` : undefined
+                }
+                text={user?.display_name || user?.first_name}
               />
-            ))}
-          </form>
-          <Button view={'action'} onClick={handleSave} disabled={!isChanged}>
-            Save
-          </Button>
+            </Button>
+            <Text variant={'display-1'}>
+              {user
+                ? user.display_name || `${user.first_name} ${user.second_name}`
+                : ''}
+            </Text>
+          </Container>
+
+          {user && (
+            <Formik initialValues={user} onSubmit={handleSubmit}>
+              <Form>
+                <Container direction={'column'} gap={2}>
+                  {inputs.map(input => (
+                    <Field
+                      as={Input}
+                      view='clear'
+                      style={{ width: '100%' }}
+                      controlProps={{
+                        readOnly: !isChanging,
+                      }}
+                      {...input}
+                    />
+                  ))}
+                  {!isChanging ? (
+                    <Button view={'flat'} onClick={handleEdit}>
+                      <Icon data={Pencil} />
+                      Edit
+                    </Button>
+                  ) : (
+                    <Button type={'submit'} view={'flat-action'}>
+                      Save
+                    </Button>
+                  )}
+                </Container>
+              </Form>
+            </Formik>
+          )}
+
           <Button view={'flat'} onClick={goBack}>
             Back
           </Button>
