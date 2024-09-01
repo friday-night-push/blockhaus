@@ -17,6 +17,7 @@ import { RecoverPasswordPage } from 'src/pages/RecoverPasswordPage';
 import { ResetPasswordPage } from 'src/pages/ResetPasswordPage';
 import { SignInPage } from 'src/pages/SignInPage';
 import { SignUpPage } from 'src/pages/SignUpPage';
+import { YandexPage } from 'src/pages/YandexPage';
 
 import { FullscreenToggle } from './components/organisms';
 
@@ -104,5 +105,10 @@ export const routes: RouteObject[] = [
     element: <ProtectedRoute element={<ForumTopicPage />} />,
     errorElement: <ErrorPage />,
     loader: topicInfo,
+  },
+  {
+    path: PAGE_ROUTES.YANDEX,
+    element: <YandexPage />,
+    errorElement: <ErrorPage />,
   },
 ];
