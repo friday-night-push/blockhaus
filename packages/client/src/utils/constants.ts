@@ -6,6 +6,7 @@ export enum PAGE_ROUTES {
   MENU = '/',
   SIGN_IN = '/sign-in',
   SIGN_UP = '/sign-up',
+  YANDEX = '/yandex',
   RESET_PAGE = '/reset-password',
   RECOVER_PASSWORD = '/recover-password',
   PROFILE = '/profile',

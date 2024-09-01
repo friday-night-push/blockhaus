@@ -46,6 +46,10 @@ export const SignInPage: React.FC = () => {
     navigate(PAGE_ROUTES.SIGN_UP);
   };
 
+  const goToYandex = () => {
+    navigate(PAGE_ROUTES.YANDEX);
+  };
+
   const goBack = () => {
     navigate(-1);
   };
@@ -68,6 +72,9 @@ export const SignInPage: React.FC = () => {
             onSubmit={auth}
             errorMessage={error}
           />
+          <Button view="outlined-info" onClick={goToYandex}>
+            Sign in or sign up through Yandex
+          </Button>
           <Button view="flat" onClick={goToSignUp}>
             First time here? Sign up
           </Button>
