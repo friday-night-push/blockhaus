@@ -37,8 +37,6 @@ describe('ProfilePage', () => {
     render(<ProfilePage />, {
       authState: { user: mockedUser, userIsLoading: false },
     });
-    expect(
-      screen.getByRole('button', { name: 'Save' }).hasAttribute('disabled')
-    ).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Save' }).hasAttribute('disabled')).toBeTruthy();
   });
 });

@@ -46,15 +46,9 @@ export const SignUpPage = () => {
           <Container direction='column' alignItems='center'>
             <Text variant='display-2'>Sign up</Text>
             <Text variant='subheader-2' style={{ textAlign: 'center' }}>
-              New here? Dive in! Just fill in the form and let the good times
-              roll.
+              New here? Dive in! Just fill in the form and let the good times roll.
             </Text>
-            <Form
-              inputs={inputs}
-              validationSchema={signUpValidationSchema}
-              onSubmit={signup}
-              errorMessage={error}
-            />
+            <Form inputs={inputs} validationSchema={signUpValidationSchema} onSubmit={signup} errorMessage={error} />
             <Button view={'flat'} isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
               Signed up already? Sign In
             </Button>

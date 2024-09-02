@@ -36,10 +36,7 @@ export const ProfilePage = () => {
     await userAPI.updateAvatar(formData, updUserData, errorHandler);
   };
 
-  const updateUserInfo = async (
-    user: TUser,
-    { setSubmitting }: FormikHelpers<TUser>
-  ) => {
+  const updateUserInfo = async (user: TUser, { setSubmitting }: FormikHelpers<TUser>) => {
     setSubmitting(true);
 
     await userAPI.updateProfile(user, updUserData, errorHandler).finally(() => {
@@ -64,29 +61,17 @@ export const ProfilePage = () => {
         <Loader />
       ) : (
         <>
-          <Container
-            direction={'column'}
-            gap={'2'}
-            alignItems={'center'}
-            width={'100%'}>
+          <Container direction={'column'} gap={'2'} alignItems={'center'} width={'100%'}>
             <input {...controlProps} />
-            <Button
-              style={{ height: '50px', width: '50px' }}
-              pin={'circle-circle'}
-              view={'flat'}
-              {...triggerProps}>
+            <Button style={{ height: '50px', width: '50px' }} pin={'circle-circle'} view={'flat'} {...triggerProps}>
               <Avatar
                 size='xl'
-                imgUrl={
-                  user?.avatar ? `${RESOURCE_URL}${user.avatar}` : undefined
-                }
+                imgUrl={user?.avatar ? `${RESOURCE_URL}${user.avatar}` : undefined}
                 text={user?.display_name || user?.first_name}
               />
             </Button>
             <Text variant={'display-1'}>
-              {user
-                ? user.display_name || `${user.first_name} ${user.second_name}`
-                : ''}
+              {user ? user.display_name || `${user.first_name} ${user.second_name}` : ''}
             </Text>
           </Container>
 
@@ -105,11 +90,7 @@ export const ProfilePage = () => {
           )}
 
           <Container direction={'column'} width={'100%'}>
-            <Button
-              isNavigate
-              navigateTo={PAGE_ROUTES.CHANGE_PASSWORD}
-              view={'flat-danger'}
-              width={'max'}>
+            <Button isNavigate navigateTo={PAGE_ROUTES.CHANGE_PASSWORD} view={'flat-danger'} width={'max'}>
               Change Password
             </Button>
             <Button isNavigate navigateTo={PAGE_ROUTES.MENU} width={'max'}>

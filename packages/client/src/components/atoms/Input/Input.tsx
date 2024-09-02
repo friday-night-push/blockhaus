@@ -6,13 +6,7 @@ export type InputProps = {
   required?: boolean;
 } & TextInputProps;
 
-export const Input = ({
-  label,
-  name,
-  type = 'text',
-  onChange,
-  ...props
-}: InputProps) => {
+export const Input = ({ label, name, type = 'text', onChange, ...props }: InputProps) => {
   return (
     <TextInput
       label={label}

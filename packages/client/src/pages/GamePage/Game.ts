@@ -109,46 +109,17 @@ export default class Game {
     if (this.ctx) {
       this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-      this.ctx.drawImage(
-        this.sprites.BG,
-        0,
-        0,
-        this.canvasWidth,
-        this.canvasHeight
-      );
+      this.ctx.drawImage(this.sprites.BG, 0, 0, this.canvasWidth, this.canvasHeight);
 
       GpDraw.DrawPause(this.ctx, this.sprites.PAUSE);
-      GpDraw.DrawToggle(
-        this.ctx,
-        this.isToggleIcon ? this.sprites.TOGGLEOFF : this.sprites.TOGGLEON
-      );
+      GpDraw.DrawToggle(this.ctx, this.isToggleIcon ? this.sprites.TOGGLEOFF : this.sprites.TOGGLEON);
 
-      GpDraw.DrawField(
-        this.ctx,
-        this.drawX,
-        this.drawY,
-        this.wField,
-        this.hField,
-        this.field
-      );
-      GpDraw.DrawField(
-        this.ctx,
-        this.drawX,
-        this.drawY,
-        this.wField,
-        this.hField,
-        this.selectedField,
-        false
-      );
+      GpDraw.DrawField(this.ctx, this.drawX, this.drawY, this.wField, this.hField, this.field);
+      GpDraw.DrawField(this.ctx, this.drawX, this.drawY, this.wField, this.hField, this.selectedField, false);
 
       GpDraw.DrawFigures(this.ctx, this.sprites.CUBES, this.figures);
 
-      GpDraw.DrawScore(
-        this.ctx,
-        this.sprites.COIN,
-        this.score,
-        this.centerWin.x
-      );
+      GpDraw.DrawScore(this.ctx, this.sprites.COIN, this.score, this.centerWin.x);
     } else console.info('no ctx');
   }
 
@@ -167,26 +138,18 @@ export default class Game {
     });
 
     // нажали кнопку мыши
-    this.canvasRef.current?.addEventListener(
-      'mousedown',
-      (event: MouseEvent) => {
-        this.isDrag = true;
-        const x = event.x;
-        const y = event.y;
-        this.figures.forEach((f: TFigure) => {
-          if (
-            x >= f.x &&
-            x <= f.x + f.width &&
-            y >= f.y &&
-            y <= f.y + f.height
-          ) {
-            this.dragFigure = f;
-            this.dragFigure.shiftX = x - this.dragFigure.x;
-            this.dragFigure.shiftY = y - this.dragFigure.y;
-          }
-        });
-      }
-    );
+    this.canvasRef.current?.addEventListener('mousedown', (event: MouseEvent) => {
+      this.isDrag = true;
+      const x = event.x;
+      const y = event.y;
+      this.figures.forEach((f: TFigure) => {
+        if (x >= f.x && x <= f.x + f.width && y >= f.y && y <= f.y + f.height) {
+          this.dragFigure = f;
+          this.dragFigure.shiftX = x - this.dragFigure.x;
+          this.dragFigure.shiftY = y - this.dragFigure.y;
+        }
+      });
+    });
 
     // отпустили кнопку мыши
     this.canvasRef.current?.addEventListener('mouseup', () => {
@@ -197,8 +160,7 @@ export default class Game {
             this.score++;
             const sx = i % 3;
             const sy = Math.floor(i / 3);
-            this.field[(this.putX + sx) * 10 + (this.putY + sy)] =
-              CUBE_DATAS[this.dragFigure.num][i];
+            this.field[(this.putX + sx) * 10 + (this.putY + sy)] = CUBE_DATAS[this.dragFigure.num][i];
           }
         }
 
@@ -210,52 +172,46 @@ export default class Game {
     });
 
     // перемещаем мышкой
-    this.canvasRef.current?.addEventListener(
-      'mousemove',
-      (event: MouseEvent) => {
-        if (this.ctx) {
-          this.selectedField = new Array(100).fill(-1);
-          if (this.isDrag && this.dragFigure) {
-            this.dragFigure.moveX = event.x - this.dragFigure.shiftX;
-            this.dragFigure.moveY = event.y - this.dragFigure.shiftY;
+    this.canvasRef.current?.addEventListener('mousemove', (event: MouseEvent) => {
+      if (this.ctx) {
+        this.selectedField = new Array(100).fill(-1);
+        if (this.isDrag && this.dragFigure) {
+          this.dragFigure.moveX = event.x - this.dragFigure.shiftX;
+          this.dragFigure.moveY = event.y - this.dragFigure.shiftY;
 
-            const x = this.dragFigure.moveX + 10;
-            const y = this.dragFigure.moveY + 10;
-            if (
-              x >= this.drawX &&
-              x <= this.drawX + this.wField - 3 &&
-              y >= this.drawY &&
-              y <= this.drawY + this.hField - 3
-            ) {
-              this.putX = Math.floor((x - this.drawX) / DEFAULT_WIDTH);
-              this.putY = Math.floor((y - this.drawY) / DEFAULT_HEIGHT);
-              for (let i = 0; i < 9; i++) {
-                if (CUBE_DATAS[this.dragFigure.num][i] != 0) {
-                  const sx = i % 3;
-                  const sy = Math.floor(i / 3);
-                  if (this.field[(this.putX + sx) * 10 + (this.putY + sy)] == 0)
-                    this.selectedField[
-                      (this.putX + sx) * 10 + (this.putY + sy)
-                    ] = 1;
-                }
+          const x = this.dragFigure.moveX + 10;
+          const y = this.dragFigure.moveY + 10;
+          if (
+            x >= this.drawX &&
+            x <= this.drawX + this.wField - 3 &&
+            y >= this.drawY &&
+            y <= this.drawY + this.hField - 3
+          ) {
+            this.putX = Math.floor((x - this.drawX) / DEFAULT_WIDTH);
+            this.putY = Math.floor((y - this.drawY) / DEFAULT_HEIGHT);
+            for (let i = 0; i < 9; i++) {
+              if (CUBE_DATAS[this.dragFigure.num][i] != 0) {
+                const sx = i % 3;
+                const sy = Math.floor(i / 3);
+                if (this.field[(this.putX + sx) * 10 + (this.putY + sy)] == 0)
+                  this.selectedField[(this.putX + sx) * 10 + (this.putY + sy)] = 1;
               }
             }
-          } else {
-            if (
-              event.x >= this.drawX &&
-              event.x <= this.drawX + this.wField - 3 &&
-              event.y >= this.drawY &&
-              event.y <= this.drawY + this.hField - 3
-            ) {
-              const indX = Math.floor((event.x - this.drawX) / DEFAULT_WIDTH);
-              const indY = Math.floor((event.y - this.drawY) / DEFAULT_HEIGHT);
-              if (this.field[indX * 10 + indY] == 0)
-                this.selectedField[indX * 10 + indY] = 1;
-            }
+          }
+        } else {
+          if (
+            event.x >= this.drawX &&
+            event.x <= this.drawX + this.wField - 3 &&
+            event.y >= this.drawY &&
+            event.y <= this.drawY + this.hField - 3
+          ) {
+            const indX = Math.floor((event.x - this.drawX) / DEFAULT_WIDTH);
+            const indY = Math.floor((event.y - this.drawY) / DEFAULT_HEIGHT);
+            if (this.field[indX * 10 + indY] == 0) this.selectedField[indX * 10 + indY] = 1;
           }
         }
       }
-    );
+    });
 
     window.onresize = () => {
       this.resize();
@@ -277,10 +233,7 @@ export default class Game {
       this.drawX = this.centerWin.x - this.wField / 2 + SHIFT_HORIZONTAL;
       this.drawY = this.centerWin.y - this.hField / 2 + SHIFT_VERTICAL;
 
-      this.figures = GpFigure.UpdateCoordFigures(
-        this.centerWin.x,
-        this.figures
-      );
+      this.figures = GpFigure.UpdateCoordFigures(this.centerWin.x, this.figures);
     }
   }
 }

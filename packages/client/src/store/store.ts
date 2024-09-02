@@ -13,8 +13,7 @@ const rootReducer = combineReducers({
 });
 
 export function createStore() {
-  const preloadedState =
-    typeof window !== 'undefined' ? window.__PRELOADED_STATE__ : undefined;
+  const preloadedState = typeof window !== 'undefined' ? window.__PRELOADED_STATE__ : undefined;
 
   if (preloadedState) {
     delete window.__PRELOADED_STATE__;
@@ -22,8 +21,7 @@ export function createStore() {
 
   const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware =>
-      getDefaultMiddleware().concat(api.middleware),
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
     preloadedState,
   });
 

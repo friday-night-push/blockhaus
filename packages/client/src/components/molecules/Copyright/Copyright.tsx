@@ -12,9 +12,7 @@ export const Copyright = () => {
         <img src={fnpLogo} alt='' />
       </Link>
       <Text variant='code-2'>at</Text>
-      <Link
-        href={'https://practicum.yandex.ru/middle-frontend/'}
-        target={'_blank'}>
+      <Link href={'https://practicum.yandex.ru/middle-frontend/'} target={'_blank'}>
         <img src={ypLogo} alt='' />
       </Link>
     </Container>

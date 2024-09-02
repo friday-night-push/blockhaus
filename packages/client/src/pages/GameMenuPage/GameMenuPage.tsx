@@ -99,17 +99,9 @@ export const GameMenuPage = () => {
       <Menu size={'xl'}>
         <Container direction={'column'} alignItems={'center'}>
           {user && user.id ? (
-            <User
-              user={user}
-              setUser={setUser}
-              userIsLoading={userIsLoading}
-              isFullSize
-            />
+            <User user={user} setUser={setUser} userIsLoading={userIsLoading} isFullSize />
           ) : (
-            <MenuItem
-              label={'sign in'}
-              onClick={() => navigate(PAGE_ROUTES.SIGN_IN)}
-            />
+            <MenuItem label={'sign in'} onClick={() => navigate(PAGE_ROUTES.SIGN_IN)} />
           )}
           {MENU_ITEMS.map(item => (
             <MenuItem key={item.label} {...item} />

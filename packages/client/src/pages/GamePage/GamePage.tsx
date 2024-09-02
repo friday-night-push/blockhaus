@@ -10,10 +10,7 @@ let startTimer: NodeJS.Timeout;
 let isFullscreen = false;
 
 export interface GamePageProps {
-  toggleFullscreen: (
-    canvasRef: React.RefObject<HTMLCanvasElement>,
-    isFS: boolean
-  ) => boolean;
+  toggleFullscreen: (canvasRef: React.RefObject<HTMLCanvasElement>, isFS: boolean) => boolean;
 }
 
 export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {

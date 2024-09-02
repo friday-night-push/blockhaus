@@ -42,9 +42,7 @@ describe('SignInPage', () => {
     render(<SignInPage />);
 
     const user = userEvent.setup();
-    await user.click(
-      screen.getByRole('button', { name: 'First time here? Sign up' })
-    );
+    await user.click(screen.getByRole('button', { name: 'First time here? Sign up' }));
     expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.SIGN_UP);
   });
 
@@ -76,10 +74,7 @@ describe('SignInPage', () => {
     const user = userEvent.setup();
 
     await user.type(screen.getByLabelText(/login/i), USER_DATA_MOCK.login);
-    await user.type(
-      screen.getByLabelText(/password/i),
-      USER_DATA_MOCK.password
-    );
+    await user.type(screen.getByLabelText(/password/i), USER_DATA_MOCK.password);
     await user.click(screen.getByRole('button', { name: /submit/i }));
 
     expect(authAPI.signIn).toHaveBeenCalledWith(

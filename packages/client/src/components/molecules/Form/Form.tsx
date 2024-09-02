@@ -50,22 +50,9 @@ export const Form = <T extends FormikValues>({
           setIsEditing(false);
         });
       }}>
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleReset,
-        isSubmitting,
-        isValid,
-      }) => (
+      {({ values, errors, touched, handleChange, handleBlur, handleReset, isSubmitting, isValid }) => (
         <FormikForm style={{ width: '100%' }}>
-          <Container
-            direction='column'
-            alignItems='center'
-            width='100%'
-            gap={4}>
+          <Container direction='column' alignItems='center' width='100%' gap={4}>
             {inputs?.map(input => (
               <Field
                 key={input.name}
@@ -78,14 +65,8 @@ export const Form = <T extends FormikValues>({
                 }}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                validationState={
-                  touched[input.name as keyof T] &&
-                  errors[input.name as keyof T] &&
-                  'invalid'
-                }
-                errorMessage={
-                  errors[input.name as keyof T] as FormikErrors<string>
-                }
+                validationState={touched[input.name as keyof T] && errors[input.name as keyof T] && 'invalid'}
+                errorMessage={errors[input.name as keyof T] as FormikErrors<string>}
                 errorPlacement={'inside'}
                 value={values[input.name as keyof T] || ''}
               />
@@ -103,11 +84,7 @@ export const Form = <T extends FormikValues>({
               ) : (
                 <>
                   {showResetButton && (
-                    <Button
-                      type='button'
-                      view='flat-secondary'
-                      onClick={handleReset}
-                      disabled={isSubmitting}>
+                    <Button type='button' view='flat-secondary' onClick={handleReset} disabled={isSubmitting}>
                       Reset
                     </Button>
                   )}

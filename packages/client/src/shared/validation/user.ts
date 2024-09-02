@@ -2,10 +2,7 @@ import * as Yup from 'yup';
 
 const loginSchema = Yup.string()
   .trim()
-  .matches(
-    /^[a-zA-Z0-9_]+$/,
-    'Login can only contain letters, numbers, and underscores'
-  )
+  .matches(/^[a-zA-Z0-9_]+$/, 'Login can only contain letters, numbers, and underscores')
   .max(15, 'Login must be 15 characters or less')
   .required('Login is required');
 
@@ -15,10 +12,7 @@ const passwordSchema = Yup.string()
   .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
   .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
   .matches(/[0-9]/, 'Password must contain at least one number')
-  .matches(
-    /[!@#$%^&*(),.?":{}|<>]/,
-    'Password must contain at least one special character'
-  )
+  .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character')
   .required('Password is required');
 
 const emailSchema = Yup.string()
@@ -75,12 +69,8 @@ export const userProfileValidationSchema = Yup.object({
 });
 
 export const changePasswordValidationSchema = Yup.object({
-  current_password: passwordSchema
-    .label('Current Password')
-    .required('Current password is required'),
-  new_password: passwordSchema
-    .label('New Password')
-    .required('New password is required'),
+  current_password: passwordSchema.label('Current Password').required('Current password is required'),
+  new_password: passwordSchema.label('New Password').required('New password is required'),
   confirm_password: Yup.string()
     .oneOf([Yup.ref('new_password'), ''], 'Passwords must match')
     .required('Please confirm your new password'),

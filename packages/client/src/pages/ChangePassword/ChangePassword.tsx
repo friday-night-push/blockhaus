@@ -13,25 +13,15 @@ import Helpers from 'src/utils/helpers';
 export const ChangePassword = () => {
   const [error, setError] = useState<string | undefined>(undefined);
 
-  const handleSubmit = async (
-    password: TUserPassword,
-    { setSubmitting }: FormikHelpers<TUserPassword>
-  ) => {
+  const handleSubmit = async (password: TUserPassword, { setSubmitting }: FormikHelpers<TUserPassword>) => {
     setSubmitting(true);
 
     const changePasswordRequest = {
       oldPassword: password.current_password,
-      newPassword:
-        password.new_password === password.confirm_password
-          ? password.new_password
-          : '',
+      newPassword: password.new_password === password.confirm_password ? password.new_password : '',
     };
 
-    await userAPI.changePassword(
-      changePasswordRequest,
-      updUserData,
-      errorHandler
-    );
+    await userAPI.changePassword(changePasswordRequest, updUserData, errorHandler);
   };
   const updUserData = () => {
     console.log('Password Updated');

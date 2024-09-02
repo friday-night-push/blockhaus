@@ -60,15 +60,9 @@ export const SignInPage: React.FC = () => {
           <Container direction='column' alignItems='center'>
             <Text variant='display-2'>Sign in</Text>
             <Text variant='subheader-2' style={{ textAlign: 'center' }}>
-              Back again? Just sign in to keep your results showing up on the
-              leaderboards
+              Back again? Just sign in to keep your results showing up on the leaderboards
             </Text>
-            <Form
-              inputs={inputs}
-              validationSchema={signInValidationSchema}
-              onSubmit={auth}
-              errorMessage={error}
-            />
+            <Form inputs={inputs} validationSchema={signInValidationSchema} onSubmit={auth} errorMessage={error} />
             <Button view="outlined-info" onClick={goToYandex}>
             Sign in or sign up through Yandex
           </Button>

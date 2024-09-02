@@ -39,9 +39,7 @@ describe('SignUpPage', () => {
     render(<SignUpPage />);
 
     const user = userEvent.setup();
-    await user.click(
-      screen.getByRole('button', { name: 'Signed up already? Sign In' })
-    );
+    await user.click(screen.getByRole('button', { name: 'Signed up already? Sign In' }));
     expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.SIGN_IN);
   });
 });

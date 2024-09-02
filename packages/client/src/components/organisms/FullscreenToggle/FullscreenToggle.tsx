@@ -6,10 +6,7 @@ export interface FullscreenToggleProps {
 }
 
 export interface FullscreenChildProps {
-  toggleFullscreen: (
-    elementRef: RefObject<ExtendedHTMLDivElement>,
-    isFullscreen: boolean
-  ) => boolean;
+  toggleFullscreen: (elementRef: RefObject<ExtendedHTMLDivElement>, isFullscreen: boolean) => boolean;
 }
 
 export interface ExtendedHTMLDivElement extends HTMLDivElement {
@@ -25,10 +22,7 @@ export interface ExtendedDocument extends Document {
 }
 
 export const FullscreenToggle: FC<FullscreenToggleProps> = ({ children }) => {
-  const toggleFullscreen = (
-    elementRef: RefObject<ExtendedHTMLDivElement>,
-    isFullscreen: boolean
-  ): boolean => {
+  const toggleFullscreen = (elementRef: RefObject<ExtendedHTMLDivElement>, isFullscreen: boolean): boolean => {
     const elem = elementRef.current;
     if (!isFullscreen) {
       if (elem) {
