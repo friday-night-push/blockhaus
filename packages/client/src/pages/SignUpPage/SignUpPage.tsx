@@ -10,7 +10,7 @@ import { Form } from 'src/components/molecules/Form';
 import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
 import AuthAPI from 'src/services/api/auth-api';
-import type { TSignUpRequest, TUser } from 'src/shared/types/user';
+import type { TSignUpRequest, TSignUpResponse, TUser } from 'src/shared/types/user';
 import { signUpValidationSchema } from 'src/shared/validation/user';
 import { PAGE_ROUTES } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';
@@ -24,12 +24,18 @@ export const SignUpPage = () => {
   const [error, setError] = useState<string | undefined>(undefined);
 
   const signup = async (data: TSignUpRequest) => {
-    await authAPI.signup(data, updUserData, errorHandler);
+    await authAPI.signup(data, isOk, errorHandler);
   };
 
-  const updUserData = (u: TUser) => {
+  const isOk = (response: TSignUpResponse) => {
+    if (response.id) {
+      authAPI.getUser(updUserData, errorHandler);
+    }
+  };
+
+  const updUserData = (user: TUser) => {
     if (setUser) {
-      setUser(u);
+      setUser(user);
     }
   };
 

@@ -63,6 +63,7 @@ export const Form = <T extends FormikValues>({
                 controlProps={{
                   readOnly: !isEditing,
                 }}
+                hasClear={isEditing}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 validationState={touched[input.name as keyof T] && errors[input.name as keyof T] && 'invalid'}

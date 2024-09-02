@@ -18,6 +18,10 @@ export type TUser = TUserCommon & {
 
 export type TSignUpRequest = TUserCommon & TPassword;
 
+export type TSignUpResponse = {
+  id: number;
+};
+
 export type TSignInRequest = {
   login: string;
 } & TPassword;
