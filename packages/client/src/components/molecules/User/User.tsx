@@ -54,7 +54,7 @@ export const User = ({
   };
 
   return (
-    <Container alignItems="center">
+    <Container alignItems='center'>
       {user && user?.id ? (
         userIsLoading ? (
           <Skeleton />
@@ -66,6 +66,7 @@ export const User = ({
                 avatar={{
                   imgUrl:
                     user?.avatar && `${BASE_API_URL}/resources${user?.avatar}`,
+                  text: user?.display_name || user?.first_name,
                 }}
                 name={
                   user?.display_name ||
@@ -88,16 +89,16 @@ export const User = ({
             <Container gap={0}>
               {isFullSize && (
                 <Button
-                  view="flat-secondary"
-                  size="xl"
+                  view='flat-secondary'
+                  size='xl'
                   onClick={() => navigate(PAGE_ROUTES.PROFILE)}
                   qa={'edit-button'}>
                   <Icon data={Pencil} />
                 </Button>
               )}
               <Button
-                view="flat-danger"
-                size="xl"
+                view='flat-danger'
+                size='xl'
                 onClick={onSignOut}
                 qa={'sign-out-button'}>
                 <Icon data={ArrowRightFromSquare} />
@@ -106,7 +107,7 @@ export const User = ({
           </>
         )
       ) : (
-        <Button view={'flat-action'} type="button" onClick={goToSignIn}>
+        <Button view={'flat-action'} type='button' onClick={goToSignIn}>
           Sign In
         </Button>
       )}

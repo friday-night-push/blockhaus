@@ -26,7 +26,7 @@ export const Logo = ({ size = 'md', isFull = false }: LogoProps) => {
     <img
       style={{ display: 'flex', width }}
       src={isFull ? logoWithBlocks : logo}
-      alt="Blockhaus"
+      alt='Blockhaus'
     />
   );
 };
