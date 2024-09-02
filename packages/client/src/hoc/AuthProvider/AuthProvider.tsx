@@ -41,8 +41,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     Helpers.Log('ERROR', err);
   };
 
-
-
   return (
     <AuthContext.Provider value={{ user, setUser, userIsLoading }}>
       {children}

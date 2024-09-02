@@ -25,14 +25,14 @@ export default class AuthAPI extends BaseAPI {
       .catch(errorCb);
   }
 
-  signin(data: TSignInRequest, cb: TResp, errorCb: TErrorFn): Promise<unknown> {
+  signIn(data: TSignInRequest, cb: TResp, errorCb: TErrorFn): Promise<unknown> {
     return this.post<TSignInRequest>('/auth/signin', data) //, 'same-origin')
       .then(response => getResponseOrThrow(response))
       .then(cb)
       .catch(errorCb);
   }
 
-  getuser(cb: (u: TUser) => void, errorCb: TErrorFn): Promise<unknown> {
+  getUser(cb: (u: TUser) => void, errorCb: TErrorFn): Promise<unknown> {
     return this.get('/auth/user')
       .then(async response => {
         if (response.status == 401) {

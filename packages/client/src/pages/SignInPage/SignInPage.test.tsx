@@ -1,5 +1,6 @@
 import userEvent from '@testing-library/user-event';
 
+import { authAPI } from 'src/hoc/AuthProvider';
 import { PAGE_ROUTES } from 'src/utils/constants';
 import { render, screen } from 'src/utils/tests';
 
@@ -7,7 +8,6 @@ import { mockedUseNavigate, mockedUser } from 'src/utils/tests/mocks';
 
 import { SignInPage } from './SignInPage';
 import { USER_DATA_MOCK } from './SignInPage.constants';
-import { authAPI } from '../../hoc/AuthProvider';
 
 describe('SignInPage', () => {
   beforeEach(() => {
@@ -49,7 +49,7 @@ describe('SignInPage', () => {
   });
 
   it('displays an error message on failed sign in', async () => {
-    jest.spyOn(authAPI, 'signin').mockImplementation((_, __, errorCb) => {
+    jest.spyOn(authAPI, 'signIn').mockImplementation((_, __, errorCb) => {
       errorCb(new Error('Invalid credentials'));
       return Promise.resolve();
     });
@@ -66,7 +66,7 @@ describe('SignInPage', () => {
   });
 
   it('calls signin with correct data', async () => {
-    jest.spyOn(authAPI, 'signin').mockImplementation((data, cb) => {
+    jest.spyOn(authAPI, 'signIn').mockImplementation((data, cb) => {
       cb(new Response(undefined, { status: 200 }));
       return Promise.resolve();
     });
@@ -82,7 +82,7 @@ describe('SignInPage', () => {
     );
     await user.click(screen.getByRole('button', { name: /submit/i }));
 
-    expect(authAPI.signin).toHaveBeenCalledWith(
+    expect(authAPI.signIn).toHaveBeenCalledWith(
       { login: USER_DATA_MOCK.login, password: USER_DATA_MOCK.password },
       expect.any(Function),
       expect.any(Function)
