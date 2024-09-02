@@ -40,7 +40,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: PAGE_ROUTES.CHANGE_PASSWORD,
-    element: <ChangePassword />,
+    element: <ProtectedRoute element={<ChangePassword />} />,
     errorElement: <ErrorPage />,
   },
   {
