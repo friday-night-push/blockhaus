@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { ArrowRightFromSquare, Pencil } from '@gravity-ui/icons';
 import { Icon, Skeleton, User as UserComponent, UserLabel } from '@gravity-ui/uikit';
@@ -37,10 +37,6 @@ export const User = ({ user, setUser, userIsLoading, isFullSize = false }: UserP
 
   const onSignOut = () => {
     authAPI.logout(logoutHandler, errorHandler);
-  };
-
-  const goToSignIn = () => {
-    navigate(PAGE_ROUTES.SIGN_IN);
   };
 
   return (
@@ -86,7 +82,7 @@ export const User = ({ user, setUser, userIsLoading, isFullSize = false }: UserP
           </>
         )
       ) : (
-        <Button view={'flat-action'} type='button' onClick={goToSignIn}>
+        <Button view={'flat-action'} type='button' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
           Sign In
         </Button>
       )}

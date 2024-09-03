@@ -7,6 +7,7 @@ import type { FormikHelpers } from 'formik';
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 import { Form } from 'src/components/molecules';
+import { BackButton } from 'src/components/molecules/BackButton';
 import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
 import { inputs } from 'src/pages/ProfilePage/ProfilePage.constants';
@@ -93,9 +94,7 @@ export const ProfilePage = () => {
             <Button isNavigate navigateTo={PAGE_ROUTES.CHANGE_PASSWORD} view={'flat-danger'} width={'max'}>
               Change Password
             </Button>
-            <Button isNavigate navigateTo={PAGE_ROUTES.MENU} width={'max'}>
-              Back
-            </Button>
+            <BackButton fallbackRoute={PAGE_ROUTES.MENU} />
           </Container>
         </>
       )}

@@ -1,9 +1,11 @@
+import React from 'react';
+
 import { Text } from '@gravity-ui/uikit';
 
-import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router-dom';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 
-import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
+import { BackButton } from 'src/components/molecules/BackButton/BackButton';
 import { Page } from 'src/components/organisms/Page';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
@@ -25,7 +27,6 @@ const errorMessages: Record<number, { title: string; code: string; message?: str
 };
 
 export const ErrorPage = () => {
-  const navigate = useNavigate();
   const error = useRouteError();
 
   let msg = '';
@@ -48,10 +49,6 @@ export const ErrorPage = () => {
 
   const { title, code, message = msg } = errorMessages[errorCode];
 
-  const onReturn = () => {
-    navigate(PAGE_ROUTES.MENU);
-  };
-
   return (
     <Page isFullWidth withHeader>
       <Container alignItems={'center'} gap={8} grow>
@@ -60,9 +57,7 @@ export const ErrorPage = () => {
           <Text variant='subheader-1'>{code}</Text>
           <Text variant='code-2'>{message}</Text>
         </Container>
-        <Button view='flat-secondary' size='xl' onClick={onReturn}>
-          Return to Start
-        </Button>
+        <BackButton fallbackRoute={PAGE_ROUTES.MENU}>Return to Start</BackButton>
       </Container>
     </Page>
   );

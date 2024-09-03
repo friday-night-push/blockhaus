@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 import { Logo } from 'src/components/atoms/Logo';
+import { BackButton } from 'src/components/molecules/BackButton/BackButton';
 import { Form } from 'src/components/molecules/Form';
 import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
@@ -20,7 +21,7 @@ import { inputs } from './SignUpPage.constants';
 const authAPI = new AuthAPI();
 
 export const SignUpPage = () => {
-  const { user, setUser, userIsLoading } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [error, setError] = useState<string | undefined>(undefined);
 
   const signup = async (data: TSignUpRequest) => {
@@ -46,7 +47,7 @@ export const SignUpPage = () => {
 
   return (
     <Page>
-      {!user?.id && !userIsLoading ? (
+      {!user?.id ? (
         <>
           <Logo size='sm' />
           <Container direction='column' alignItems='center'>
@@ -58,9 +59,7 @@ export const SignUpPage = () => {
             <Button view={'flat'} isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
               Signed up already? Sign In
             </Button>
-            <Button view='flat' isNavigate navigateTo={-1}>
-              Back
-            </Button>
+            <BackButton fallbackRoute={PAGE_ROUTES.MENU} />
           </Container>
         </>
       ) : (

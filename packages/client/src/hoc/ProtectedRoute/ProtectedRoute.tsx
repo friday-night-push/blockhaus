@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Loader } from '@gravity-ui/uikit';
 import { useNavigate } from 'react-router-dom';
@@ -13,8 +13,13 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   const { user, userIsLoading } = useAuth();
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userIsLoading && (!user || !user.id)) {
+      navigate(PAGE_ROUTES.SIGN_IN);
+    }
+  }, [user, userIsLoading, navigate]);
 
   if (userIsLoading) {
     return (
@@ -24,9 +29,5 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
     );
   }
 
-  if (!user || !user.id) {
-    navigate(PAGE_ROUTES.SIGN_IN);
-  }
-
-  return element;
+  return user && user.id ? element : null;
 };

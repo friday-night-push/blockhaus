@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 import { Logo } from 'src/components/atoms/Logo';
+import { BackButton } from 'src/components/molecules/BackButton/BackButton';
 import { Form } from 'src/components/molecules/Form';
 import { Page } from 'src/components/organisms/Page';
 import { authAPI, AuthContext } from 'src/hoc/AuthProvider';
@@ -19,7 +20,7 @@ import Helpers from 'src/utils/helpers';
 import { inputs } from './SignInPage.constants';
 
 export const SignInPage: React.FC = () => {
-  const { user, setUser, userIsLoading } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [error, setError] = useState<string | undefined>(undefined);
 
   const auth = async (formData: TSignInRequest) => {
@@ -54,7 +55,7 @@ export const SignInPage: React.FC = () => {
 
   return (
     <Page>
-      {!user?.id && !userIsLoading ? (
+      {!user?.id ? (
         <>
           <Logo size='sm' />
           <Container direction='column' alignItems='center'>
@@ -69,9 +70,7 @@ export const SignInPage: React.FC = () => {
           <Button view='flat' isNavigate navigateTo={PAGE_ROUTES.SIGN_UP}>
               First time here? Sign up
             </Button>
-            <Button view='flat' isNavigate navigateTo={-1}>
-              Back
-            </Button>
+            <BackButton fallbackRoute={PAGE_ROUTES.MENU} />
           </Container>
         </>
       ) : (
