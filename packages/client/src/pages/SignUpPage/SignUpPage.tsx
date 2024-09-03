@@ -35,7 +35,7 @@ export const SignUpPage = () => {
     }
   };
 
-  const errorHandler = (err: unknown) => {
+  const errorHandler = (err: Error) => {
     setError(String(err));
     Helpers.Log('ERROR', err);
   };

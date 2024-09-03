@@ -34,13 +34,14 @@ export const User = ({
 }: UserProps) => {
   const navigate = useNavigate();
 
-  const errorHandler = (err: unknown) => {
+  const errorHandler = (err: Error) => {
     Helpers.Log('ERROR', err);
   };
 
   const logoutHandler = () => {
     if (setUser) {
       setUser({} as TUser);
+      localStorage.removeItem('isAuth');
     }
   };
 

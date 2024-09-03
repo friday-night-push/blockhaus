@@ -34,9 +34,19 @@ export default class AuthAPI extends BaseAPI {
 
   getuser(cb: (u: TUser) => void, errorCb: TErrorFn): Promise<unknown> {
     return this.get('/auth/user')
-      .then(async response => await (await getResponseOrThrow(response)).json())
+      .then(async response => {
+        if (response.status == 401) {
+          // unauthorized
+          localStorage.removeItem('isAuth');
+          return null;
+        }
+        return await (await getResponseOrThrow(response)).json();
+      })
       .then(cb)
-      .catch(errorCb);
+      .catch((e: Error) => {
+        console.info(e);
+        errorCb(e);
+      });
   }
 
   logout(cb: () => void, errorCb: TErrorFn): Promise<unknown> {
@@ -54,11 +64,11 @@ export default class AuthAPI extends BaseAPI {
 
   yaSignInUp(
     data: TYandexAuth,
-    cb: TResp,
+    cb: () => void,
     errorCb: TErrorFn
   ): Promise<unknown> {
     return this.post<TYandexAuth>('/oauth/yandex', data) //, 'same-origin')
-      .then(response => getResponseOrThrow(response))
+      .then(() => true)
       .then(cb)
       .catch(errorCb);
   }
