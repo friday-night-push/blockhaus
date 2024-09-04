@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { Sequelize } from 'sequelize-typescript';
 
+import { logger } from './logger';
 import { TopicModel } from '../topic/topic.model';
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
@@ -20,10 +21,10 @@ export const initPostgres = async (): Promise<Sequelize | null> => {
     });
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
-    console.log('All models were synchronized successfully.');
+    logger.info('All models were synchronized successfully.');
     return sequelize;
   } catch (e) {
-    console.error(e);
+    logger.error(e);
   }
   return null;
 };

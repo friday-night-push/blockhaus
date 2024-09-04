@@ -12,7 +12,7 @@ import { type ViteDevServer, createServer as createViteServer } from 'vite';
 import { apiRouter } from './api';
 import { ssrRoute } from './ssr';
 
-import { isDev, initPostgres } from './utils';
+import { isDev, initPostgres, logger } from './utils';
 
 initPostgres();
 
@@ -47,7 +47,7 @@ async function startServer() {
   app.use('*', ssrRoute({ vite, distPath, srcPath }));
 
   app.listen(port, () => {
-    console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+    logger.info(`  ➜ 🎸 Server is listening on port: ${port}`);
   });
 }
 
