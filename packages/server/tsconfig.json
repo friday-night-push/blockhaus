@@ -23,6 +23,8 @@
       "*": ["types/*"]
     },
     "outDir": "dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

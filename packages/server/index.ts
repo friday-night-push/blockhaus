@@ -2,7 +2,7 @@ import * as path from 'path';
 
 import cors from 'cors';
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 import express from 'express';
 import { type ViteDevServer, createServer as createViteServer } from 'vite';
@@ -10,11 +10,9 @@ import { type ViteDevServer, createServer as createViteServer } from 'vite';
 import { apiRouter } from './routes/api';
 import { ssrRoute } from './routes/ssr';
 
-import { isDev } from './utils';
+import { isDev, initPostgres } from './utils';
 
-// import { createClientAndConnect } from './db';
-
-// createClientAndConnect();
+initPostgres();
 
 async function startServer() {
   const app = express();
