@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Sequelize } from 'sequelize-typescript';
 
-import { Topic } from '../models/topic';
+import { TopicModel } from '../topic/topic.model';
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env;
@@ -16,7 +16,7 @@ export const initPostgres = async (): Promise<Sequelize | null> => {
       database: POSTGRES_DB,
       dialect: 'postgres',
       logging: false,
-      models: [Topic],
+      models: [TopicModel],
     });
     await sequelize.authenticate();
     await sequelize.sync({ force: true });

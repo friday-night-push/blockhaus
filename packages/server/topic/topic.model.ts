@@ -1,11 +1,11 @@
-import { Model, Table, DataType, Column } from 'sequelize-typescript';
+import { Model, Table, DataType, Column, Length } from 'sequelize-typescript';
 
 export interface TopicCreationAttributes {
   name: string;
 }
 
 @Table({ tableName: 'topics' })
-export class Topic extends Model<Topic, TopicCreationAttributes> {
+export class TopicModel extends Model<TopicModel, TopicCreationAttributes> {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -14,6 +14,7 @@ export class Topic extends Model<Topic, TopicCreationAttributes> {
   })
   id: number;
 
+  @Length({ min: 1, msg: 'TopicModel name must be at least 1 character long' })
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;
 }

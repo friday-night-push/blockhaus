@@ -1,6 +1,8 @@
 import type { RequestHandler } from 'express';
 
-import { TopicService } from '../services/topic';
+import { ValidationError } from 'sequelize';
+
+import { TopicService } from './topic.service';
 
 export class TopicController {
   static getTopics: RequestHandler = async (_, res, next) => {
@@ -18,6 +20,9 @@ export class TopicController {
       const topic = await TopicService.createTopic({ name });
       res.status(201).json(topic);
     } catch (e) {
+      if (e instanceof ValidationError) {
+        res.status(400).json({ message: e.message });
+      }
       next(e);
     }
   };

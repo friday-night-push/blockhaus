@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { topicRouter } from './topic';
+import { topicRouter } from '../topic/topic.router';
 
 export const apiRouter = Router();
 

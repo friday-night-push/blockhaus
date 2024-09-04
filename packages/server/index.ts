@@ -2,13 +2,14 @@ import * as path from 'path';
 
 import cors from 'cors';
 import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+dotenv.config({ path: '../../.env' });
 
 import express from 'express';
 import { type ViteDevServer, createServer as createViteServer } from 'vite';
 
-import { apiRouter } from './routes/api';
-import { ssrRoute } from './routes/ssr';
+import { apiRouter } from './api';
+import { ssrRoute } from './ssr';
 
 import { isDev, initPostgres } from './utils';
 
