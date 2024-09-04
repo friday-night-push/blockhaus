@@ -32,7 +32,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   },
 ];
 
-let aaa = 0;
+let firtsStart = 0;
 
 const authAPI = new AuthAPI();
 
@@ -75,7 +75,7 @@ export const GameMenuPage = () => {
   };
 
   useEffect(() => {
-    if (aaa == 0) {
+    if (firtsStart == 0) {
       const code = searchParams.get('code');
       const cid = searchParams.get('cid');
       if (code != null && cid != null) {
@@ -90,7 +90,7 @@ export const GameMenuPage = () => {
       }
     }
 
-    aaa++;
+    firtsStart++;
   }, []);
 
   return (
