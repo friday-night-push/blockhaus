@@ -1,11 +1,11 @@
 import * as path from 'path';
 
-import cors from 'cors';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });
 
 import express from 'express';
+import helmet from 'helmet';
 import { type ViteDevServer, createServer as createViteServer } from 'vite';
 
 import { apiRouter } from './api';
@@ -19,7 +19,7 @@ async function startServer() {
   const app = express();
   const port = Number(process.env.SERVER_PORT) || 3001;
 
-  app.use(cors());
+  app.use(helmet());
   app.use(express.json());
   app.use('/api/v1', apiRouter);
 
