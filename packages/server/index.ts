@@ -19,6 +19,7 @@ async function startServer() {
   const port = Number(process.env.SERVER_PORT) || 3001;
 
   app.use(cors());
+  app.use(express.json());
   app.use('/api/v1', apiRouter);
 
   let vite: ViteDevServer | undefined;
