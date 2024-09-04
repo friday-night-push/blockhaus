@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const isAuth = localStorage.getItem('isAuth');
       if (isAuth !== null) await authAPI.getuser(updateUser, errorHandler);
     } catch (err) {
-      errorHandler(err);
+      errorHandler(err as Error);
     } finally {
       setUserIsLoading(false);
     }
