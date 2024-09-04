@@ -1,5 +1,6 @@
 import * as path from 'path';
 
+import compression from 'compression';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });
@@ -20,6 +21,7 @@ async function startServer() {
   const port = Number(process.env.SERVER_PORT) || 3001;
 
   app.use(helmet());
+  app.use(compression());
   app.use(express.json());
   app.use('/api/v1', apiRouter);
 
