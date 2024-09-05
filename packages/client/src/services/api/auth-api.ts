@@ -45,19 +45,13 @@ export default class AuthAPI extends BaseAPI {
   }
 
   yaGetServiceId(cb: (d: TYandex) => void, errorCb: TErrorFn) {
-    return this.get(
-      '/oauth/yandex/service-id?redirect_uri=http://localhost:3000'
-    )
+    return this.get('/oauth/yandex/service-id?redirect_uri=http://localhost:3000')
       .then(async response => await (await getResponseOrThrow(response)).json())
       .then(cb)
       .catch(errorCb);
   }
 
-  yaSignInUp(
-    data: TYandexAuth,
-    cb: () => void,
-    errorCb: TErrorFn
-  ): Promise<unknown> {
+  yaSignInUp(data: TYandexAuth, cb: () => void, errorCb: TErrorFn): Promise<unknown> {
     return this.post<TYandexAuth>('/oauth/yandex', data) //, 'same-origin')
       .then(() => true)
       .then(cb)

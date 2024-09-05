@@ -18,19 +18,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const isAuthenticated = async () => {
       setUserIsLoading(true);
 
-    try {
-      const isAuth = localStorage.getItem('isAuth');
-      if (isAuth !== null) await authAPI.getuser(updateUser, errorHandler);
-    } catch (err) {
-      errorHandler(err as Error);
-    } finally {
-      setUserIsLoading(false);
-    }
-  };
+      try {
+        const isAuth = localStorage.getItem('isAuth');
+        if (isAuth !== null) await authAPI.getUser(updateUser, errorHandler);
+      } catch (err) {
+        errorHandler(err as Error);
+      } finally {
+        setUserIsLoading(false);
+      }
+    };
 
     isAuthenticated();
   }, []);
-
 
   const updateUser = (user: TUser) => {
     localStorage.setItem('isAuth', 'true');

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 
-import { Text } from '@gravity-ui/uikit';
+import { LogoYandex } from '@gravity-ui/icons';
+import { Icon, Text } from '@gravity-ui/uikit';
 import { Navigate } from 'react-router-dom';
 
 import { Button } from 'src/components/atoms/Button';
@@ -63,10 +64,11 @@ export const SignInPage: React.FC = () => {
               Back again? Just sign in to keep your results showing up on the leaderboards
             </Text>
             <Form inputs={inputs} onSubmit={auth} errorMessage={error} />
-            <Button view="outlined-info" onClick={goToYandex}>
-            Sign in or sign up through Yandex
-          </Button>
-          <Button view='flat' isNavigate navigateTo={PAGE_ROUTES.SIGN_UP}>
+            <Button view='outlined-action' onClick={goToYandex}>
+              <Icon data={LogoYandex} />
+              Auth with Yandex
+            </Button>
+            <Button view='flat' isNavigate navigateTo={PAGE_ROUTES.SIGN_UP}>
               First time here? Sign up
             </Button>
             <BackButton fallbackRoute={PAGE_ROUTES.MENU} />

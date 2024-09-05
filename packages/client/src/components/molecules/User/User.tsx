@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 
 import { ArrowRightFromSquare, Pencil } from '@gravity-ui/icons';
 import { Icon, Skeleton, User as UserComponent, UserLabel } from '@gravity-ui/uikit';
