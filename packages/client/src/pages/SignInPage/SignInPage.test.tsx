@@ -34,16 +34,17 @@ describe('SignInPage', () => {
     render(<SignInPage />);
 
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: 'Back' }));
-    expect(mockedUseNavigate).toHaveBeenCalledWith(-1);
+    await user.click(screen.getByRole('button', { name: 'Go Back' }));
+
+    expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.MENU);
   });
 
   it('navigates to sign up on sign up button click', async () => {
     render(<SignInPage />);
 
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: 'First time here? Sign up' }));
-    expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.SIGN_UP);
+    await user.click(screen.getByRole('link', { name: 'First time here? Sign up' }));
+    expect(location.href).toMatch(PAGE_ROUTES.SIGN_UP);
   });
 
   it('displays an error message on failed sign in', async () => {

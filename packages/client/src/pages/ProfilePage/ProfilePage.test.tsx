@@ -5,6 +5,7 @@ import { render, screen } from 'src/utils/tests';
 import { mockedUser, mockedUseNavigate } from 'src/utils/tests/mocks';
 
 import { ProfilePage } from './ProfilePage';
+import { PAGE_ROUTES } from '../../utils/constants';
 
 describe('ProfilePage', () => {
   beforeEach(() => {
@@ -29,14 +30,26 @@ describe('ProfilePage', () => {
     });
 
     const user = userEvent.setup();
-    await user.click(screen.getByText('Back'));
-    expect(mockedUseNavigate).toHaveBeenCalledWith(-1);
+    await user.click(screen.getByText('Go Back'));
+    expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.MENU);
   });
 
-  it('save button is disabled when no changes are made', () => {
+  it('edit button is on the page', () => {
     render(<ProfilePage />, {
       authState: { user: mockedUser, userIsLoading: false },
     });
-    expect(screen.getByRole('button', { name: 'Save' }).hasAttribute('disabled')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Edit' })).toBeInTheDocument();
+  });
+
+  it('shows Save and Reset buttons after Edit button was clicked', async () => {
+    render(<ProfilePage />, {
+      authState: { user: mockedUser, userIsLoading: false },
+    });
+
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: 'Edit' }));
+
+    expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Reset' })).toBeInTheDocument();
   });
 });

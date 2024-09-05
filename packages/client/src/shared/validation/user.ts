@@ -44,11 +44,6 @@ const phoneSchema = Yup.string()
   .matches(/^\+?[1-9]\d{1,14}$/, 'Phone number is not valid')
   .required('Phone number is required');
 
-export const signInValidationSchema = Yup.object({
-  login: loginSchema,
-  password: passwordSchema,
-});
-
 export const signUpValidationSchema = Yup.object({
   first_name: firstNameSchema,
   second_name: secondNameSchema,

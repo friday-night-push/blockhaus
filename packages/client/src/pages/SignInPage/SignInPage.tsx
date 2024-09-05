@@ -13,7 +13,6 @@ import { authAPI, AuthContext } from 'src/hoc/AuthProvider';
 import type { TSignInRequest, TUser } from 'src/shared/types/user';
 import type { TYandex } from 'src/shared/types/yandex';
 
-import { signInValidationSchema } from 'src/shared/validation/user';
 import { PAGE_ROUTES } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';
 
@@ -63,7 +62,7 @@ export const SignInPage: React.FC = () => {
             <Text variant='subheader-2' style={{ textAlign: 'center' }}>
               Back again? Just sign in to keep your results showing up on the leaderboards
             </Text>
-            <Form inputs={inputs} validationSchema={signInValidationSchema} onSubmit={auth} errorMessage={error} />
+            <Form inputs={inputs} onSubmit={auth} errorMessage={error} />
             <Button view="outlined-info" onClick={goToYandex}>
             Sign in or sign up through Yandex
           </Button>

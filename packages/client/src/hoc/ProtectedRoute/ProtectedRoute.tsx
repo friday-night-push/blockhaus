@@ -11,6 +11,8 @@ interface ProtectedRouteProps {
   element: JSX.Element;
 }
 
+export const LOADER_ID = 'loader';
+
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   const { user, userIsLoading } = useAuth();
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   if (userIsLoading) {
     return (
       <Page>
-        <Loader size={'l'} />
+        <Loader size={'l'} qa={LOADER_ID} />
       </Page>
     );
   }

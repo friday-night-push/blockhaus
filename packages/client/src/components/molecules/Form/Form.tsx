@@ -12,7 +12,7 @@ import { Input } from 'src/components/atoms/Input';
 
 interface FormProps<T> {
   initialValues?: T;
-  validationSchema: Yup.Schema<T>;
+  validationSchema?: Yup.Schema<T>;
   onSubmit: (values: T, formikHelpers: FormikHelpers<T>) => Promise<void>;
   inputs?: InputProps[];
   inputView?: InputProps['view'];

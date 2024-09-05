@@ -59,7 +59,7 @@ export const ProfilePage = () => {
   return (
     <Page>
       {userIsLoading ? (
-        <Loader />
+        <Loader qa='loader' />
       ) : (
         <>
           <Container direction={'column'} gap={'2'} alignItems={'center'} width={'100%'}>

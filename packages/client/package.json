@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ./ --silent"
+    "test": "jest ./ --silent",
+    "test:update": "yarn test --updateSnapshot"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
