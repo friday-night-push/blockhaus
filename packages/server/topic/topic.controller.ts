@@ -1,8 +1,8 @@
 import type { RequestHandler } from 'express';
 
-import { ValidationError } from 'sequelize';
-
+import { createTopicDto } from './topic.dto';
 import { TopicService } from './topic.service';
+import { logger } from '../utils';
 
 export class TopicController {
   static getTopics: RequestHandler = async (_, res, next) => {
@@ -15,15 +15,18 @@ export class TopicController {
   };
 
   static createTopic: RequestHandler = async (req, res, next) => {
-    const { name } = req.body;
+    const validation = createTopicDto.safeParse(req.body);
+
+    if (!validation.success) {
+      return res.status(400).json({ message: validation.error.errors });
+    }
+
     try {
-      const topic = await TopicService.createTopic({ name });
-      res.status(201).json(topic);
+      const topic = await TopicService.createTopic(req.body);
+      return res.status(201).json(topic);
     } catch (e) {
-      if (e instanceof ValidationError) {
-        res.status(400).json({ message: e.message });
-      }
-      next(e);
+      logger.error(e);
+      return next(e);
     }
   };
 }
