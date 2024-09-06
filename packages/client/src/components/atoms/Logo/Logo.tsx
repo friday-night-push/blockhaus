@@ -22,11 +22,5 @@ export const Logo = ({ size = 'md', isFull = false }: LogoProps) => {
     }
   }, [size]);
 
-  return (
-    <img
-      style={{ display: 'flex', width }}
-      src={isFull ? logoWithBlocks : logo}
-      alt="Blockhaus"
-    />
-  );
+  return <img style={{ display: 'flex', width }} src={isFull ? logoWithBlocks : logo} alt='Blockhaus' />;
 };

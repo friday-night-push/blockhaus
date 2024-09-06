@@ -24,11 +24,29 @@ export default class BaseAPI {
     });
   }
 
-  put() {
-    throw new Error('Not implemented');
+  put<TRequest>(url: string, data: TRequest, credentials = 'include') {
+    const isFormData = data instanceof FormData;
+
+    return fetch(BaseAPI.host + url, {
+      method: 'PUT',
+      headers:
+        data instanceof FormData
+          ? undefined
+          : {
+              'Content-Type': 'application/json;charset=utf-8',
+            },
+      credentials: credentials === 'include' ? 'include' : 'same-origin',
+      body: isFormData ? (data as unknown as FormData) : JSON.stringify(data),
+    });
   }
 
-  delete() {
-    throw new Error('Not implemented');
+  delete(url: string) {
+    return fetch(BaseAPI.host + url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      credentials: 'include',
+    });
   }
 }

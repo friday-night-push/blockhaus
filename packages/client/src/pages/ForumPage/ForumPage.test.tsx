@@ -27,9 +27,7 @@ test('renders topics links', async () => {
     const complaintsLink = screen.getByText('Complaints');
 
     expect(announcementLink).toBeInTheDocument();
-    expect(announcementLink.getAttribute('href')).toBe(
-      `${PAGE_ROUTES.FORUM}/1/1`
-    );
+    expect(announcementLink.getAttribute('href')).toBe(`${PAGE_ROUTES.FORUM}/1/1`);
 
     expect(complaintsLink).toBeInTheDocument();
     expect(complaintsLink.getAttribute('href')).toBe(`${PAGE_ROUTES.FORUM}/2`);

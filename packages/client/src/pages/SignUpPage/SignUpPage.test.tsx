@@ -31,17 +31,15 @@ describe('SignUpPage', () => {
     render(<SignUpPage />);
 
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: 'Back' }));
-    expect(mockedUseNavigate).toHaveBeenCalledWith(-1);
+    await user.click(screen.getByRole('button', { name: 'Go Back' }));
+    expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.MENU);
   });
 
   it('navigates to sign in on sign in button click', async () => {
     render(<SignUpPage />);
 
     const user = userEvent.setup();
-    await user.click(
-      screen.getByRole('button', { name: 'Signed up already? Sign In' })
-    );
-    expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.SIGN_IN);
+    await user.click(screen.getByRole('link', { name: 'Signed up already? Sign In' }));
+    expect(location.href).toMatch(PAGE_ROUTES.SIGN_IN);
   });
 });

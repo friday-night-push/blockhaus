@@ -25,22 +25,15 @@ const AllTheProviders = (props: AllTheProvidersProps) => {
   return (
     <ThemeProvider theme={'light'}>
       <BrowserRouter>
-        <AuthContext.Provider value={authState}>
-          {children}
-        </AuthContext.Provider>
+        <AuthContext.Provider value={authState}>{children}</AuthContext.Provider>
       </BrowserRouter>
     </ThemeProvider>
   );
 };
 
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'> & { authState?: AuthState }
-) =>
+const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'> & { authState?: AuthState }) =>
   render(ui, {
-    wrapper: (props: AllTheProvidersProps) => (
-      <AllTheProviders {...props} {...options} />
-    ),
+    wrapper: (props: AllTheProvidersProps) => <AllTheProviders {...props} {...options} />,
     ...options,
   });
 

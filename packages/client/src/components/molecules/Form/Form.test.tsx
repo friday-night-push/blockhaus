@@ -38,12 +38,7 @@ describe('Form', () => {
 
   it('renders all inputs with initial values', () => {
     render(
-      <Form
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-        inputs={inputs}
-      />
+      <Form initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} inputs={inputs} />
     );
 
     inputs.forEach(input => {
@@ -54,12 +49,7 @@ describe('Form', () => {
 
   it('updates formik value on input change', async () => {
     render(
-      <Form
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-        inputs={inputs}
-      />
+      <Form initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} inputs={inputs} />
     );
 
     const user = userEvent.setup();
@@ -87,12 +77,7 @@ describe('Form', () => {
 
   it('submits the form with correct values', async () => {
     render(
-      <Form
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-        inputs={inputs}
-      />
+      <Form initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} inputs={inputs} />
     );
 
     const user = userEvent.setup();

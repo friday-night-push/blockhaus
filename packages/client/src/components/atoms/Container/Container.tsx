@@ -5,7 +5,7 @@ export type ContainerProps = FlexProps;
 
 export const Container = ({ as, children, ...props }: ContainerProps) => {
   return (
-    <Flex as={as || 'section'} gap="3" {...props}>
+    <Flex as={as || 'section'} gap='3' {...props}>
       {children}
     </Flex>
   );

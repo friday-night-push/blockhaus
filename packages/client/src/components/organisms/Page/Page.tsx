@@ -9,17 +9,9 @@ export type PageProps = {
   children?: React.ReactNode;
 };
 
-export const Page = ({
-  withHeader,
-  hasBackButton,
-  isFullWidth,
-  children,
-}: PageProps) => {
+export const Page = ({ withHeader, hasBackButton, isFullWidth, children }: PageProps) => {
   return (
-    <Container
-      minHeight={'100vh'}
-      justifyContent={'center'}
-      width={isFullWidth ? '100%' : 'auto'}>
+    <Container minHeight={'100vh'} justifyContent={'center'} width={isFullWidth ? '100%' : 'auto'}>
       <Container
         width={'100%'}
         minHeight={'100vh'}

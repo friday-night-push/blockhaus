@@ -28,15 +28,13 @@ exports[`SignInPage matches snapshot 1`] = `
       >
         Back again? Just sign in to keep your results showing up on the leaderboards
       </span>
-    </section>
-    <form>
-      <section
-        class="g-box g-flex"
-        style="width: 100%; flex-direction: column; column-gap: 16px; row-gap: 16px; align-items: center;"
+      <form
+        action="#"
+        style="width: 100%;"
       >
         <section
           class="g-box g-flex"
-          style="flex-direction: column; column-gap: 12px; row-gap: 12px; align-items: center;"
+          style="width: 100%; flex-direction: column; column-gap: 16px; row-gap: 16px; align-items: center;"
         >
           <span
             class="g-text-input g-text-input_view_normal g-text-input_size_xl g-text-input_pin_brick-brick"
@@ -84,49 +82,86 @@ exports[`SignInPage matches snapshot 1`] = `
               />
             </span>
           </span>
+          <section
+            class="g-box g-flex"
+            style="flex-direction: row; column-gap: 8px; row-gap: 8px;"
+          >
+            <button
+              class="g-button g-button_view_action g-button_size_xl g-button_pin_brick-brick g-button_width_max"
+              type="submit"
+            >
+              <span
+                class="g-button__text"
+              >
+                Submit
+              </span>
+            </button>
+          </section>
         </section>
-        <button
-          class="g-button g-button_view_action g-button_size_xl g-button_pin_brick-brick"
-          type="submit"
+      </form>
+      <button
+        class="g-button g-button_view_outlined-action g-button_size_xl g-button_pin_brick-brick"
+        type="button"
+      >
+        <span
+          class="g-button__icon g-button__icon_side_start"
         >
           <span
-            class="g-button__text"
+            class="g-button__icon-inner"
           >
-            Submit
+            <svg
+              aria-hidden="true"
+              class="g-icon"
+              fill="currentColor"
+              height="16"
+              stroke="none"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <svg
+                fill="none"
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M13.5 8a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0M6.136 5.103a.75.75 0 0 0-1.272.795l2.044 3.27c.223.357.342.77.342 1.192v1.14a.75.75 0 0 0 1.5 0v-1.14a3.75 3.75 0 0 0-.57-1.987zm5 .795a.75.75 0 1 0-1.272-.795L8.77 6.853a.75.75 0 0 0 1.272.795z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </svg>
           </span>
-        </button>
-      </section>
-    </form>
-    <button
-      class="g-button g-button_view_outlined-info g-button_size_xl g-button_pin_brick-brick"
-      type="button"
-    >
-      <span
-        class="g-button__text"
+        </span>
+        <span
+          class="g-button__text"
+        >
+          Auth with Yandex
+        </span>
+      </button>
+      <a
+        aria-disabled="false"
+        class="g-button g-button_view_flat g-button_size_xl g-button_pin_brick-brick"
+        href="/sign-up"
       >
-        Sign in or sign up through Yandex
-      </span>
-    </button>
-    <button
-      class="g-button g-button_view_flat g-button_size_xl g-button_pin_brick-brick"
-      type="button"
-    >
-      <span
-        class="g-button__text"
+        <span
+          class="g-button__text"
+        >
+          First time here? Sign up
+        </span>
+      </a>
+      <button
+        class="g-button g-button_view_flat g-button_size_xl g-button_pin_brick-brick"
+        type="button"
       >
-        First time here? Sign up
-      </span>
-    </button>
-    <button
-      class="g-button g-button_view_flat g-button_size_xl g-button_pin_brick-brick"
-      type="button"
-    >
-      <span
-        class="g-button__text"
-      >
-        Back
-      </span>
-    </button>
+        <span
+          class="g-button__text"
+        >
+          Go Back
+        </span>
+      </button>
+    </section>
   </section>
 </section>
 `;

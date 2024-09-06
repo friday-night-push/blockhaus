@@ -1,5 +1,5 @@
 export interface FullscreenToggleProps {
-  children: React.ReactElement<any>;
+  children: React.ReactElement<unknown>;
 }
 
 export interface ExtendedHTMLDivElement extends HTMLDivElement {

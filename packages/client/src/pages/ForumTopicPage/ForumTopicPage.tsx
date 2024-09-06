@@ -4,9 +4,7 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import type { CommentType, TopicType } from './ForumTopicPage.types';
 
 // Simulating a request to the server
-export const topicInfo: LoaderFunction = async ({
-  params,
-}): Promise<TopicType> => {
+export const topicInfo: LoaderFunction = async ({ params }): Promise<TopicType> => {
   return {
     id: 1,
     name: 'Announcement',
