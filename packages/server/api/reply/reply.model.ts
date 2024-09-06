@@ -9,6 +9,7 @@ import {
 
 import type { CreateReplyDto } from './reply.dto';
 import { CommentModel } from '../comment';
+import { UserModel } from '../user';
 
 @Table({ tableName: 'replies' })
 export class ReplyModel extends Model<ReplyModel, CreateReplyDto> {
@@ -29,4 +30,11 @@ export class ReplyModel extends Model<ReplyModel, CreateReplyDto> {
 
   @BelongsTo(() => CommentModel)
   comment: CommentModel;
+
+  @ForeignKey(() => UserModel)
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  userId: number;
+
+  @BelongsTo(() => UserModel)
+  user: UserModel;
 }

@@ -5,6 +5,7 @@ import { logger } from './logger';
 import { CommentModel } from '../api/comment';
 import { ReplyModel } from '../api/reply';
 import { TopicModel } from '../api/topic';
+import { UserModel } from '../api/user';
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env;
@@ -19,7 +20,7 @@ export const initPostgres = async (): Promise<Sequelize | null> => {
       database: POSTGRES_DB,
       dialect: 'postgres',
       logging: false,
-      models: [TopicModel, CommentModel, ReplyModel],
+      models: [TopicModel, CommentModel, ReplyModel, UserModel],
     });
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
