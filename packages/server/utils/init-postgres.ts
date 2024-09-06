@@ -2,7 +2,9 @@ import 'reflect-metadata';
 import { Sequelize } from 'sequelize-typescript';
 
 import { logger } from './logger';
-import { TopicModel } from '../topic/topic.model';
+import { CommentModel } from '../api/comment';
+import { ReplyModel } from '../api/reply';
+import { TopicModel } from '../api/topic';
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env;
@@ -17,10 +19,10 @@ export const initPostgres = async (): Promise<Sequelize | null> => {
       database: POSTGRES_DB,
       dialect: 'postgres',
       logging: false,
-      models: [TopicModel],
+      models: [TopicModel, CommentModel, ReplyModel],
     });
     await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: true });
     logger.info('All models were synchronized successfully.');
     return sequelize;
   } catch (e) {
