@@ -50,7 +50,7 @@ describe('SignInPage', () => {
 
   it('displays an error message on failed sign in', async () => {
     jest.spyOn(authAPI, 'signin').mockImplementation((_, __, errorCb) => {
-      errorCb('Invalid credentials');
+      errorCb(new Error('Invalid credentials'));
       return Promise.resolve();
     });
 

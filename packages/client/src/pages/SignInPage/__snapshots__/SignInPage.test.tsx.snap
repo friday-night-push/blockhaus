@@ -98,6 +98,16 @@ exports[`SignInPage matches snapshot 1`] = `
       </section>
     </form>
     <button
+      class="g-button g-button_view_outlined-info g-button_size_xl g-button_pin_brick-brick"
+      type="button"
+    >
+      <span
+        class="g-button__text"
+      >
+        Sign in or sign up through Yandex
+      </span>
+    </button>
+    <button
       class="g-button g-button_view_flat g-button_size_xl g-button_pin_brick-brick"
       type="button"
     >

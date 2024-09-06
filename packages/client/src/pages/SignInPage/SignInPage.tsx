@@ -10,6 +10,8 @@ import { Form } from 'src/components/molecules/Form';
 import { Page } from 'src/components/organisms/Page';
 import { authAPI, AuthContext } from 'src/hoc/AuthProvider';
 import type { TSignInRequest, TUser } from 'src/shared/types/user';
+import type { TYandex } from 'src/shared/types/yandex';
+
 import { PAGE_ROUTES } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';
 
@@ -37,13 +39,22 @@ export const SignInPage: React.FC = () => {
     }
   };
 
-  const errorHandler = (err: unknown) => {
+  const errorHandler = (err: Error) => {
     setError(String(err));
     Helpers.Log('ERROR', err);
   };
 
   const goToSignUp = () => {
     navigate(PAGE_ROUTES.SIGN_UP);
+  };
+
+  const isGetIdOk = (data: TYandex) => {
+    const url = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=http://localhost:3000`;
+    window.location.href = url;
+  };
+
+  const goToYandex = async () => {
+    await authAPI.yaGetServiceId(isGetIdOk, errorHandler);
   };
 
   const goBack = () => {
@@ -68,6 +79,9 @@ export const SignInPage: React.FC = () => {
             onSubmit={auth}
             errorMessage={error}
           />
+          <Button view="outlined-info" onClick={goToYandex}>
+            Sign in or sign up through Yandex
+          </Button>
           <Button view="flat" onClick={goToSignUp}>
             First time here? Sign up
           </Button>
