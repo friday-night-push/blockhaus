@@ -14,6 +14,8 @@ import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
+import { Geolocation } from '../../components/organisms';
+
 export const MENU_ITEMS: MenuItemProps[] = [
   { label: 'play the endless game', href: PAGE_ROUTES.GAME },
   { label: 'play for time', href: PAGE_ROUTES.GAME },
@@ -34,12 +36,15 @@ export const GameMenuPage = () => {
       <Menu size={'xl'}>
         <Container direction={'column'} alignItems={'center'}>
           {user && user.id ? (
-            <User
-              user={user}
-              setUser={setUser}
-              userIsLoading={userIsLoading}
-              isFullSize
-            />
+            <>
+              <User
+                user={user}
+                setUser={setUser}
+                userIsLoading={userIsLoading}
+                isFullSize
+              />
+              <Geolocation />
+            </>
           ) : (
             <MenuItem
               label={'sign in'}
