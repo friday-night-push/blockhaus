@@ -1,119 +1,101 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
-import { Avatar, Loader, Text } from '@gravity-ui/uikit';
-import { useNavigate } from 'react-router-dom';
+import { Avatar, Loader, Text, useFileInput } from '@gravity-ui/uikit';
+
+import type { FormikHelpers } from 'formik';
 
 import { Button } from 'src/components/atoms/Button';
-import type { InputProps } from 'src/components/atoms/Input';
-import { EditableText } from 'src/components/molecules/EditableText';
+import { Container } from 'src/components/atoms/Container';
+import { Form } from 'src/components/molecules';
+import { BackButton } from 'src/components/molecules/BackButton';
 import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
-import { RESOURCE_URL } from 'src/utils/constants';
+import { inputs } from 'src/pages/ProfilePage/ProfilePage.constants';
+import UserAPI from 'src/services/api/user-api';
+import type { TUser } from 'src/shared/types/user';
+import { userProfileValidationSchema } from 'src/shared/validation/user';
+import { PAGE_ROUTES, RESOURCE_URL } from 'src/utils/constants';
+import Helpers from 'src/utils/helpers';
 
-const profileFormFields: InputProps[] = [
-  { name: 'email', label: 'Email', type: 'email', autoComplete: 'email' },
-  {
-    name: 'first_name',
-    label: 'First Name',
-    type: 'text',
-    autoComplete: 'given-name',
-  },
-  {
-    name: 'second_name',
-    label: 'Second Name',
-    type: 'text',
-    autoComplete: 'family-name',
-  },
-  { name: 'login', label: 'Login', type: 'text', autoComplete: 'username' },
-  {
-    name: 'phone',
-    label: 'Phone',
-    type: 'text',
-    autoComplete: 'phone',
-  },
-];
+export const userAPI = new UserAPI();
 
 export const ProfilePage = () => {
-  const { user, userIsLoading } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { user, setUser, userIsLoading } = useContext(AuthContext);
+  const [error, setError] = useState<string | undefined>(undefined);
 
-  const [formData, setFormData] = useState<Record<string, string>>({});
-  const [originalData, setOriginalData] = useState<Record<string, string>>({});
-  const [isChanged, setIsChanged] = useState(false);
+  const onUpdate = useCallback((files: File[]) => {
+    files[0] && updateUserAvatar(files[0]);
+  }, []);
 
-  useEffect(() => {
-    if (user) {
-      const userData = profileFormFields.reduce(
-        (acc, field) => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          acc[field.name] = user[field.name] || '';
-          return acc;
-        },
-        {} as Record<string, string>
-      );
-      console.log('Initial formData:', userData); // Debugging line
-      setFormData(userData);
-      setOriginalData(userData);
-    }
-  }, [user]);
+  const { controlProps, triggerProps } = useFileInput({ onUpdate });
 
-  const handleChange = (name: string, value: string) => {
-    setFormData(prev => {
-      const newFormData = { ...prev, [name]: value };
-      console.log('Updated formData:', newFormData); // Debugging line
-      setIsChanged(
-        JSON.stringify(newFormData) !== JSON.stringify(originalData)
-      );
-      return newFormData;
+  const updateUserAvatar = async (avatar: File) => {
+    const formData = new FormData();
+
+    formData.append('avatar', avatar);
+
+    await userAPI.updateAvatar(formData, updUserData, errorHandler);
+  };
+
+  const updateUserInfo = async (user: TUser, { setSubmitting }: FormikHelpers<TUser>) => {
+    setSubmitting(true);
+
+    await userAPI.updateProfile(user, updUserData, errorHandler).finally(() => {
+      setSubmitting(false);
     });
   };
 
-  const handleSave = () => {
-    if (isChanged) {
-      // Send updated data to the server
-      console.log('Updated data:', formData);
+  const updUserData = (user: TUser) => {
+    if (setUser) {
+      setUser(user);
     }
   };
 
-  const goBack = () => {
-    navigate(-1);
+  const errorHandler = (err: unknown) => {
+    setError(String(err));
+    Helpers.Log('ERROR', err);
   };
 
   return (
     <Page>
       {userIsLoading ? (
-        <Loader />
+        <Loader qa='loader' />
       ) : (
         <>
-          <Avatar
-            size={'xl'}
-            imgUrl={user?.avatar ? `${RESOURCE_URL}${user?.avatar}` : undefined}
-            text={user?.display_name || user?.first_name}
-          />
-          <Text variant={'display-1'}>
-            {user?.display_name || `${user?.first_name} ${user?.second_name}`}
-          </Text>
-          <Text variant={'subheader-1'}>{user?.email}</Text>
-          <form>
-            {profileFormFields.map(({ name, label, type, autoComplete }) => (
-              <EditableText
-                key={name}
-                name={name}
-                label={label || ''}
-                type={type}
-                autoComplete={autoComplete}
-                value={formData[name]}
-                onChange={handleChange}
+          <Container direction={'column'} gap={'2'} alignItems={'center'} width={'100%'}>
+            <input {...controlProps} />
+            <Button style={{ height: '50px', width: '50px' }} pin={'circle-circle'} view={'flat'} {...triggerProps}>
+              <Avatar
+                size='xl'
+                imgUrl={user?.avatar ? `${RESOURCE_URL}${user.avatar}` : undefined}
+                text={user?.display_name || user?.first_name}
               />
-            ))}
-          </form>
-          <Button view={'action'} onClick={handleSave} disabled={!isChanged}>
-            Save
-          </Button>
-          <Button view={'flat'} onClick={goBack}>
-            Back
-          </Button>
+            </Button>
+            <Text variant={'display-1'}>
+              {user ? user.display_name || `${user.first_name} ${user.second_name}` : ''}
+            </Text>
+          </Container>
+
+          {user && (
+            <Form
+              initialValues={user}
+              inputs={inputs}
+              validationSchema={userProfileValidationSchema}
+              inputView={'clear'}
+              onSubmit={updateUserInfo}
+              errorMessage={error}
+              submitButtonText='Save'
+              showEditButton={true}
+              showResetButton={true}
+            />
+          )}
+
+          <Container direction={'column'} width={'100%'}>
+            <Button isNavigate navigateTo={PAGE_ROUTES.CHANGE_PASSWORD} view={'flat-danger'} width={'max'}>
+              Change Password
+            </Button>
+            <BackButton fallbackRoute={PAGE_ROUTES.MENU} />
+          </Container>
         </>
       )}
     </Page>

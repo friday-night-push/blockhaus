@@ -1,9 +1,4 @@
-import {
-  DEFAULT_WIDTH,
-  DEFAULT_HEIGHT,
-  CUBE_SIZES,
-  CUBE_DATAS,
-} from './GamePage.constants';
+import { DEFAULT_WIDTH, DEFAULT_HEIGHT, CUBE_SIZES, CUBE_DATAS } from './GamePage.constants';
 
 import type { TFigure } from './GamePage.types';
 

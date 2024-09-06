@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ./ --silent"
+    "test": "jest ./ --silent",
+    "test:update": "yarn test --updateSnapshot"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
@@ -22,8 +23,8 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@gravity-ui/icons": "^2.10.0",
-    "@gravity-ui/uikit": "^6.22.0",
+    "@gravity-ui/icons": "^2.11.0",
+    "@gravity-ui/uikit": "^6.23.1",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.5.2",

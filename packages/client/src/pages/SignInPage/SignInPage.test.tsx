@@ -1,5 +1,6 @@
 import userEvent from '@testing-library/user-event';
 
+import { authAPI } from 'src/hoc/AuthProvider';
 import { PAGE_ROUTES } from 'src/utils/constants';
 import { render, screen } from 'src/utils/tests';
 
@@ -7,7 +8,6 @@ import { mockedUseNavigate, mockedUser } from 'src/utils/tests/mocks';
 
 import { SignInPage } from './SignInPage';
 import { USER_DATA_MOCK } from './SignInPage.constants';
-import { authAPI } from '../../hoc/AuthProvider';
 
 describe('SignInPage', () => {
   beforeEach(() => {
@@ -34,22 +34,21 @@ describe('SignInPage', () => {
     render(<SignInPage />);
 
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: 'Back' }));
-    expect(mockedUseNavigate).toHaveBeenCalledWith(-1);
+    await user.click(screen.getByRole('button', { name: 'Go Back' }));
+
+    expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.MENU);
   });
 
   it('navigates to sign up on sign up button click', async () => {
     render(<SignInPage />);
 
     const user = userEvent.setup();
-    await user.click(
-      screen.getByRole('button', { name: 'First time here? Sign up' })
-    );
-    expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.SIGN_UP);
+    await user.click(screen.getByRole('link', { name: 'First time here? Sign up' }));
+    expect(location.href).toMatch(PAGE_ROUTES.SIGN_UP);
   });
 
   it('displays an error message on failed sign in', async () => {
-    jest.spyOn(authAPI, 'signin').mockImplementation((_, __, errorCb) => {
+    jest.spyOn(authAPI, 'signIn').mockImplementation((_, __, errorCb) => {
       errorCb(new Error('Invalid credentials'));
       return Promise.resolve();
     });
@@ -66,7 +65,7 @@ describe('SignInPage', () => {
   });
 
   it('calls signin with correct data', async () => {
-    jest.spyOn(authAPI, 'signin').mockImplementation((data, cb) => {
+    jest.spyOn(authAPI, 'signIn').mockImplementation((data, cb) => {
       cb(new Response(undefined, { status: 200 }));
       return Promise.resolve();
     });
@@ -76,13 +75,10 @@ describe('SignInPage', () => {
     const user = userEvent.setup();
 
     await user.type(screen.getByLabelText(/login/i), USER_DATA_MOCK.login);
-    await user.type(
-      screen.getByLabelText(/password/i),
-      USER_DATA_MOCK.password
-    );
+    await user.type(screen.getByLabelText(/password/i), USER_DATA_MOCK.password);
     await user.click(screen.getByRole('button', { name: /submit/i }));
 
-    expect(authAPI.signin).toHaveBeenCalledWith(
+    expect(authAPI.signIn).toHaveBeenCalledWith(
       { login: USER_DATA_MOCK.login, password: USER_DATA_MOCK.password },
       expect.any(Function),
       expect.any(Function)

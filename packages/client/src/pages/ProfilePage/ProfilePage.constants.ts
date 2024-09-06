@@ -16,31 +16,21 @@ export const inputs: InputProps[] = [
     type: 'text',
     autoComplete: 'family-name',
   },
-  { name: 'login', label: 'Login', type: 'text', autoComplete: 'username' },
   {
-    name: 'password',
-    label: 'Password',
-    type: 'password',
-    autoComplete: 'new-password',
+    name: 'display_name',
+    label: 'Display name',
+    type: 'text',
+    autoComplete: 'given-name',
   },
+  { name: 'login', label: 'Login', type: 'text', autoComplete: 'username' },
   { name: 'phone', label: 'Phone', type: 'tel', autoComplete: 'tel' },
 ];
 
 export const validationSchema = Yup.object({
-  email: Yup.string()
-    .email('Invalid email address')
-    .required('Email is required'),
-  first_name: Yup.string()
-    .max(50, 'First name must be 50 characters or less')
-    .required('First name is required'),
-  second_name: Yup.string()
-    .max(50, 'Second name must be 50 characters or less')
-    .required('Second name is required'),
-  login: Yup.string()
-    .max(15, 'Login must be 15 characters or less')
-    .required('Login is required'),
-  password: Yup.string()
-    .min(8, 'Password must be at least 8 characters')
-    .required('Password is required'),
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  first_name: Yup.string().max(50, 'First name must be 50 characters or less').required('First name is required'),
+  second_name: Yup.string().max(50, 'Second name must be 50 characters or less').required('Second name is required'),
+  display_name: Yup.string().max(50, 'Display name must be 50 characters or less'),
+  login: Yup.string().max(15, 'Login must be 15 characters or less').required('Login is required'),
   phone: Yup.string().required('Phone number is required'),
 });

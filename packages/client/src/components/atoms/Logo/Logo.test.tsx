@@ -9,13 +9,13 @@ describe('Logo', () => {
   });
 
   it('renders with size sm', () => {
-    const { getByAltText } = render(<Logo size="sm" />);
+    const { getByAltText } = render(<Logo size='sm' />);
     const img = getByAltText('Blockhaus');
     expect(img).toHaveStyle('width: 240px');
   });
 
   it('renders with size "auto"', () => {
-    const { getByAltText } = render(<Logo size="auto" />);
+    const { getByAltText } = render(<Logo size='auto' />);
     const img = getByAltText('Blockhaus');
     expect(img).toHaveStyle('width: auto');
   });

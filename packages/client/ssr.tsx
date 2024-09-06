@@ -5,10 +5,7 @@ import type { Request, Response } from 'express';
 import { renderToString } from 'react-dom/server';
 
 import { Provider } from 'react-redux';
-import {
-  createStaticRouter,
-  createStaticHandler,
-} from 'react-router-dom/server';
+import { createStaticRouter, createStaticHandler } from 'react-router-dom/server';
 
 import { App } from './src/components/organisms/App';
 import { routes } from './src/router';
