@@ -21,6 +21,7 @@ import type { TYandexAuth } from 'src/shared/types/yandex';
 
 import { PAGE_ROUTES } from 'src/utils/constants';
 
+import Helpers from 'src/utils/helpers';
 
 import { Geolocation } from '../../components/organisms';
 
