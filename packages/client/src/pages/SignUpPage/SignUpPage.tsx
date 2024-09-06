@@ -30,6 +30,7 @@ export const SignUpPage = () => {
 
   const isOk = (response: TSignUpResponse) => {
     if (response.id) {
+      localStorage.setItem('isAuth', 'true');
       authAPI.getUser(updUserData, errorHandler);
     }
   };

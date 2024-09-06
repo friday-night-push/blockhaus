@@ -29,6 +29,7 @@ export const SignInPage: React.FC = () => {
 
   const isOk = (response: Response) => {
     if (response.ok) {
+      localStorage.setItem('isAuth', 'true');
       authAPI.getUser(updUserData, errorHandler);
     }
   };
