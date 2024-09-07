@@ -2,7 +2,6 @@ import type { RequestHandler } from 'express';
 
 import { createCommentDto } from './comment.dto';
 import { CommentService } from './comment.service';
-import { logger } from '../../utils';
 
 export class CommentController {
   static createComment: RequestHandler = async (req, res, next) => {
@@ -17,7 +16,6 @@ export class CommentController {
       const comment = await CommentService.createComment(validation.data);
       return res.status(201).json(comment);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -37,7 +35,6 @@ export class CommentController {
       );
       return res.status(200).json(comments);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -56,7 +53,6 @@ export class CommentController {
       }
       return res.status(200).json(comment);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -80,7 +76,6 @@ export class CommentController {
       );
       return res.status(200).json(updatedComment);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -96,7 +91,6 @@ export class CommentController {
       const deletedComment = await CommentService.deleteComment(commentId);
       return res.status(200).json(deletedComment);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };

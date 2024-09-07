@@ -1,5 +1,6 @@
 import type { CreateCommentDto } from './comment.dto';
 import { CommentModel } from './comment.model';
+import { NotFoundError } from '../../utils';
 
 export class CommentService {
   static async createComment(createData: CreateCommentDto) {
@@ -25,7 +26,7 @@ export class CommentService {
     const comment = await CommentModel.findByPk(id);
 
     if (!comment) {
-      throw new Error('Comment not found');
+      throw new NotFoundError('Comment not found');
     }
 
     return await comment.update(updateData);
@@ -35,7 +36,7 @@ export class CommentService {
     const comment = await CommentModel.findByPk(id);
 
     if (!comment) {
-      throw new Error('Comment not found');
+      throw new NotFoundError('Comment not found');
     }
 
     return await comment.destroy();

@@ -2,7 +2,6 @@ import type { RequestHandler } from 'express';
 
 import { createReplyDto } from './reply.dto';
 import { ReplyService } from './reply.service';
-import { logger } from '../../utils';
 
 export class ReplyController {
   static createReply: RequestHandler = async (req, res, next) => {
@@ -17,7 +16,6 @@ export class ReplyController {
       const reply = await ReplyService.createReply(validation.data);
       return res.status(201).json(reply);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -37,7 +35,6 @@ export class ReplyController {
       );
       return res.status(200).json(replies);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -56,7 +53,6 @@ export class ReplyController {
       }
       return res.status(200).json(reply);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -77,7 +73,6 @@ export class ReplyController {
       const updatedReply = await ReplyService.updateReply(replyId, req.body);
       return res.status(200).json(updatedReply);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -93,7 +88,6 @@ export class ReplyController {
       const deletedReply = await ReplyService.deleteReply(replyId);
       return res.status(200).json(deletedReply);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };

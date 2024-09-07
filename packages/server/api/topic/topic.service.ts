@@ -1,5 +1,6 @@
 import type { CreateTopicDto } from './topic.dto';
 import { TopicModel } from './topic.model';
+import { NotFoundError } from '../../utils';
 import { CommentModel } from '../comment';
 
 export class TopicService {
@@ -18,8 +19,10 @@ export class TopicService {
       attributes: {
         include: [
           [
+            // eslint-disable-next-line
             TopicModel.sequelize!.fn(
               'COUNT',
+              // eslint-disable-next-line
               TopicModel.sequelize!.col('comments.id')
             ),
             'commentCount',
@@ -41,8 +44,10 @@ export class TopicService {
       attributes: {
         include: [
           [
+            // eslint-disable-next-line
             TopicModel.sequelize!.fn(
               'COUNT',
+              // eslint-disable-next-line
               TopicModel.sequelize!.col('comments.id')
             ),
             'commentCount',
@@ -57,7 +62,7 @@ export class TopicService {
     const topic = await TopicModel.findByPk(id);
 
     if (!topic) {
-      throw new Error('Topic not found');
+      throw new NotFoundError('Topic not found');
     }
 
     return await topic.update(updateData);
@@ -67,7 +72,7 @@ export class TopicService {
     const topic = await TopicModel.findByPk(id);
 
     if (!topic) {
-      throw new Error('Topic not found');
+      throw new NotFoundError('Topic not found');
     }
 
     return await topic.destroy();

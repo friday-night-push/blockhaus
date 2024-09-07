@@ -1,5 +1,6 @@
 import type { CreateReplyDto } from './reply.dto';
 import { ReplyModel } from './reply.model';
+import { NotFoundError } from '../../utils';
 
 export class ReplyService {
   static async createReply(createData: CreateReplyDto) {
@@ -20,17 +21,21 @@ export class ReplyService {
 
   static async updateReply(id: number, updateData: Partial<CreateReplyDto>) {
     const reply = await ReplyModel.findByPk(id);
+
     if (!reply) {
-      throw new Error('Reply not found');
+      throw new NotFoundError('Reply not found');
     }
+
     return await reply.update(updateData);
   }
 
   static async deleteReply(id: number) {
     const reply = await ReplyModel.findByPk(id);
+
     if (!reply) {
-      throw new Error('Reply not found');
+      throw new NotFoundError('Reply not found');
     }
+
     return await reply.destroy();
   }
 }

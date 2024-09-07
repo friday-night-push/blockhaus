@@ -2,7 +2,6 @@ import type { RequestHandler } from 'express';
 
 import { createTopicDto } from './topic.dto';
 import { TopicService } from './topic.service';
-import { logger } from '../../utils';
 
 export class TopicController {
   static createTopic: RequestHandler = async (req, res, next) => {
@@ -16,7 +15,6 @@ export class TopicController {
       const topic = await TopicService.createTopic(req.body);
       return res.status(201).json(topic);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -44,7 +42,6 @@ export class TopicController {
       }
       return res.status(200).json(topic);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -65,7 +62,6 @@ export class TopicController {
       const updatedTopic = await TopicService.updateTopic(topicId, req.body);
       return res.status(200).json(updatedTopic);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
@@ -81,7 +77,6 @@ export class TopicController {
       const deletedTopic = await TopicService.deleteTopic(topicId);
       return res.status(200).json(deletedTopic);
     } catch (e) {
-      logger.error(e);
       return next(e);
     }
   };
