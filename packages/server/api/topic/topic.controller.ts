@@ -5,14 +5,18 @@ import { TopicService } from './topic.service';
 
 export class TopicController {
   static createTopic: RequestHandler = async (req, res, next) => {
-    const validation = createTopicDto.safeParse(req.body);
+    const user = res.locals.user;
+    const validation = createTopicDto.safeParse({
+      userId: user.id,
+      ...req.body,
+    });
 
     if (!validation.success) {
       return res.status(400).json({ message: validation.error.errors });
     }
 
     try {
-      const topic = await TopicService.createTopic(req.body);
+      const topic = await TopicService.createTopic(validation.data);
       return res.status(201).json(topic);
     } catch (e) {
       return next(e);
@@ -48,7 +52,10 @@ export class TopicController {
 
   static updateTopic: RequestHandler = async (req, res, next) => {
     const topicId = Number(req.params.id);
-    const validation = createTopicDto.partial().safeParse(req.body);
+    const validation = createTopicDto
+      .omit({ userId: true })
+      .safeParse(req.body);
+    const user = res.locals.user;
 
     if (isNaN(topicId)) {
       return res.status(400).json({ message: 'Invalid topic ID' });
@@ -59,7 +66,11 @@ export class TopicController {
     }
 
     try {
-      const updatedTopic = await TopicService.updateTopic(topicId, req.body);
+      const updatedTopic = await TopicService.updateTopic(
+        topicId,
+        validation.data,
+        user.id
+      );
       return res.status(200).json(updatedTopic);
     } catch (e) {
       return next(e);
@@ -68,13 +79,14 @@ export class TopicController {
 
   static deleteTopic: RequestHandler = async (req, res, next) => {
     const topicId = Number(req.params.id);
+    const user = res.locals.user;
 
     if (isNaN(topicId)) {
       return res.status(400).json({ message: 'Invalid topic ID' });
     }
-
+    4;
     try {
-      const deletedTopic = await TopicService.deleteTopic(topicId);
+      const deletedTopic = await TopicService.deleteTopic(topicId, user.id);
       return res.status(200).json(deletedTopic);
     } catch (e) {
       return next(e);

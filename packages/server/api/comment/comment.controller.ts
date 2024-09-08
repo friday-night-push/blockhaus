@@ -5,8 +5,13 @@ import { CommentService } from './comment.service';
 
 export class CommentController {
   static createComment: RequestHandler = async (req, res, next) => {
+    const user = res.locals.user;
     const topicId = Number(req.params.topicId);
-    const validation = createCommentDto.safeParse({ topicId, ...req.body });
+    const validation = createCommentDto.safeParse({
+      topicId,
+      userId: user.id,
+      ...req.body,
+    });
 
     if (!validation.success) {
       return res.status(400).json({ message: validation.error.errors });
@@ -58,6 +63,7 @@ export class CommentController {
   };
 
   static updateComment: RequestHandler = async (req, res, next) => {
+    const user = res.locals.user;
     const commentId = Number(req.params.id);
     const validation = createCommentDto.partial().safeParse(req.body);
 
@@ -72,7 +78,8 @@ export class CommentController {
     try {
       const updatedComment = await CommentService.updateComment(
         commentId,
-        req.body
+        validation.data,
+        user.id
       );
       return res.status(200).json(updatedComment);
     } catch (e) {
@@ -82,13 +89,17 @@ export class CommentController {
 
   static deleteComment: RequestHandler = async (req, res, next) => {
     const commentId = Number(req.params.id);
+    const user = res.locals.user;
 
     if (isNaN(commentId)) {
       return res.status(400).json({ message: 'Invalid comment ID' });
     }
 
     try {
-      const deletedComment = await CommentService.deleteComment(commentId);
+      const deletedComment = await CommentService.deleteComment(
+        commentId,
+        user.id
+      );
       return res.status(200).json(deletedComment);
     } catch (e) {
       return next(e);

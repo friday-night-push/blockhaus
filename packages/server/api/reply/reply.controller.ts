@@ -5,8 +5,13 @@ import { ReplyService } from './reply.service';
 
 export class ReplyController {
   static createReply: RequestHandler = async (req, res, next) => {
+    const user = res.locals.user;
     const commentId = Number(req.params.commentId);
-    const validation = createReplyDto.safeParse({ commentId, ...req.body });
+    const validation = createReplyDto.safeParse({
+      userId: user.id,
+      commentId,
+      ...req.body,
+    });
 
     if (!validation.success) {
       return res.status(400).json({ message: validation.error.errors });
@@ -48,9 +53,6 @@ export class ReplyController {
 
     try {
       const reply = await ReplyService.getReply(replyId);
-      if (!reply) {
-        return res.status(404).json({ message: 'Reply not found' });
-      }
       return res.status(200).json(reply);
     } catch (e) {
       return next(e);
