@@ -1,6 +1,8 @@
 import * as path from 'path';
 
 import compression from 'compression';
+import cors from 'cors';
+
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '../../.env' });
@@ -19,10 +21,16 @@ initPostgres();
 async function startServer() {
   const app = express();
   const port = Number(process.env.SERVER_PORT) || 3001;
+  const clientPort = Number(process.env.CLIENT_PORT) || 3000;
 
   app.use(helmet());
+  app.use(
+    cors({
+      origin: `http://localhost:${clientPort}`,
+      credentials: true,
+    })
+  );
   app.use(compression());
-  app.use(express.json());
   app.use('/api/v1', apiRouter);
 
   let vite: ViteDevServer | undefined;
