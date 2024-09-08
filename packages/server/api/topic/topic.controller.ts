@@ -12,7 +12,7 @@ export class TopicController {
     });
 
     if (!validation.success) {
-      return res.status(400).json({ message: validation.error.errors });
+      return res.status(400).json({ reason: validation.error.errors });
     }
 
     try {
@@ -36,13 +36,13 @@ export class TopicController {
     const topicId = Number(req.params.id);
 
     if (isNaN(topicId)) {
-      return res.status(400).json({ message: 'Invalid topic ID' });
+      return res.status(400).json({ reason: 'Invalid topic ID' });
     }
 
     try {
       const topic = await TopicService.getTopic(topicId);
       if (!topic) {
-        return res.status(404).json({ message: 'Topic not found' });
+        return res.status(404).json({ reason: 'Topic not found' });
       }
       return res.status(200).json(topic);
     } catch (e) {
@@ -58,11 +58,11 @@ export class TopicController {
     const user = res.locals.user;
 
     if (isNaN(topicId)) {
-      return res.status(400).json({ message: 'Invalid topic ID' });
+      return res.status(400).json({ reason: 'Invalid topic ID' });
     }
 
     if (!validation.success) {
-      return res.status(400).json({ message: validation.error.errors });
+      return res.status(400).json({ reason: validation.error.errors });
     }
 
     try {
@@ -82,7 +82,7 @@ export class TopicController {
     const user = res.locals.user;
 
     if (isNaN(topicId)) {
-      return res.status(400).json({ message: 'Invalid topic ID' });
+      return res.status(400).json({ reason: 'Invalid topic ID' });
     }
     4;
     try {

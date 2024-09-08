@@ -14,7 +14,7 @@ export class ReplyController {
     });
 
     if (!validation.success) {
-      return res.status(400).json({ message: validation.error.errors });
+      return res.status(400).json({ reason: validation.error.errors });
     }
 
     try {
@@ -31,7 +31,7 @@ export class ReplyController {
     });
 
     if (!validation.success) {
-      return res.status(400).json({ message: validation.error.errors });
+      return res.status(400).json({ reason: validation.error.errors });
     }
 
     try {
@@ -48,7 +48,7 @@ export class ReplyController {
     const replyId = Number(req.params.id);
 
     if (isNaN(replyId)) {
-      return res.status(400).json({ message: 'Invalid reply ID' });
+      return res.status(400).json({ reason: 'Invalid reply ID' });
     }
 
     try {
@@ -64,11 +64,11 @@ export class ReplyController {
     const validation = createReplyDto.partial().safeParse(req.body);
 
     if (isNaN(replyId)) {
-      return res.status(400).json({ message: 'Invalid reply ID' });
+      return res.status(400).json({ reason: 'Invalid reply ID' });
     }
 
     if (!validation.success) {
-      return res.status(400).json({ message: validation.error.errors });
+      return res.status(400).json({ reason: validation.error.errors });
     }
 
     try {
@@ -83,7 +83,7 @@ export class ReplyController {
     const replyId = Number(req.params.id);
 
     if (isNaN(replyId)) {
-      return res.status(400).json({ message: 'Invalid reply ID' });
+      return res.status(400).json({ reason: 'Invalid reply ID' });
     }
 
     try {

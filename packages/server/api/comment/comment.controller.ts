@@ -14,7 +14,7 @@ export class CommentController {
     });
 
     if (!validation.success) {
-      return res.status(400).json({ message: validation.error.errors });
+      return res.status(400).json({ reason: validation.error.errors });
     }
 
     try {
@@ -31,7 +31,7 @@ export class CommentController {
       .safeParse({ topicId: Number(req.params.topicId) });
 
     if (!validation.success) {
-      return res.status(400).json({ message: validation.error.errors });
+      return res.status(400).json({ reason: validation.error.errors });
     }
 
     try {
@@ -48,13 +48,13 @@ export class CommentController {
     const commentId = Number(req.params.id);
 
     if (isNaN(commentId)) {
-      return res.status(400).json({ message: 'Invalid comment ID' });
+      return res.status(400).json({ reason: 'Invalid comment ID' });
     }
 
     try {
       const comment = await CommentService.getComment(commentId);
       if (!comment) {
-        return res.status(404).json({ message: 'Comment not found' });
+        return res.status(404).json({ reason: 'Comment not found' });
       }
       return res.status(200).json(comment);
     } catch (e) {
@@ -68,11 +68,11 @@ export class CommentController {
     const validation = createCommentDto.partial().safeParse(req.body);
 
     if (isNaN(commentId)) {
-      return res.status(400).json({ message: 'Invalid comment ID' });
+      return res.status(400).json({ reason: 'Invalid comment ID' });
     }
 
     if (!validation.success) {
-      return res.status(400).json({ message: validation.error.errors });
+      return res.status(400).json({ reason: validation.error.errors });
     }
 
     try {
@@ -92,7 +92,7 @@ export class CommentController {
     const user = res.locals.user;
 
     if (isNaN(commentId)) {
-      return res.status(400).json({ message: 'Invalid comment ID' });
+      return res.status(400).json({ reason: 'Invalid comment ID' });
     }
 
     try {

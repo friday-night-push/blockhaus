@@ -7,7 +7,7 @@ export const checkAuthMiddleware: RequestHandler = async (req, res, next) => {
   const cookie = req.headers.cookie;
 
   if (!cookie) {
-    return res.status(403).send('Unauthorized');
+    return res.status(403).json({ reason: 'Unauthorized' });
   }
 
   try {
@@ -18,7 +18,7 @@ export const checkAuthMiddleware: RequestHandler = async (req, res, next) => {
     });
 
     if (!response.ok) {
-      return res.status(403).send('Unauthorized');
+      return res.status(403).json({ reason: 'Unauthorized' });
     }
     res.locals.user = await response.json();
   } catch (e) {
