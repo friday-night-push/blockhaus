@@ -3,7 +3,7 @@ import { render, screen } from 'src/utils/tests';
 
 import { mockedUseNavigate, mockedUser } from 'src/utils/tests/mocks';
 
-import { ProtectedRoute } from './ProtectedRoute';
+import { LOADER_ID, ProtectedRoute } from './ProtectedRoute';
 
 describe('ProtectedRoute', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('ProtectedRoute', () => {
       },
     });
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByTestId(LOADER_ID)).toBeInTheDocument();
   });
 
   it('navigate to sign in if user is not authenticated', () => {

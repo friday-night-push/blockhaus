@@ -1,12 +1,7 @@
 import React from 'react';
 
 import { ArrowRightFromSquare, Pencil } from '@gravity-ui/icons';
-import {
-  Icon,
-  Skeleton,
-  User as UserComponent,
-  UserLabel,
-} from '@gravity-ui/uikit';
+import { Icon, Skeleton, User as UserComponent, UserLabel } from '@gravity-ui/uikit';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -26,12 +21,7 @@ export type UserProps = {
   isFullSize?: boolean;
 };
 
-export const User = ({
-  user,
-  setUser,
-  userIsLoading,
-  isFullSize = false,
-}: UserProps) => {
+export const User = ({ user, setUser, userIsLoading, isFullSize = false }: UserProps) => {
   const navigate = useNavigate();
 
   const errorHandler = (err: Error) => {
@@ -49,64 +39,44 @@ export const User = ({
     authAPI.logout(logoutHandler, errorHandler);
   };
 
-  const goToSignIn = () => {
-    navigate(PAGE_ROUTES.SIGN_IN);
-  };
-
   return (
-    <Container alignItems="center">
-      {user && user?.id ? (
-        userIsLoading ? (
-          <Skeleton />
-        ) : (
-          <>
-            {isFullSize ? (
-              <UserComponent
-                size={'xl'}
-                avatar={{
-                  imgUrl:
-                    user?.avatar && `${BASE_API_URL}/resources${user?.avatar}`,
-                }}
-                name={
-                  user?.display_name ||
-                  `${user?.first_name} ${user?.second_name}`
-                }
-                description={user?.email && user?.email}
-              />
-            ) : (
-              <UserLabel
-                size={'xl'}
-                view={'clear'}
-                avatar={
-                  user?.avatar ? `${RESOURCE_URL}${user?.avatar}` : undefined
-                }
-                onClick={() => navigate(PAGE_ROUTES.PROFILE)}>
-                {user?.display_name ||
-                  `${user?.first_name} ${user?.second_name}`}
-              </UserLabel>
-            )}
-            <Container gap={0}>
-              {isFullSize && (
-                <Button
-                  view="flat-secondary"
-                  size="xl"
-                  onClick={() => navigate(PAGE_ROUTES.PROFILE)}
-                  qa={'edit-button'}>
-                  <Icon data={Pencil} />
-                </Button>
-              )}
-              <Button
-                view="flat-danger"
-                size="xl"
-                onClick={onSignOut}
-                qa={'sign-out-button'}>
-                <Icon data={ArrowRightFromSquare} />
+    <Container alignItems='center'>
+      {userIsLoading ? (
+        <Skeleton style={{ height: '50px', width: '200px' }} />
+      ) : user && user?.id ? (
+        <>
+          {isFullSize ? (
+            <UserComponent
+              size={'xl'}
+              avatar={{
+                imgUrl: user?.avatar && `${BASE_API_URL}/resources${user?.avatar}`,
+                text: user?.display_name || user?.first_name,
+              }}
+              name={user?.display_name || `${user?.first_name} ${user?.second_name}`}
+              description={user?.email && user?.email}
+            />
+          ) : (
+            <UserLabel
+              size={'xl'}
+              view={'clear'}
+              avatar={user?.avatar ? `${RESOURCE_URL}${user?.avatar}` : undefined}
+              onClick={() => navigate(PAGE_ROUTES.PROFILE)}>
+              {user?.display_name || `${user?.first_name} ${user?.second_name}`}
+            </UserLabel>
+          )}
+          <Container gap={0}>
+            {isFullSize && (
+              <Button view='flat-secondary' size='xl' onClick={() => navigate(PAGE_ROUTES.PROFILE)} qa={'edit-button'}>
+                <Icon data={Pencil} />
               </Button>
-            </Container>
-          </>
-        )
+            )}
+            <Button view='flat-danger' size='xl' onClick={onSignOut} qa={'sign-out-button'}>
+              <Icon data={ArrowRightFromSquare} />
+            </Button>
+          </Container>
+        </>
       ) : (
-        <Button view={'flat-action'} type="button" onClick={goToSignIn}>
+        <Button view={'flat-action'} type='button' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
           Sign In
         </Button>
       )}

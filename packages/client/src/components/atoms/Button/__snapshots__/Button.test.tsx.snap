@@ -2,7 +2,7 @@
 
 exports[`Button renders correctly with default props 1`] = `
 <button
-  class="g-button g-button_view_normal g-button_size_xl g-button_pin_brick-brick"
+  class="g-button g-button_view_flat g-button_size_xl g-button_pin_brick-brick"
   type="button"
 >
   <span

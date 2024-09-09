@@ -23,7 +23,7 @@ describe('User', () => {
     render(<User user={null} />, {
       authState: { user: null, userIsLoading: false },
     });
-    expect(screen.getByRole('button', { name: 'Sign In' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Sign In' })).toBeInTheDocument();
   });
 
   it('renders UserLabel when user is present and not in full size', () => {

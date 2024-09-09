@@ -1,9 +1,5 @@
-export function loadSprites(
-  spritesPath: Record<string, string> = {}
-): Promise<Record<string, HTMLImageElement>> {
-  return Promise.all(
-    Object.values(spritesPath).map(path => loadImage(path))
-  ).then(sprites => {
+export function loadSprites(spritesPath: Record<string, string> = {}): Promise<Record<string, HTMLImageElement>> {
+  return Promise.all(Object.values(spritesPath).map(path => loadImage(path))).then(sprites => {
     const keys = Object.keys(spritesPath);
     const map = keys.map((key, index) => [key, sprites[index]]);
     return Object.fromEntries(map);

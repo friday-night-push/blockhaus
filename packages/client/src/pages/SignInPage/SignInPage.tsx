@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 
-import { Text } from '@gravity-ui/uikit';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { LogoYandex } from '@gravity-ui/icons';
+import { Icon, Text } from '@gravity-ui/uikit';
+import { Navigate } from 'react-router-dom';
 
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 import { Logo } from 'src/components/atoms/Logo';
+import { BackButton } from 'src/components/molecules/BackButton/BackButton';
 import { Form } from 'src/components/molecules/Form';
 import { Page } from 'src/components/organisms/Page';
 import { authAPI, AuthContext } from 'src/hoc/AuthProvider';
@@ -15,21 +17,20 @@ import type { TYandex } from 'src/shared/types/yandex';
 import { PAGE_ROUTES } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';
 
-import { inputs, validationSchema } from './SignInPage.constants';
+import { inputs } from './SignInPage.constants';
 
 export const SignInPage: React.FC = () => {
-  const { user, setUser, userIsLoading } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [error, setError] = useState<string | undefined>(undefined);
 
-  const navigate = useNavigate();
-
   const auth = async (formData: TSignInRequest) => {
-    await authAPI.signin(formData, isOk, errorHandler);
+    await authAPI.signIn(formData, isOk, errorHandler);
   };
 
   const isOk = (response: Response) => {
     if (response.ok) {
-      authAPI.getuser(updUserData, errorHandler);
+      localStorage.setItem('isAuth', 'true');
+      authAPI.getUser(updUserData, errorHandler);
     }
   };
 
@@ -44,10 +45,6 @@ export const SignInPage: React.FC = () => {
     Helpers.Log('ERROR', err);
   };
 
-  const goToSignUp = () => {
-    navigate(PAGE_ROUTES.SIGN_UP);
-  };
-
   const isGetIdOk = (data: TYandex) => {
     const url = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=http://localhost:3000`;
     window.location.href = url;
@@ -57,37 +54,26 @@ export const SignInPage: React.FC = () => {
     await authAPI.yaGetServiceId(isGetIdOk, errorHandler);
   };
 
-  const goBack = () => {
-    navigate(-1);
-  };
-
   return (
     <Page>
-      {!user?.id && !userIsLoading ? (
+      {!user?.id ? (
         <>
-          <Logo size="sm" />
-          <Container direction="column" alignItems="center">
-            <Text variant="display-2">Sign in</Text>
-            <Text variant="subheader-2" style={{ textAlign: 'center' }}>
-              Back again? Just sign in to keep your results showing up on the
-              leaderboards
+          <Logo size='sm' />
+          <Container direction='column' alignItems='center'>
+            <Text variant='display-2'>Sign in</Text>
+            <Text variant='subheader-2' style={{ textAlign: 'center' }}>
+              Back again? Just sign in to keep your results showing up on the leaderboards
             </Text>
+            <Form inputs={inputs} onSubmit={auth} errorMessage={error} />
+            <Button view='outlined-action' onClick={goToYandex}>
+              <Icon data={LogoYandex} />
+              Auth with Yandex
+            </Button>
+            <Button view='flat' isNavigate navigateTo={PAGE_ROUTES.SIGN_UP}>
+              First time here? Sign up
+            </Button>
+            <BackButton fallbackRoute={PAGE_ROUTES.MENU} />
           </Container>
-          <Form
-            inputs={inputs}
-            validationSchema={validationSchema}
-            onSubmit={auth}
-            errorMessage={error}
-          />
-          <Button view="outlined-info" onClick={goToYandex}>
-            Sign in or sign up through Yandex
-          </Button>
-          <Button view="flat" onClick={goToSignUp}>
-            First time here? Sign up
-          </Button>
-          <Button view="flat" onClick={goBack}>
-            Back
-          </Button>
         </>
       ) : (
         <Navigate to={PAGE_ROUTES.MENU} />

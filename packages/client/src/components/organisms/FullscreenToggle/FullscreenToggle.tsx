@@ -1,20 +1,29 @@
-import React from 'react';
+import type { FC, ReactElement, RefObject } from 'react';
+import { cloneElement, isValidElement } from 'react';
 
-import type {
-  ExtendedDocument,
-  ExtendedHTMLDivElement,
-  FullscreenToggleProps,
-} from './FullscreenToggle.types';
+export interface FullscreenToggleProps {
+  children: ReactElement<FullscreenChildProps>;
+}
 
-export const FullscreenToggle: React.FC<FullscreenToggleProps> = ({
-  children,
-}) => {
-  const toggleFullscreen = (
-    elementRef: React.RefObject<ExtendedHTMLDivElement>,
-    isFullscreen: boolean
-  ): boolean => {
+export interface FullscreenChildProps {
+  toggleFullscreen: (elementRef: RefObject<ExtendedHTMLDivElement>, isFullscreen: boolean) => boolean;
+}
+
+export interface ExtendedHTMLDivElement extends HTMLDivElement {
+  msRequestFullscreen?: () => Promise<void>;
+  mozRequestFullScreen?: () => Promise<void>;
+  webkitRequestFullscreen?: () => Promise<void>;
+}
+
+export interface ExtendedDocument extends Document {
+  msExitFullscreen?: () => Promise<void>;
+  mozCancelFullScreen?: () => Promise<void>;
+  webkitExitFullscreen?: () => Promise<void>;
+}
+
+export const FullscreenToggle: FC<FullscreenToggleProps> = ({ children }) => {
+  const toggleFullscreen = (elementRef: RefObject<ExtendedHTMLDivElement>, isFullscreen: boolean): boolean => {
     const elem = elementRef.current;
-
     if (!isFullscreen) {
       if (elem) {
         if (elem.requestFullscreen) {
@@ -25,11 +34,17 @@ export const FullscreenToggle: React.FC<FullscreenToggleProps> = ({
           elem.mozRequestFullScreen();
         } else if (elem.webkitRequestFullscreen) {
           elem.webkitRequestFullscreen();
+        } else {
+          return false;
         }
+
         return true;
       }
+
+      return false;
     } else {
       const doc = document as ExtendedDocument;
+
       if (doc.exitFullscreen) {
         doc.exitFullscreen();
       } else if (doc.msExitFullscreen) {
@@ -38,11 +53,17 @@ export const FullscreenToggle: React.FC<FullscreenToggleProps> = ({
         doc.mozCancelFullScreen();
       } else if (doc.webkitExitFullscreen) {
         doc.webkitExitFullscreen();
+      } else {
+        return false;
       }
-    }
 
-    return false;
+      return true;
+    }
   };
 
-  return <>{React.cloneElement(children, { toggleFullscreen })}</>;
+  if (isValidElement<FullscreenChildProps>(children)) {
+    return cloneElement(children, { toggleFullscreen });
+  }
+
+  return null;
 };

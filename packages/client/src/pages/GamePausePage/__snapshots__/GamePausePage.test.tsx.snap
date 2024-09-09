@@ -9,12 +9,6 @@ exports[`GamePausePage matches snapshot 1`] = `
     class="g-box g-flex"
     style="width: 100%; min-height: 100vh; max-width: 380px; flex-direction: column; column-gap: 32px; row-gap: 32px; align-items: center; justify-content: center;"
   >
-    <span
-      class="g-text g-text_variant_header-1"
-      style="text-align: center;"
-    >
-      PAUSE THE GAME
-    </span>
     <ul
       class="g-menu g-menu_size_xl"
       role="menu"
@@ -38,7 +32,7 @@ exports[`GamePausePage matches snapshot 1`] = `
               <span
                 class="g-text g-text_variant_display-2"
               >
-                resume the game
+                resume
               </span>
             </div>
           </div>
@@ -47,7 +41,7 @@ exports[`GamePausePage matches snapshot 1`] = `
           class="g-menu__list-item"
         >
           <div
-            class="g-menu__item g-menu__item_theme_normal g-menu__item_interactive"
+            class="g-menu__item g-menu__item_theme_danger g-menu__item_interactive"
             role="menuitem"
             style="min-height: 50px;"
             tabindex="0"
@@ -58,48 +52,13 @@ exports[`GamePausePage matches snapshot 1`] = `
               <span
                 class="g-text g-text_variant_display-2"
               >
-                cancel the game
+                stop
               </span>
             </div>
           </div>
         </li>
       </section>
     </ul>
-    <section
-      class="g-box g-flex"
-      style="column-gap: 12px; row-gap: 12px; align-items: center;"
-    >
-      <span
-        class="g-text g-text_variant_code-2"
-      >
-        Made in 2024 by
-      </span>
-      <a
-        class="g-link g-link_view_normal"
-        href="https://github.com/friday-night-push/"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <img
-          alt=""
-        />
-      </a>
-      <span
-        class="g-text g-text_variant_code-2"
-      >
-        at
-      </span>
-      <a
-        class="g-link g-link_view_normal"
-        href="https://practicum.yandex.ru/middle-frontend/"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <img
-          alt=""
-        />
-      </a>
-    </section>
   </section>
 </section>
 `;

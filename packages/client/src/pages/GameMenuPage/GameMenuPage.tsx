@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 
-import { Menu } from '@gravity-ui/uikit';
+import { Menu, Skeleton } from '@gravity-ui/uikit';
 
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -26,8 +26,11 @@ import Helpers from 'src/utils/helpers';
 import { Geolocation } from '../../components/organisms';
 
 export const MENU_ITEMS: MenuItemProps[] = [
-  { label: 'play the endless game', href: PAGE_ROUTES.GAME },
-  { label: 'play for time', href: PAGE_ROUTES.GAME },
+  {
+    label: 'never-ending',
+    href: PAGE_ROUTES.GAME,
+  },
+  { label: 'race the clock', href: PAGE_ROUTES.GAME },
   {
     label: 'leaderboards',
     href: PAGE_ROUTES.LEADER_BOARD,
@@ -97,24 +100,18 @@ export const GameMenuPage = () => {
 
   return (
     <Page>
-      <Logo isFull size="auto" />
+      <Logo isFull size='auto' />
       <Menu size={'xl'}>
         <Container direction={'column'} alignItems={'center'}>
-          {user && user.id ? (
+          {userIsLoading ? (
+            <Skeleton style={{ height: '50px' }} />
+          ) : user && user.id ? (
             <>
-              <User
-                user={user}
-                setUser={setUser}
-                userIsLoading={userIsLoading}
-                isFullSize
-              />
+              <User user={user} setUser={setUser} userIsLoading={userIsLoading} isFullSize />
               <Geolocation />
             </>
           ) : (
-            <MenuItem
-              label={'sign in'}
-              onClick={() => navigate(PAGE_ROUTES.SIGN_IN)}
-            />
+            <MenuItem label={'sign in'} onClick={() => navigate(PAGE_ROUTES.SIGN_IN)} />
           )}
           {MENU_ITEMS.map(item => (
             <MenuItem key={item.label} {...item} />
