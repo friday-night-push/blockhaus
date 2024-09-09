@@ -9,6 +9,7 @@ import {
   DEFAULT_WIDTH,
   SHIFT_HORIZONTAL,
   SHIFT_VERTICAL,
+  CUBE_SIZES,
 } from './GamePage.constants';
 
 import { GpDraw } from './GamePage.draw';
@@ -47,6 +48,7 @@ export default class Game {
   private putY = 0;
 
   private isToggleIcon = false;
+  private isOnField = false;
 
   // массив объектов, по который будет оцениваться куда кликнули и какой вызывать обработчик
   private CLICK_HANDLERS: TRectClickHandler[] = [];
@@ -128,10 +130,7 @@ export default class Game {
       const x = event.x;
       const y = event.y;
       this.CLICK_HANDLERS.forEach((rch: TRectClickHandler) => {
-        console.info(x, y);
-        console.info(rch);
         if (x >= rch.x1 && x <= rch.x2 && y >= rch.y1 && y <= rch.y2) {
-          console.info('click', rch.handler);
           rch.handler();
         }
       });
@@ -155,19 +154,25 @@ export default class Game {
     this.canvasRef.current?.addEventListener('mouseup', () => {
       this.isDrag = false;
       if (this.dragFigure) {
-        for (let i = 0; i < 9; i++) {
-          if (CUBE_DATAS[this.dragFigure.num][i] != 0) {
-            this.score++;
-            const sx = i % 3;
-            const sy = Math.floor(i / 3);
-            this.field[(this.putX + sx) * 10 + (this.putY + sy)] = CUBE_DATAS[this.dragFigure.num][i];
+        if (this.isOnField) {
+          for (let i = 0; i < 9; i++) {
+            if (CUBE_DATAS[this.dragFigure.num][i] != 0) {
+              this.score++;
+              const sx = i % 3;
+              const sy = Math.floor(i / 3);
+              this.field[(this.putX + sx) * 10 + (this.putY + sy)] = CUBE_DATAS[this.dragFigure.num][i];
+            }
           }
         }
 
         this.dragFigure.moveX = this.dragFigure.x;
         this.dragFigure.moveY = this.dragFigure.y;
         this.dragFigure = null;
-        this.figures = GpFigure.RandomFigures(this.centerWin.x);
+
+        if (this.isOnField) {
+          this.figures = GpFigure.RandomFigures(this.centerWin.x);
+          GpFigure.KillRowsAndColumns(this.field);
+        }
       }
     });
 
@@ -179,23 +184,39 @@ export default class Game {
           this.dragFigure.moveX = event.x - this.dragFigure.shiftX;
           this.dragFigure.moveY = event.y - this.dragFigure.shiftY;
 
+          this.isOnField = false;
           const x = this.dragFigure.moveX + 10;
           const y = this.dragFigure.moveY + 10;
           if (
             x >= this.drawX &&
-            x <= this.drawX + this.wField - 3 &&
+            x <= this.drawX + this.wField - 3 - (CUBE_SIZES[this.dragFigure.num].x - 1) * DEFAULT_WIDTH &&
             y >= this.drawY &&
-            y <= this.drawY + this.hField - 3
+            y <= this.drawY + this.hField - 3 - (CUBE_SIZES[this.dragFigure.num].y - 1) * DEFAULT_HEIGHT
           ) {
             this.putX = Math.floor((x - this.drawX) / DEFAULT_WIDTH);
             this.putY = Math.floor((y - this.drawY) / DEFAULT_HEIGHT);
+
+            let nasloi = false;
             for (let i = 0; i < 9; i++) {
               if (CUBE_DATAS[this.dragFigure.num][i] != 0) {
                 const sx = i % 3;
                 const sy = Math.floor(i / 3);
-                if (this.field[(this.putX + sx) * 10 + (this.putY + sy)] == 0)
-                  this.selectedField[(this.putX + sx) * 10 + (this.putY + sy)] = 1;
+                if (this.field[(this.putX + sx) * 10 + (this.putY + sy)] != 0) {
+                  nasloi = true;
+                }
               }
+            }
+
+            if (!nasloi) {
+              for (let i = 0; i < 9; i++) {
+                if (CUBE_DATAS[this.dragFigure.num][i] != 0) {
+                  const sx = i % 3;
+                  const sy = Math.floor(i / 3);
+                  if (this.field[(this.putX + sx) * 10 + (this.putY + sy)] == 0)
+                    this.selectedField[(this.putX + sx) * 10 + (this.putY + sy)] = 1;
+                }
+              }
+              this.isOnField = true;
             }
           }
         } else {
