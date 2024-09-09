@@ -31,6 +31,7 @@ async function startServer() {
     })
   );
   app.use(compression());
+  app.use(express.json());
   app.use('/api/v1', apiRouter);
 
   let vite: ViteDevServer | undefined;

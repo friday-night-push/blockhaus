@@ -1,4 +1,6 @@
-import type { RequestHandler } from 'express';
+import querystring from 'querystring';
+
+import type { Request, RequestHandler } from 'express';
 import {
   createProxyMiddleware,
   responseInterceptor,
@@ -22,6 +24,31 @@ export const yaProxyMiddleware: RequestHandler = (req, res, next) => {
     cookieDomainRewrite: { '*': req.hostname },
     selfHandleResponse: true,
     on: {
+      /**
+       * Этот callback вызывается перед отправкой запроса к API Яндекс.
+       * Он позволяет модифицировать запрос, пересылая тело запроса в случае,
+       * если `express.json()` уже прочитал тело запроса. https://github.com/chimurai/http-proxy-middleware/issues/320
+       */
+      proxyReq: async (proxyReq, req: Request) => {
+        if (!req.body || !Object.keys(req.body).length) {
+          return;
+        }
+
+        const contentType = proxyReq.getHeader('Content-Type');
+        const writeBody = (bodyData: string) => {
+          proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+          proxyReq.write(bodyData);
+        };
+
+        if (contentType === 'application/json') {
+          // contentType.includes('application/json')
+          writeBody(JSON.stringify(req.body));
+        }
+
+        if (contentType === 'application/x-www-form-urlencoded') {
+          writeBody(querystring.stringify(req.body));
+        }
+      },
       /**
        * Перехватчик ответа от API Яндекс. Если это запрос 'auth/user', парсит ответ,
        * обновляет или вставляет пользователя в базу данных.
