@@ -7,6 +7,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Container } from 'src/components/atoms/Container';
 import { Logo } from 'src/components/atoms/Logo';
 import type { MenuItemProps } from 'src/components/atoms/MenuItem';
+
 import { MenuItem } from 'src/components/atoms/MenuItem';
 import { Copyright } from 'src/components/molecules/Copyright';
 import { User } from 'src/components/molecules/User';
@@ -21,6 +22,8 @@ import type { TYandexAuth } from 'src/shared/types/yandex';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 import Helpers from 'src/utils/helpers';
+
+import { Geolocation } from '../../components/organisms';
 
 export const MENU_ITEMS: MenuItemProps[] = [
   {
@@ -103,7 +106,10 @@ export const GameMenuPage = () => {
           {userIsLoading ? (
             <Skeleton style={{ height: '50px' }} />
           ) : user && user.id ? (
-            <User user={user} setUser={setUser} userIsLoading={userIsLoading} isFullSize />
+            <>
+              <User user={user} setUser={setUser} userIsLoading={userIsLoading} isFullSize />
+              <Geolocation />
+            </>
           ) : (
             <MenuItem label={'sign in'} onClick={() => navigate(PAGE_ROUTES.SIGN_IN)} />
           )}
