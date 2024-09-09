@@ -1,5 +1,22 @@
 import { z } from 'zod';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     CreateTopic:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Topic name
+ *       example:
+ *         name: "Topic example"
+ *
+ */
+
 export const createTopicDto = z.object({
   name: z
     .string()

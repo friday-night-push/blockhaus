@@ -1,5 +1,22 @@
 import { z } from 'zod';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     CreateReply:
+ *       type: object
+ *       required:
+ *         - content
+ *       properties:
+ *         content:
+ *           type: string
+ *           description: Reply content
+ *       example:
+ *         content: "Reply example"
+ *
+ */
+
 export const createReplyDto = z.object({
   content: z
     .string()

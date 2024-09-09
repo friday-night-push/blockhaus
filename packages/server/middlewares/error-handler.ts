@@ -17,5 +17,5 @@ export const errorHandlerMiddleware = (
 
   logger.error(err);
 
-  res.status(statusCode).json({ message });
+  res.status(statusCode).json({ reason: message });
 };

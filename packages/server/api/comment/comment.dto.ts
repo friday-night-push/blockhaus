@@ -1,5 +1,22 @@
 import { z } from 'zod';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     CreateComment:
+ *       type: object
+ *       required:
+ *         - content
+ *       properties:
+ *         content:
+ *           type: string
+ *           description: Comment content
+ *       example:
+ *         content: "Comment example"
+ *
+ */
+
 export const createCommentDto = z.object({
   topicId: z
     .number({ message: 'Invalid topic ID' })

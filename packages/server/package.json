@@ -26,6 +26,8 @@
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.3",
     "sequelize-typescript": "^2.1.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "vite": "^3.0.7",
     "winston": "^3.14.2",
     "zod": "^3.23.8"
@@ -38,6 +40,8 @@
     "@types/jsesc": "^3.0.3",
     "@types/node": "^22.5.3",
     "@types/pg": "^8.6.5",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "@types/validator": "^13.12.1",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
