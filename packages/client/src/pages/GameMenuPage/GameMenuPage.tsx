@@ -53,7 +53,7 @@ export const GameMenuPage = () => {
   };
 
   const getUser = async () => {
-    await authAPI.getuser(updateUser, errorHandler);
+    await authAPI.getUser(updateUser, errorHandler);
   };
 
   const updateUser = (user: TUser) => {
