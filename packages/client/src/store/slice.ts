@@ -1,27 +1,27 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-interface ExampleState {
-  name: string;
+interface InitialState {
+  gameType: number;
 }
 
-const initialState: ExampleState = {
-  name: '',
+const initialState: InitialState = {
+  gameType: 0,
 };
 
 const exampleSlice = createSlice({
   name: 'example',
   initialState,
   reducers: {
-    setExample: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
+    setGameType: (state, action: PayloadAction<number>) => {
+      state.gameType = action.payload;
     },
-    clearExample: state => {
-      state.name = '';
+    clearGameType: state => {
+      state.gameType = 0;
     },
   },
 });
 
-export const { setExample, clearExample } = exampleSlice.actions;
+export const { setGameType, clearGameType } = exampleSlice.actions;
 
 export default exampleSlice.reducer;
