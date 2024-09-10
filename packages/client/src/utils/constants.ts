@@ -13,6 +13,7 @@ export enum PAGE_ROUTES {
   GAME_PAUSE = '/game-pause',
   GAME_RESULT = '/game-result',
   GAME_SETUP = '/game-setup',
+  GAME_DIFFICULT = '/game-difficult',
   LEADER_BOARD = '/leader-board',
   ERROR_BOUNDARY = '/error-boundary',
   FORUM = '/forum',
