@@ -7,6 +7,7 @@ import { ErrorBoundaryPage } from 'src/pages/ErrorBoundaryPage';
 import { ErrorPage } from 'src/pages/ErrorPage';
 import { ForumPage, topicsLoader } from 'src/pages/ForumPage';
 import { ForumTopicPage, topicInfo } from 'src/pages/ForumTopicPage';
+import { GameDifficultPage } from 'src/pages/GameDifficultPage';
 import { GameMenuPage } from 'src/pages/GameMenuPage';
 import { GamePage } from 'src/pages/GamePage';
 import { GamePausePage } from 'src/pages/GamePausePage';
@@ -104,5 +105,10 @@ export const routes: RouteObject[] = [
     element: <ProtectedRoute element={<ForumTopicPage />} />,
     errorElement: <ErrorPage />,
     loader: topicInfo,
+  },
+  {
+    path: PAGE_ROUTES.GAME_DIFFICULT,
+    element: <GameDifficultPage />,
+    errorElement: <ErrorPage />,
   },
 ];

@@ -19,6 +19,8 @@ export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
 
   let game: Game;
 
+  // получить gameType из хранилища
+
   useEffect(() => {
     clearTimeout(startTimer);
     startTimer = setTimeout(Initialize, 100);
