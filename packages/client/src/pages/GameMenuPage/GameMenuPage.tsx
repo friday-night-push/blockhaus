@@ -28,9 +28,9 @@ import { Geolocation } from '../../components/organisms';
 export const MENU_ITEMS: MenuItemProps[] = [
   {
     label: 'never-ending',
-    href: PAGE_ROUTES.GAME,
+    href: PAGE_ROUTES.GAME_DIFFICULT,
   },
-  { label: 'race the clock', href: PAGE_ROUTES.GAME },
+  { label: 'race the clock', href: PAGE_ROUTES.GAME_DIFFICULT },
   {
     label: 'leaderboards',
     href: PAGE_ROUTES.LEADER_BOARD,
