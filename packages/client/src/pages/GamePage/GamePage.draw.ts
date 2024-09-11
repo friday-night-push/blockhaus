@@ -75,6 +75,20 @@ export class GpDraw {
     ctx.fillText(String(score), centerWidth + 40 + shift + 120, 43);
   }
 
+  public static DrawTime(ctx: CanvasRenderingContext2D, coin: HTMLImageElement, time: number, centerWidth: number) {
+    const shift = -85;
+    ctx.drawImage(coin, 0, 0, 32, 32, centerWidth + shift, 20, 32, 32);
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(centerWidth + 40 + shift, 60, 130, 32);
+
+    // write score with right align
+    ctx.font = '20px serif';
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'black';
+    const tt = new Date(time * 1000).toISOString().slice(14, 19);
+    ctx.fillText(tt, centerWidth + 40 + shift + 120, 83);
+  }
+
   public static DrawFigures(ctx: CanvasRenderingContext2D, cubes: HTMLImageElement, figures: TFigure[]) {
     for (let i = 0; i < figures.length; i++) {
       GpDraw.DrawFigure(ctx, cubes, figures[i].moveX, figures[i].moveY, figures[i].num);

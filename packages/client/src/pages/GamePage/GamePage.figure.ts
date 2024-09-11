@@ -23,12 +23,12 @@ export class GpFigure {
     return f;
   }
 
-  public static RandomFigures(centerWinX: number): TFigure[] {
+  public static RandomFigures(centerWinX: number, count: number): TFigure[] {
     const tmp: number[] = [];
     const figures: TFigure[] = [];
 
     let sum = 0;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < count; i++) {
       let num = 0;
 
       do {
