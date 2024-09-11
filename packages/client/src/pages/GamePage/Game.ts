@@ -50,6 +50,19 @@ export default class Game {
   private isToggleIcon = false;
   private isOnField = false;
 
+  private difficult = 0;
+  private difficults: number[] = [7, 5, 3, 1];
+
+  private gameType = 0; // 0 - endless, 1 - race the clock
+  private gameTimes: number[] = [5, 10, 15, 20];
+  private gameTime = 0;
+
+  private lasttimestamp = 0;
+
+  private saveDataHandler: (sc: number, fl: number[]) => void = () => {
+    console.info();
+  };
+
   // массив объектов, по который будет оцениваться куда кликнули и какой вызывать обработчик
   private CLICK_HANDLERS: TRectClickHandler[] = [];
 
@@ -57,7 +70,10 @@ export default class Game {
     this.canvasRef = canvasRef;
   }
 
-  Init() {
+  Init(scores: number, field: number[]) {
+    this.score = scores;
+    this.field = field;
+
     this.canvas = this.canvasRef.current;
     if (!this.canvas) throw 'Canvas is null';
 
@@ -68,15 +84,19 @@ export default class Game {
   Start() {
     this.addEvents();
 
-    this.field = new Array(100).fill(0);
+    if (this.field.length == 0) this.field = new Array(100).fill(0);
     this.selectedField = new Array(100).fill(-1);
 
     loadSprites(SPRITES).then((s: Record<string, HTMLImageElement>) => {
       this.sprites = s;
-      this.figures = GpFigure.RandomFigures(this.centerWin.x);
+      this.figures = GpFigure.RandomFigures(this.centerWin.x, this.difficult);
       this.resize();
       this.animate();
     });
+
+    if (this.gameType == 1) {
+      console.info('Start race the clock');
+    }
   }
 
   SetPauseHandler(handler: () => void) {
@@ -105,8 +125,24 @@ export default class Game {
     this.isToggleIcon = isFS;
   }
 
-  private animate() {
-    requestAnimationFrame(() => this.animate());
+  SetDifficult(gameDifficultState: number) {
+    this.difficult = this.difficults[gameDifficultState];
+    this.gameTime = this.gameTimes[gameDifficultState] * 60;
+  }
+
+  SetType(gameTypeState: number) {
+    this.gameType = gameTypeState;
+  }
+
+  SetSaveDataHandler(handler: (sc: number, fl: number[]) => void) {
+    this.saveDataHandler = handler;
+  }
+
+  private animate(timestamp = 0) {
+    const delta = timestamp - this.lasttimestamp;
+    if (this.lasttimestamp != 0) this.gameTime -= delta / 1000;
+
+    requestAnimationFrame((timestamp: number) => this.animate(timestamp));
 
     if (this.ctx) {
       this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -122,6 +158,9 @@ export default class Game {
       GpDraw.DrawFigures(this.ctx, this.sprites.CUBES, this.figures);
 
       GpDraw.DrawScore(this.ctx, this.sprites.COIN, this.score, this.centerWin.x);
+      GpDraw.DrawTime(this.ctx, this.sprites.COIN, this.gameTime, this.centerWin.x);
+
+      this.lasttimestamp = timestamp;
     } else console.info('no ctx');
   }
 
@@ -170,10 +209,13 @@ export default class Game {
         this.dragFigure = null;
 
         if (this.isOnField) {
-          this.figures = GpFigure.RandomFigures(this.centerWin.x);
+          this.figures = GpFigure.RandomFigures(this.centerWin.x, this.difficult);
           GpFigure.KillRowsAndColumns(this.field);
         }
       }
+      localStorage.setItem('scores', this.score.toString());
+      this.saveDataHandler(this.score, this.field);
+      this.isOnField = false;
     });
 
     // перемещаем мышкой
