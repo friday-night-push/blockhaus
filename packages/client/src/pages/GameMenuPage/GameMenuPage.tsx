@@ -2,6 +2,8 @@ import { useContext, useEffect } from 'react';
 
 import { Menu, Skeleton } from '@gravity-ui/uikit';
 
+import { useDispatch } from 'react-redux';
+
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Container } from 'src/components/atoms/Container';
@@ -25,17 +27,7 @@ import Helpers from 'src/utils/helpers';
 
 import { Geolocation } from '../../components/organisms';
 
-export const MENU_ITEMS: MenuItemProps[] = [
-  {
-    label: 'never-ending',
-    href: PAGE_ROUTES.GAME_DIFFICULT,
-  },
-  { label: 'race the clock', href: PAGE_ROUTES.GAME_DIFFICULT },
-  {
-    label: 'leaderboards',
-    href: PAGE_ROUTES.LEADER_BOARD,
-  },
-];
+import { setGameType } from '../../store';
 
 let firtsStart = 0;
 
@@ -45,7 +37,20 @@ export const GameMenuPage = () => {
   const { user, setUser, userIsLoading } = useContext(AuthContext);
   const [searchParams] = useSearchParams();
 
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
+  const goGame = (gameType: number) => {
+    dispatch(setGameType(gameType));
+    navigate(PAGE_ROUTES.GAME_DIFFICULT);
+  };
+
+  const MENU_ITEMS: MenuItemProps[] = [
+    { label: 'never-ending', onClick: () => goGame(0) },
+    { label: 'race the clock', onClick: () => goGame(1) },
+    { label: 'leaderboards', href: PAGE_ROUTES.LEADER_BOARD },
+  ];
 
   const auth = async (data: TYandexAuth) => {
     console.info('auth');
