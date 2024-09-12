@@ -108,7 +108,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: PAGE_ROUTES.GAME_DIFFICULT,
-    element: <GameDifficultPage gameDifficult={0} />,
+    element: <GameDifficultPage />,
     errorElement: <ErrorPage />,
   },
 ];
