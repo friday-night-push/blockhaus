@@ -1,4 +1,4 @@
-export const BASE_API_URL = 'https://ya-praktikum.tech/api/v2';
+export const BASE_API_URL = 'http://localhost:3001/api/v1';
 
 export const RESOURCE_URL = BASE_API_URL + '/resources';
 
