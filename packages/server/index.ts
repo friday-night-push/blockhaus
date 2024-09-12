@@ -1,26 +1,37 @@
 import * as path from 'path';
 
+import compression from 'compression';
 import cors from 'cors';
+
 import dotenv from 'dotenv';
-dotenv.config();
+
+dotenv.config({ path: '../../.env' });
 
 import express from 'express';
+import helmet from 'helmet';
 import { type ViteDevServer, createServer as createViteServer } from 'vite';
 
-import { apiRouter } from './routes/api';
-import { ssrRoute } from './routes/ssr';
+import { apiRouter } from './api';
+import { ssrRoute } from './ssr';
 
-import { isDev } from './utils';
+import { isDev, initPostgres, logger } from './utils';
 
-// import { createClientAndConnect } from './db';
-
-// createClientAndConnect();
+initPostgres();
 
 async function startServer() {
   const app = express();
   const port = Number(process.env.SERVER_PORT) || 3001;
+  const clientPort = Number(process.env.CLIENT_PORT) || 3000;
 
-  app.use(cors());
+  app.use(helmet());
+  app.use(
+    cors({
+      origin: `http://localhost:${clientPort}`,
+      credentials: true,
+    })
+  );
+  app.use(compression());
+  app.use(express.json());
   app.use('/api/v1', apiRouter);
 
   let vite: ViteDevServer | undefined;
@@ -45,7 +56,7 @@ async function startServer() {
   app.use('*', ssrRoute({ vite, distPath, srcPath }));
 
   app.listen(port, () => {
-    console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+    logger.info(`  ➜ 🎸 Server is listening on port: ${port}`);
   });
 }
 
