@@ -58,6 +58,7 @@ export default class Game {
   private gameTimes: number[] = [5, 10, 15, 20];
   private gameTime = 0;
   private gameIsOver = false;
+  private gameInPause = false;
 
   private lasttimestamp = 0;
 
@@ -101,6 +102,7 @@ export default class Game {
     });
 
     this.gameIsOver = false;
+    this.gameInPause = false;
 
     if (this.gameType == 1) {
       console.info('Start race the clock');
@@ -151,49 +153,51 @@ export default class Game {
   }
 
   PauseGame() {
-    this.gameIsOver = true;
+    this.gameInPause = true;
   }
 
   private animate(timestamp = 0) {
-    if (this.ctx) {
-      const delta = timestamp - this.lasttimestamp;
+    if (!this.gameInPause) {
+      if (this.ctx) {
+        const delta = timestamp - this.lasttimestamp;
 
-      if (this.gameType == 1) {
-        if (this.lasttimestamp != 0 && this.gameType == 1) this.gameTime -= delta / 1000;
-        if (this.gameTime <= 0) {
+        if (this.gameType == 1) {
+          if (this.lasttimestamp != 0 && this.gameType == 1) this.gameTime -= delta / 1000;
+          if (this.gameTime <= 0) {
+            this.gameIsOver = true;
+          }
+        }
+
+        this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+        this.ctx.drawImage(this.sprites.BG, 0, 0, this.canvasWidth, this.canvasHeight);
+
+        GpDraw.DrawPause(this.ctx, this.sprites.PAUSE);
+        GpDraw.DrawToggle(this.ctx, this.isToggleIcon ? this.sprites.TOGGLEOFF : this.sprites.TOGGLEON);
+
+        GpDraw.DrawField(this.ctx, this.drawX, this.drawY, this.wField, this.hField, this.field);
+        GpDraw.DrawField(this.ctx, this.drawX, this.drawY, this.wField, this.hField, this.selectedField, false);
+
+        GpDraw.DrawFigures(this.ctx, this.sprites.CUBES, this.figures);
+
+        GpDraw.DrawScore(this.ctx, this.sprites.COIN, this.score, this.centerWin.x);
+        if (this.gameType == 1) GpDraw.DrawTime(this.ctx, this.sprites.COIN, this.gameTime, this.centerWin.x);
+
+        this.lasttimestamp = timestamp;
+
+        this.saveDataHandler(this.score, this.field, this.gameTime);
+
+        if (this.fieldIsFull) {
           this.gameIsOver = true;
         }
-      }
 
-      this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+        if (this.gameIsOver) {
+          this.gameOverHandler(this.score);
+        }
 
-      this.ctx.drawImage(this.sprites.BG, 0, 0, this.canvasWidth, this.canvasHeight);
-
-      GpDraw.DrawPause(this.ctx, this.sprites.PAUSE);
-      GpDraw.DrawToggle(this.ctx, this.isToggleIcon ? this.sprites.TOGGLEOFF : this.sprites.TOGGLEON);
-
-      GpDraw.DrawField(this.ctx, this.drawX, this.drawY, this.wField, this.hField, this.field);
-      GpDraw.DrawField(this.ctx, this.drawX, this.drawY, this.wField, this.hField, this.selectedField, false);
-
-      GpDraw.DrawFigures(this.ctx, this.sprites.CUBES, this.figures);
-
-      GpDraw.DrawScore(this.ctx, this.sprites.COIN, this.score, this.centerWin.x);
-      GpDraw.DrawTime(this.ctx, this.sprites.COIN, this.gameTime, this.centerWin.x);
-
-      this.lasttimestamp = timestamp;
-
-      this.saveDataHandler(this.score, this.field, this.gameTime);
-
-      if (this.fieldIsFull) {
-        this.gameIsOver = true;
-      }
-
-      if (this.gameIsOver) {
-        this.gameOverHandler(this.score);
-      }
-
-      if (!this.gameIsOver) requestAnimationFrame((timestamp: number) => this.animate(timestamp));
-    } else console.info('no ctx');
+        if (!this.gameIsOver) requestAnimationFrame((timestamp: number) => this.animate(timestamp));
+      } else console.info('no ctx');
+    }
   }
 
   private addEvents() {
