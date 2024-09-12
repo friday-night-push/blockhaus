@@ -21,9 +21,8 @@ export const GameDifficultPage = () => {
   const dispatch = useDispatch();
 
   const goGame = (gameDifficult: number) => {
+    console.info('gameDifficult', gameDifficult);
     dispatch(setGameDifficult(gameDifficult));
-    localStorage.setItem('scores', '0');
-    localStorage.setItem('field', JSON.stringify([]));
     navigate(PAGE_ROUTES.GAME);
   };
 
