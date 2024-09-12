@@ -161,4 +161,32 @@ export class GpFigure {
       }
     }
   }
+
+  public static CheckFill(field: number[], figures: TFigure[]) {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (field[i * 10 + j] == 0) {
+          // находим пустую клетку
+          for (let f = 0; f < figures.length; f++) {
+            const figure = figures[f];
+            let nasloi = false;
+            for (let k = 0; k < 9; k++) {
+              if (CUBE_DATAS[figure.num][k] != 0) {
+                const sx = k % 3;
+                const sy = Math.floor(k / 3);
+                if (field[(i + sx) * 10 + (j + sy)] != 0) {
+                  nasloi = true;
+                }
+              }
+            }
+
+            if (!nasloi) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
 }

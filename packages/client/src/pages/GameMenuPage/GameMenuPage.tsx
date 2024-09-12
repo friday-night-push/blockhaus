@@ -42,6 +42,7 @@ export const GameMenuPage = () => {
   const navigate = useNavigate();
 
   const goGame = (gameType: number) => {
+    console.info('gameType', gameType);
     dispatch(setGameType(gameType));
     navigate(PAGE_ROUTES.GAME_DIFFICULT);
   };
