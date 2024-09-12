@@ -11,8 +11,11 @@ export const GamePausePage = () => {
   const navigate = useNavigate();
 
   const stopGame = () => {
-    localStorage.setItem('scores', '0');
-    localStorage.setItem('field', JSON.stringify([]));
+    localStorage.removeItem('scores');
+    localStorage.removeItem('field');
+    localStorage.removeItem('time');
+    localStorage.removeItem('type');
+    localStorage.removeItem('difficult');
     navigate(PAGE_ROUTES.MENU);
   };
 

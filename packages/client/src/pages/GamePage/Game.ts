@@ -38,6 +38,7 @@ export default class Game {
   private field: number[] = [];
   private selectedField: number[] = [];
   private figures: TFigure[] = [];
+  private fieldIsFull = false;
 
   private score = 0;
 
@@ -56,10 +57,15 @@ export default class Game {
   private gameType = 0; // 0 - endless, 1 - race the clock
   private gameTimes: number[] = [5, 10, 15, 20];
   private gameTime = 0;
+  private gameIsOver = false;
 
   private lasttimestamp = 0;
 
-  private saveDataHandler: (sc: number, fl: number[]) => void = () => {
+  private saveDataHandler: (sc: number, fl: number[], tm: number) => void = () => {
+    console.info();
+  };
+
+  private gameOverHandler: (sc: number) => void = () => {
     console.info();
   };
 
@@ -94,6 +100,8 @@ export default class Game {
       this.animate();
     });
 
+    this.gameIsOver = false;
+
     if (this.gameType == 1) {
       console.info('Start race the clock');
     }
@@ -125,26 +133,38 @@ export default class Game {
     this.isToggleIcon = isFS;
   }
 
-  SetDifficult(gameDifficultState: number) {
+  SetDifficult(gameDifficultState: number, time = -1) {
     this.difficult = this.difficults[gameDifficultState];
-    this.gameTime = this.gameTimes[gameDifficultState] * 60;
+    this.gameTime = time >= 0 ? time : this.gameTimes[gameDifficultState] * 60;
   }
 
   SetType(gameTypeState: number) {
     this.gameType = gameTypeState;
   }
 
-  SetSaveDataHandler(handler: (sc: number, fl: number[]) => void) {
+  SetSaveDataHandler(handler: (sc: number, fl: number[], tm: number) => void) {
     this.saveDataHandler = handler;
   }
 
+  SetGameOver(handler: (sc: number) => void) {
+    this.gameOverHandler = handler;
+  }
+
+  PauseGame() {
+    this.gameIsOver = true;
+  }
+
   private animate(timestamp = 0) {
-    const delta = timestamp - this.lasttimestamp;
-    if (this.lasttimestamp != 0) this.gameTime -= delta / 1000;
-
-    requestAnimationFrame((timestamp: number) => this.animate(timestamp));
-
     if (this.ctx) {
+      const delta = timestamp - this.lasttimestamp;
+
+      if (this.gameType == 1) {
+        if (this.lasttimestamp != 0 && this.gameType == 1) this.gameTime -= delta / 1000;
+        if (this.gameTime <= 0) {
+          this.gameIsOver = true;
+        }
+      }
+
       this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
       this.ctx.drawImage(this.sprites.BG, 0, 0, this.canvasWidth, this.canvasHeight);
@@ -161,6 +181,18 @@ export default class Game {
       GpDraw.DrawTime(this.ctx, this.sprites.COIN, this.gameTime, this.centerWin.x);
 
       this.lasttimestamp = timestamp;
+
+      this.saveDataHandler(this.score, this.field, this.gameTime);
+
+      if (this.fieldIsFull) {
+        this.gameIsOver = true;
+      }
+
+      if (this.gameIsOver) {
+        this.gameOverHandler(this.score);
+      }
+
+      if (!this.gameIsOver) requestAnimationFrame((timestamp: number) => this.animate(timestamp));
     } else console.info('no ctx');
   }
 
@@ -211,10 +243,10 @@ export default class Game {
         if (this.isOnField) {
           this.figures = GpFigure.RandomFigures(this.centerWin.x, this.difficult);
           GpFigure.KillRowsAndColumns(this.field);
+          this.fieldIsFull = !GpFigure.CheckFill(this.field, this.figures);
         }
       }
       localStorage.setItem('scores', this.score.toString());
-      this.saveDataHandler(this.score, this.field);
       this.isOnField = false;
     });
 

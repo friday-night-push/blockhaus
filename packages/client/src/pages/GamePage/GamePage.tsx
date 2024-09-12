@@ -23,8 +23,8 @@ export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
 
   let game: Game;
 
-  const gameDifficultState = useSelector((state: RootState) => state.example.gameDifficult);
-  const gameTypeState = useSelector((state: RootState) => state.example.gameType);
+  let gameDifficultState = useSelector((state: RootState) => state.example.gameDifficult);
+  let gameTypeState = useSelector((state: RootState) => state.example.gameType);
 
   useEffect(() => {
     clearTimeout(startTimer);
@@ -37,17 +37,29 @@ export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
     const scoresState = scores ? parseInt(scores) : 0;
     const fieldState = field ? JSON.parse(field) : [];
 
+    const difficult = localStorage.getItem('difficult');
+    const type = localStorage.getItem('type');
+
+    gameDifficultState = difficult ? parseInt(difficult) : gameDifficultState;
+    gameTypeState = type ? parseInt(type) : gameTypeState;
+    localStorage.setItem('difficult', gameDifficultState.toString());
+    localStorage.setItem('type', gameTypeState.toString());
+
+    const time = localStorage.getItem('time');
+
     game = new Game(canvasRef);
     game.Init(scoresState, fieldState);
-    game.SetDifficult(gameDifficultState);
+    game.SetDifficult(gameDifficultState, time == null ? -1 : parseInt(time));
     game.SetType(gameTypeState);
     game.SetPauseHandler(pauseGame);
     game.SetToggleFullscreenHandler(toggleFS);
     game.SetSaveDataHandler(saveData);
+    game.SetGameOver(gameOver);
     game.Start();
   }
 
   function pauseGame() {
+    game.PauseGame();
     navigate(PAGE_ROUTES.GAME_PAUSE);
   }
 
@@ -56,9 +68,20 @@ export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
     game.SetToggleIcon(isFullscreen);
   }
 
-  function saveData(score: number, field: number[]) {
+  function saveData(score: number, field: number[], time: number) {
     localStorage.setItem('scores', score.toString());
+    localStorage.setItem('time', time.toString());
     localStorage.setItem('field', JSON.stringify(field));
+  }
+
+  function gameOver(score: number) {
+    alert('Game over. Your score is ' + score);
+    localStorage.removeItem('scores');
+    localStorage.removeItem('field');
+    localStorage.removeItem('time');
+    localStorage.removeItem('type');
+    localStorage.removeItem('difficult');
+    navigate(PAGE_ROUTES.MENU);
   }
 
   return <canvas ref={canvasRef} className='canvas'></canvas>;
