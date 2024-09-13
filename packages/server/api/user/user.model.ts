@@ -27,7 +27,7 @@ export class UserModel extends Model {
   @Column({ type: DataType.STRING, allowNull: false })
   email: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING })
   phone: string;
 
   @HasMany(() => TopicModel)
