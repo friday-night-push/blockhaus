@@ -4,17 +4,17 @@ import compression from 'compression';
 import cors from 'cors';
 
 import dotenv from 'dotenv';
-
-dotenv.config({ path: '../../.env' });
-
 import express from 'express';
 import helmet from 'helmet';
-import { type ViteDevServer, createServer as createViteServer } from 'vite';
+import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 import { apiRouter } from './api';
+import { yaProxyMiddleware } from './middlewares/ya-proxy';
 import { ssrRoute } from './ssr';
 
-import { isDev, initPostgres, logger } from './utils';
+import { initPostgres, isDev, logger } from './utils';
+
+dotenv.config({ path: '../../.env' });
 
 initPostgres();
 
@@ -31,7 +31,8 @@ async function startServer() {
     })
   );
   app.use(compression());
-  app.use(express.json());
+
+  app.use('/api/v1/proxy', yaProxyMiddleware);
   app.use('/api/v1', apiRouter);
 
   let vite: ViteDevServer | undefined;
