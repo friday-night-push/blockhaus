@@ -50,7 +50,6 @@ export const GameMenuPage = () => {
   const MENU_ITEMS: MenuItemProps[] = [
     { label: 'never-ending', onClick: () => goGame(0) },
     { label: 'race the clock', onClick: () => goGame(1) },
-    { label: 'leaderboards', href: PAGE_ROUTES.LEADER_BOARD },
   ];
 
   const auth = async (data: TYandexAuth) => {
@@ -122,6 +121,12 @@ export const GameMenuPage = () => {
           {MENU_ITEMS.map(item => (
             <MenuItem key={item.label} {...item} />
           ))}
+
+          {userIsLoading ? (
+            <Skeleton style={{ height: '50px' }} />
+          ) : user && user.id ? (
+            <MenuItem label={'leaderboards'} onClick={() => navigate(PAGE_ROUTES.LEADER_BOARD)} />
+          ) : null}
         </Container>
       </Menu>
       <Copyright />
