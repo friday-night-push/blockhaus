@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+
 import 'reflect-metadata';
 import { Sequelize } from 'sequelize-typescript';
 
@@ -7,8 +9,8 @@ import { ReplyModel } from '../api/reply';
 import { TopicModel } from '../api/topic';
 import { UserModel } from '../api/user';
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-  process.env;
+dotenv.config({ path: '../../.env' });
+const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process.env;
 
 export const initPostgres = async (): Promise<Sequelize | null> => {
   try {
