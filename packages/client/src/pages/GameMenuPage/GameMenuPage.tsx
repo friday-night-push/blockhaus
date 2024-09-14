@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Menu, Skeleton } from '@gravity-ui/uikit';
 
@@ -13,6 +13,7 @@ import type { MenuItemProps } from 'src/components/atoms/MenuItem';
 import { MenuItem } from 'src/components/atoms/MenuItem';
 import { Copyright } from 'src/components/molecules/Copyright';
 import { User } from 'src/components/molecules/User';
+import { Geolocation } from 'src/components/organisms';
 import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
 
@@ -25,17 +26,16 @@ import { PAGE_ROUTES } from 'src/utils/constants';
 
 import Helpers from 'src/utils/helpers';
 
-import { Geolocation } from '../../components/organisms';
-
 import { setGameType } from '../../store';
 
-let firtsStart = 0;
 
 const authAPI = new AuthAPI();
 
 export const GameMenuPage = () => {
   const { user, setUser, userIsLoading } = useContext(AuthContext);
   const [searchParams] = useSearchParams();
+
+  const [firstStart, setFirstStart] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -86,7 +86,7 @@ export const GameMenuPage = () => {
   };
 
   useEffect(() => {
-    if (firtsStart == 0) {
+    if (firstStart === 0) {
       const code = searchParams.get('code');
       const cid = searchParams.get('cid');
       if (code != null && cid != null) {
@@ -101,7 +101,7 @@ export const GameMenuPage = () => {
       }
     }
 
-    firtsStart++;
+    setFirstStart(prev => prev++);
   }, []);
 
   return (
