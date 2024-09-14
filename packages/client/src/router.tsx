@@ -96,13 +96,13 @@ export const routes: RouteObject[] = [
   },
   {
     path: PAGE_ROUTES.FORUM,
-    element: <ProtectedRoute element={<ForumPage />} />,
+    element: <ForumPage />,
     errorElement: <ErrorPage />,
     loader: topicsLoader,
   },
   {
     path: PAGE_ROUTES.FORUM_TOPIC,
-    element: <ProtectedRoute element={<ForumTopicPage />} />,
+    element: <ForumTopicPage />,
     errorElement: <ErrorPage />,
     loader: topicInfo,
   },
