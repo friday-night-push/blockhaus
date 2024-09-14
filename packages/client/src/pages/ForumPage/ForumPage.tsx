@@ -5,7 +5,6 @@ import { PAGE_ROUTES } from 'src/utils/constants';
 
 import type { TopicsType } from './ForumPage.types';
 
-// Simulating a request to the server
 export const topicsLoader: LoaderFunction = async (): Promise<TopicsType[]> => {
   return [
     {

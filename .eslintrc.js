@@ -4,17 +4,12 @@ module.exports = {
     es2020: true,
     node: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:import/typescript',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'plugin:import/typescript', 'plugin:@typescript-eslint/recommended', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 11,
   },
-  plugins: ['@typescript-eslint', 'import'],
+  plugins: ['@typescript-eslint', 'import', 'no-relative-import-paths'],
   settings: {
     'import/resolver': {
       typescript: {
@@ -27,16 +22,11 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-var-requires': 0,
+    'no-relative-import-paths/no-relative-import-paths': ['warn', { allowSameFolder: true, rootDir: 'src' }],
     'import/order': [
       'error',
       {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          ['sibling', 'parent'],
-          'index',
-        ],
+        groups: ['builtin', 'external', 'internal', ['sibling', 'parent'], 'index'],
         alphabetize: {
           order: 'asc',
           orderImportKind: 'asc',
