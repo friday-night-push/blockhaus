@@ -22,12 +22,10 @@ import AuthAPI from 'src/services/api/auth-api';
 import type { TUser } from 'src/shared/types/user';
 import type { TYandexAuth } from 'src/shared/types/yandex';
 
+import { setGameType } from 'src/store';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 import Helpers from 'src/utils/helpers';
-
-import { setGameType } from '../../store';
-
 
 const authAPI = new AuthAPI();
 
@@ -42,7 +40,6 @@ export const GameMenuPage = () => {
   const navigate = useNavigate();
 
   const goGame = (gameType: number) => {
-    console.info('gameType', gameType);
     dispatch(setGameType(gameType));
     navigate(PAGE_ROUTES.GAME_DIFFICULT);
   };
@@ -54,7 +51,6 @@ export const GameMenuPage = () => {
   ];
 
   const auth = async (data: TYandexAuth) => {
-    console.info('auth');
     await authAPI.yaSignInUp(data, isAuthOk, errorAuthHandler);
   };
 
@@ -107,8 +103,8 @@ export const GameMenuPage = () => {
   return (
     <Page>
       <Logo isFull size='auto' />
-      <Menu size={'xl'}>
-        <Container direction={'column'} alignItems={'center'}>
+      <Menu size='xl'>
+        <Container direction='column' alignItems='center'>
           {userIsLoading ? (
             <Skeleton style={{ height: '50px' }} />
           ) : user && user.id ? (
@@ -117,7 +113,7 @@ export const GameMenuPage = () => {
               <Geolocation />
             </>
           ) : (
-            <MenuItem label={'sign in'} onClick={() => navigate(PAGE_ROUTES.SIGN_IN)} />
+            <MenuItem label='sign in' onClick={() => navigate(PAGE_ROUTES.SIGN_IN)} />
           )}
           {MENU_ITEMS.map(item => (
             <MenuItem key={item.label} {...item} />

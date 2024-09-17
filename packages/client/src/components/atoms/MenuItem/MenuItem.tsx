@@ -19,7 +19,7 @@ export const MenuItem = ({ label, href, theme = 'normal', onClick }: MenuItemPro
 
   return (
     <Menu.Item theme={theme} style={{ minHeight: '50px' }} onClick={onClick || goToHref}>
-      <Text variant={'display-2'}>{label}</Text>
+      <Text variant='display-2'>{label}</Text>
     </Menu.Item>
   );
 };

@@ -39,7 +39,7 @@ export const ChangePassword = () => {
         onSubmit={handleSubmit}
         validationSchema={changePasswordValidationSchema}
         errorMessage={error}
-        submitButtonText={'Change Password'}
+        submitButtonText='Change Password'
       />
     </Page>
   );
