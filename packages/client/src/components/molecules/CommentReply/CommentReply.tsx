@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { Button, TextArea } from '@gravity-ui/uikit';
+import { Text, TextArea } from '@gravity-ui/uikit';
 
+import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 
+import { AuthContext } from 'src/hoc/AuthProvider';
 import type { Nullable } from 'src/shared/types/global';
+
+import { PAGE_ROUTES } from 'src/utils/constants';
 
 type CommentReplyProps = {
   parentId: Nullable<number>;
@@ -12,6 +16,8 @@ type CommentReplyProps = {
 };
 
 export const CommentReply: React.FC<CommentReplyProps> = ({ parentId, onCancel }) => {
+  const { user } = useContext(AuthContext);
+
   const [replyContent, setReplyContent] = useState('');
 
   const handleSubmit = () => {
@@ -29,21 +35,32 @@ export const CommentReply: React.FC<CommentReplyProps> = ({ parentId, onCancel }
 
   return (
     <Container direction='column' gap={2}>
-      <TextArea
-        placeholder='Write a reply...'
-        value={replyContent}
-        onChange={e => setReplyContent(e.target.value)}
-        rows={3}
-        style={{ width: '100%' }}
-      />
-      <Container justifyContent='flex-end' gap={2}>
-        <Button view='flat' size='s' onClick={handleCancel}>
-          Cancel
-        </Button>
-        <Button view='action' size='s' onClick={handleSubmit}>
-          Submit Reply
-        </Button>
-      </Container>
+      {user && user.id ? (
+        <>
+          <TextArea
+            placeholder='Write a reply...'
+            value={replyContent}
+            onChange={e => setReplyContent(e.target.value)}
+            rows={3}
+            style={{ width: '100%' }}
+          />
+          <Container justifyContent='flex-end' gap={2}>
+            <Button view='flat' size='s' onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button view='action' size='s' onClick={handleSubmit}>
+              Submit Reply
+            </Button>
+          </Container>
+        </>
+      ) : (
+        <Container justifyContent='space-between' alignItems='center' gap={2}>
+          <Text>You should sign in to leave comments</Text>
+          <Button view='action' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
+            Sign in
+          </Button>
+        </Container>
+      )}
     </Container>
   );
 };

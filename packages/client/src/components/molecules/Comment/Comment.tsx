@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { ArrowShapeTurnUpLeft } from '@gravity-ui/icons';
 import { Avatar, Card, Icon, Text } from '@gravity-ui/uikit';
@@ -6,6 +6,7 @@ import { Avatar, Card, Icon, Text } from '@gravity-ui/uikit';
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 import { CommentReply } from 'src/components/molecules/CommentReply';
+import { AuthContext } from 'src/hoc/AuthProvider';
 import type { Nullable } from 'src/shared/types/global';
 
 export type CommentProps = {
@@ -18,6 +19,8 @@ export type CommentProps = {
 };
 
 export const Comment = ({ id, content, time, parentCommentId }: CommentProps) => {
+  const { user } = useContext(AuthContext);
+
   const [isReplying, setIsReplying] = useState(false);
 
   const formattedTime = new Date(time).toLocaleString('ru-RU');
@@ -36,7 +39,7 @@ export const Comment = ({ id, content, time, parentCommentId }: CommentProps) =>
               <Avatar size='xs' />
               <Text color='secondary'>{formattedTime}</Text>
             </Container>
-            <Button view='flat-secondary' size='s' type='button' onClick={toggleReply}>
+            <Button view='flat-secondary' size='s' type='button' disabled={!user} onClick={toggleReply}>
               <Icon data={ArrowShapeTurnUpLeft} />
             </Button>
           </Container>
