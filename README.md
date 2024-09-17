@@ -1,5 +1,9 @@
 # Block Puzzle
 
+##
+
+Видео для командного зачёта: https://disk.yandex.ru/i/j6lmXIRMKd0Rpw
+
 ### Команда
 
 Над проектом работают:
