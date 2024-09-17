@@ -67,7 +67,7 @@ module.exports = {
       },
     ],
     'no-multiple-empty-lines': 1,
-    'no-unused-vars': 0,
+    'no-unused-vars': 1,
     'react/react-in-jsx-scope': 0,
     'react/jsx-uses-react': 0,
     'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
