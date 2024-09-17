@@ -17,12 +17,14 @@ export const ForumTopicPage = () => {
   const { topicId } = useParams();
 
   return (
-    <Container direction='column' gap={2} grow maxWidth='580px' spacing={{ px: 4 }}>
-      <Text variant='header-1'>
-        {topicId}: {topicInfo.name}
-      </Text>
+    <Container direction='column' gap={6} grow maxWidth='580px' spacing={{ px: 4 }}>
+      <Container direction='column'>
+        <Text variant='header-1'>
+          {topicId}: {topicInfo.name}
+        </Text>
+        <Text variant='body-1'>{topicInfo.text}</Text>
+      </Container>
       <Container direction='column' spacing={{ mb: 10 }}>
-        <p>{topicInfo.text}</p>
         {topicInfo?.comments && <CommentsSection comments={topicInfo.comments} />}
       </Container>
     </Container>
