@@ -62,7 +62,7 @@ export class GpFigure {
     return figures;
   }
 
-  public static UpdateCoordFigures(centerWinX: number, figures: TFigure[]) {
+  public static UpdateCoordFigures(centerWinX: number, figures: TFigure[], yy = 0) {
     function rf(a: number, b: TFigure) {
       return a + b.width + 50;
     }
@@ -71,6 +71,7 @@ export class GpFigure {
     const figuresShift = (figures.reduce(rf, 0) - 50) / 2;
 
     figures.forEach((f: TFigure) => {
+      f.y = yy;
       f.x = centerWinX + l - figuresShift;
       l += f.width + 50;
 

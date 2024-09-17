@@ -1,8 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+
+import { Button, Modal } from '@gravity-ui/uikit';
 
 import { useSelector } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
+
+import { AuthContext } from 'src/hoc/AuthProvider';
 
 import { PAGE_ROUTES } from 'src/utils/constants';
 
@@ -18,8 +22,12 @@ export interface GamePageProps {
 }
 
 export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
+  const [open, setOpen] = useState(false);
+  const [content, setContent] = useState('');
+
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const { user } = useContext(AuthContext);
 
   let game: Game;
 
@@ -74,8 +82,20 @@ export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
     localStorage.setItem('field', JSON.stringify(field));
   }
 
-  function gameOver(score: number) {
-    alert('Game over. Your score is ' + score);
+  function gameOver(score: number, type: number, diff: number) {
+    const isAuth = localStorage.getItem('isAuth');
+
+    let name = 'Y';
+    if (user != null && isAuth != null) {
+      name = user?.display_name == null ? user?.first_name : user?.display_name;
+      name += ', y';
+    }
+
+    setContent(`Game over. ${name}our score is ${score}. Type: ${type}, difficult: ${diff}.`);
+    setOpen(true);
+  }
+
+  function closeGame() {
     localStorage.removeItem('scores');
     localStorage.removeItem('field');
     localStorage.removeItem('time');
@@ -84,5 +104,16 @@ export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
     navigate(PAGE_ROUTES.MENU);
   }
 
-  return <canvas ref={canvasRef} className='canvas'></canvas>;
+  return (
+    <>
+      <canvas ref={canvasRef} className='canvas'></canvas>;
+      <Modal open={open} onClose={closeGame}>
+        <div style={{ padding: '20px' }}>
+          {content}
+          <hr />
+          <Button onClick={closeGame}>Ok</Button>
+        </div>
+      </Modal>
+    </>
+  );
 };

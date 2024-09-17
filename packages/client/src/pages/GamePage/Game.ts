@@ -55,7 +55,7 @@ export default class Game {
   private difficults: number[] = [7, 5, 3, 1];
 
   private gameType = 0; // 0 - endless, 1 - race the clock
-  private gameTimes: number[] = [5, 10, 15, 20];
+  private gameTimes: number[] = [0.05, 10, 15, 20];
   private gameTime = 0;
   private gameIsOver = false;
   private gameInPause = false;
@@ -66,7 +66,7 @@ export default class Game {
     console.info();
   };
 
-  private gameOverHandler: (sc: number) => void = () => {
+  private gameOverHandler: (sc: number, type: number, diff: number) => void = () => {
     console.info();
   };
 
@@ -148,7 +148,7 @@ export default class Game {
     this.saveDataHandler = handler;
   }
 
-  SetGameOver(handler: (sc: number) => void) {
+  SetGameOver(handler: (sc: number, type: number, diff: number) => void) {
     this.gameOverHandler = handler;
   }
 
@@ -192,7 +192,7 @@ export default class Game {
         }
 
         if (this.gameIsOver) {
-          this.gameOverHandler(this.score);
+          this.gameOverHandler(this.score, this.gameType, this.difficult);
         }
 
         if (!this.gameIsOver) requestAnimationFrame((timestamp: number) => this.animate(timestamp));
@@ -246,6 +246,7 @@ export default class Game {
 
         if (this.isOnField) {
           this.figures = GpFigure.RandomFigures(this.centerWin.x, this.difficult);
+          this.resize();
           GpFigure.KillRowsAndColumns(this.field);
           this.fieldIsFull = !GpFigure.CheckFill(this.field, this.figures);
         }
@@ -332,7 +333,10 @@ export default class Game {
       this.drawX = this.centerWin.x - this.wField / 2 + SHIFT_HORIZONTAL;
       this.drawY = this.centerWin.y - this.hField / 2 + SHIFT_VERTICAL;
 
-      this.figures = GpFigure.UpdateCoordFigures(this.centerWin.x, this.figures);
+      if (this.gameType == 0 && this.drawY < 70) this.drawY = 70;
+      if (this.gameType == 1 && this.drawY < 110) this.drawY = 110;
+
+      this.figures = GpFigure.UpdateCoordFigures(this.centerWin.x, this.figures, this.drawY + this.hField + 20);
     }
   }
 }

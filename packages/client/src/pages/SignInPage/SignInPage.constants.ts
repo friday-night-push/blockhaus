@@ -7,9 +7,5 @@ export const USER_DATA_MOCK = {
 
 export const inputs: InputProps[] = [
   { name: 'login', label: 'Login', type: 'text' },
-  {
-    name: 'password',
-    label: 'Password',
-    type: 'password',
-  },
+  { name: 'password', label: 'Password', type: 'password' },
 ];

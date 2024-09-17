@@ -31,7 +31,7 @@ export const Form = <T extends FormikValues>({
   inputView = 'normal',
   errorMessage,
   submitButtonText = 'Submit',
-  showEditButton = false,
+  showEditButton = true,
   showResetButton = false,
   children,
 }: FormProps<T>) => {

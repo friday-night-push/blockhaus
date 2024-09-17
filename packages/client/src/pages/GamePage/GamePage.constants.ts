@@ -9,7 +9,7 @@ import type { TPos } from './GamePage.types';
 
 const DEFAULT_WIDTH = 30;
 const DEFAULT_HEIGHT = 30;
-const SHIFT_VERTICAL = -150;
+const SHIFT_VERTICAL = -80;
 const SHIFT_HORIZONTAL = 0;
 
 const SPRITES = {
