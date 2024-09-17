@@ -1,49 +1,30 @@
+import { Text } from '@gravity-ui/uikit';
 import type { LoaderFunction } from 'react-router-dom';
 import { useLoaderData, useParams } from 'react-router-dom';
 
-import type { CommentType, TopicType } from './ForumTopicPage.types';
+import { Container } from 'src/components/atoms/Container';
+import type { TopicProps } from 'src/components/molecules/TopicCard';
+import { CommentsSection } from 'src/components/organisms/CommentsSection';
+import { mockTopic } from 'src/pages/ForumTopicPage/ForumTopicPage.mock';
 
-// Simulating a request to the server
-export const topicInfo: LoaderFunction = async ({ params }): Promise<TopicType> => {
-  return {
-    id: 1,
-    name: 'Announcement',
-    text: `Info about topic ${params.topicId} `, // It's temporary logic, just to remove comments for 'Complaints' page
-    ...(params.topicId === '1' && {
-      comments: [
-        {
-          id: 1,
-          author: 'Ivan',
-          text: 'Hello!',
-        },
-      ],
-    }),
-  };
+export const topicInfo: LoaderFunction = async ({ params }): Promise<TopicProps> => {
+  return { ...mockTopic, id: Number(params.topicId) || mockTopic.id };
 };
 
 export const ForumTopicPage = () => {
-  const topicInfo = useLoaderData() as TopicType;
+  const topicInfo = useLoaderData() as TopicProps;
+
   const { topicId } = useParams();
 
   return (
-    <div>
-      <h1>Topic Page {topicId}</h1>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <p> {topicInfo.text}</p>
-        {topicInfo?.comments?.map((comment: CommentType) => {
-          return (
-            <div
-              style={{
-                width: '300px',
-                height: '100px',
-                border: '1px solid black',
-              }}>
-              <h2>{comment.author}</h2>
-              <p>{comment.text}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <Container direction='column' gap={2} grow maxWidth='580px' spacing={{ px: 4 }}>
+      <Text variant='header-1'>
+        {topicId}: {topicInfo.name}
+      </Text>
+      <Container direction='column' spacing={{ mb: 10 }}>
+        <p>{topicInfo.text}</p>
+        {topicInfo?.comments && <CommentsSection comments={topicInfo.comments} />}
+      </Container>
+    </Container>
   );
 };

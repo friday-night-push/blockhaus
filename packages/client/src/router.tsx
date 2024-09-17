@@ -2,6 +2,7 @@ import type { RouteObject } from 'react-router-dom';
 
 import { ProtectedRoute } from 'src/hoc/ProtectedRoute';
 
+import { ForumLayout } from 'src/layouts/ForumLayout';
 import { ChangePassword } from 'src/pages/ChangePassword';
 import { ErrorBoundaryPage } from 'src/pages/ErrorBoundaryPage';
 import { ErrorPage } from 'src/pages/ErrorPage';
@@ -57,15 +58,13 @@ export const routes: RouteObject[] = [
   {
     path: PAGE_ROUTES.GAME,
     element: (
-      <FullscreenToggle
-        children={
-          <GamePage
-            toggleFullscreen={function (): boolean {
-              throw new Error('Function not implemented.');
-            }}
-          />
-        }
-      />
+      <FullscreenToggle>
+        <GamePage
+          toggleFullscreen={function (): boolean {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      </FullscreenToggle>
     ),
     errorElement: <ErrorPage />,
   },
@@ -96,15 +95,22 @@ export const routes: RouteObject[] = [
   },
   {
     path: PAGE_ROUTES.FORUM,
-    element: <ForumPage />,
+    element: <ForumLayout />,
     errorElement: <ErrorPage />,
-    loader: topicsLoader,
-  },
-  {
-    path: PAGE_ROUTES.FORUM_TOPIC,
-    element: <ForumTopicPage />,
-    errorElement: <ErrorPage />,
-    loader: topicInfo,
+    children: [
+      {
+        path: PAGE_ROUTES.FORUM,
+        element: <ForumPage />,
+        errorElement: <ErrorPage />,
+        loader: topicsLoader,
+      },
+      {
+        path: PAGE_ROUTES.FORUM_TOPIC,
+        element: <ForumTopicPage />,
+        errorElement: <ErrorPage />,
+        loader: topicInfo,
+      },
+    ],
   },
   {
     path: PAGE_ROUTES.GAME_DIFFICULT,

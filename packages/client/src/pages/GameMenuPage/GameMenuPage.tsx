@@ -48,6 +48,7 @@ export const GameMenuPage = () => {
     { label: 'never-ending', onClick: () => goGame(0) },
     { label: 'race the clock', onClick: () => goGame(1) },
     { label: 'leaderboards', href: PAGE_ROUTES.LEADER_BOARD },
+    { label: 'forum', href: PAGE_ROUTES.FORUM },
   ];
 
   const auth = async (data: TYandexAuth) => {
@@ -108,10 +109,10 @@ export const GameMenuPage = () => {
           {userIsLoading ? (
             <Skeleton style={{ height: '50px' }} />
           ) : user && user.id ? (
-            <>
+            <Container direction='column' gap={2} alignItems='center'>
               <User user={user} setUser={setUser} userIsLoading={userIsLoading} isFullSize />
               <Geolocation />
-            </>
+            </Container>
           ) : (
             <MenuItem label='sign in' onClick={() => navigate(PAGE_ROUTES.SIGN_IN)} />
           )}

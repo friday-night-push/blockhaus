@@ -11,8 +11,4 @@ export const MENU_ITEMS: MenuItemProps[] = [
     label: 'leaderboards',
     href: PAGE_ROUTES.LEADER_BOARD,
   },
-  {
-    label: 'forum',
-    href: PAGE_ROUTES.FORUM,
-  },
 ];

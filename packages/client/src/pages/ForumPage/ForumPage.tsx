@@ -1,35 +1,34 @@
+import { Text } from '@gravity-ui/uikit';
 import type { LoaderFunction } from 'react-router-dom';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 
-import { PAGE_ROUTES } from 'src/utils/constants';
+import { Container } from 'src/components/atoms/Container';
+import type { TopicCardsProps } from 'src/components/molecules/TopicCard';
+import { TopicCard } from 'src/components/molecules/TopicCard';
 
-import type { TopicsType } from './ForumPage.types';
+import { mockTopics } from 'src/pages/ForumPage/ForumPage.mock';
 
-export const topicsLoader: LoaderFunction = async (): Promise<TopicsType[]> => {
-  return [
-    {
-      name: 'Announcement',
-      id: 1,
-      commentCount: 10,
-    },
-    {
-      name: 'Complaints',
-      id: 2,
-      commentCount: 0,
-    },
-  ];
+export const topicsLoader: LoaderFunction = async (): Promise<TopicCardsProps> => {
+  return mockTopics;
 };
 
 export const ForumPage = () => {
-  const topics = useLoaderData() as TopicsType[];
+  const topics = useLoaderData() as TopicCardsProps;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {topics.map(topic => (
-        <Link key={topic.id} to={`${PAGE_ROUTES.FORUM}/${topic.id}${topic.commentCount ? '/1' : ''}`}>
-          {topic.name}
-        </Link>
-      ))}
-    </div>
+    <Container spacing={{ px: 4 }} direction='column' grow gap={5} maxWidth='580px'>
+      <Container direction='column' gap={2} style={{ textAlign: 'center' }}>
+        <Text variant='subheader-1'>Join the Conversation: Share Your Achievements, Tactics, and Game Insights!</Text>
+        <Text variant='body-1'>
+          Welcome to the hub to connect, compete, and collaborate. Dive into discussions, explore strategies, and share
+          your latest victories with a community!
+        </Text>
+      </Container>
+      <Container direction='column' gap={2}>
+        {topics.map(topic => (
+          <TopicCard key={topic.id} {...topic} />
+        ))}
+      </Container>
+    </Container>
   );
 };
