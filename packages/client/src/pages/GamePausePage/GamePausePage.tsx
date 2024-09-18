@@ -26,8 +26,8 @@ export const GamePausePage = () => {
 
   return (
     <Page>
-      <Menu size={'xl'}>
-        <Container direction={'column'} alignItems={'center'}>
+      <Menu size='xl'>
+        <Container direction='column' alignItems='center'>
           {MENU_ITEMS.map(item => (
             <MenuItem key={item.label} {...item} />
           ))}

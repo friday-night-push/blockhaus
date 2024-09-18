@@ -68,7 +68,7 @@ export const Form = <T extends FormikValues>({
                 onBlur={handleBlur}
                 validationState={touched[input.name as keyof T] && errors[input.name as keyof T] && 'invalid'}
                 errorMessage={errors[input.name as keyof T] as FormikErrors<string>}
-                errorPlacement={'inside'}
+                errorPlacement='inside'
                 value={values[input.name as keyof T] || ''}
               />
             ))}
@@ -92,7 +92,7 @@ export const Form = <T extends FormikValues>({
                   <Button
                     view='action'
                     type='submit'
-                    width={'max'}
+                    width='max'
                     loading={isSubmitting}
                     disabled={!isValid || isSubmitting}>
                     {submitButtonText}

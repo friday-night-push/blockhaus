@@ -47,7 +47,7 @@ export const User = ({ user, setUser, userIsLoading, isFullSize = false }: UserP
         <>
           {isFullSize ? (
             <UserComponent
-              size={'xl'}
+              size='xl'
               avatar={{
                 imgUrl: user?.avatar && `${BASE_API_URL}/resources${user?.avatar}`,
                 text: user?.display_name || user?.first_name,
@@ -57,8 +57,8 @@ export const User = ({ user, setUser, userIsLoading, isFullSize = false }: UserP
             />
           ) : (
             <UserLabel
-              size={'xl'}
-              view={'clear'}
+              size='xl'
+              view='clear'
               avatar={user?.avatar ? `${RESOURCE_URL}${user?.avatar}` : undefined}
               onClick={() => navigate(PAGE_ROUTES.PROFILE)}>
               {user?.display_name || `${user?.first_name} ${user?.second_name}`}
@@ -66,17 +66,17 @@ export const User = ({ user, setUser, userIsLoading, isFullSize = false }: UserP
           )}
           <Container gap={0}>
             {isFullSize && (
-              <Button view='flat-secondary' size='xl' onClick={() => navigate(PAGE_ROUTES.PROFILE)} qa={'edit-button'}>
+              <Button view='flat-secondary' size='xl' onClick={() => navigate(PAGE_ROUTES.PROFILE)} qa='edit-button'>
                 <Icon data={Pencil} />
               </Button>
             )}
-            <Button view='flat-danger' size='xl' onClick={onSignOut} qa={'sign-out-button'}>
+            <Button view='flat-danger' size='xl' onClick={onSignOut} qa='sign-out-button'>
               <Icon data={ArrowRightFromSquare} />
             </Button>
           </Container>
         </>
       ) : (
-        <Button view={'flat-action'} type='button' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
+        <Button view='flat-action' type='button' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
           Sign In
         </Button>
       )}

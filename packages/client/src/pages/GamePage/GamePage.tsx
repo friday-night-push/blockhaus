@@ -4,11 +4,10 @@ import { useSelector } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
 
+import type { RootState } from 'src/store';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 import Game from './Game';
-
-import type { RootState } from '../../store';
 
 let startTimer: NodeJS.Timeout;
 let isFullscreen = false;
@@ -17,7 +16,7 @@ export interface GamePageProps {
   toggleFullscreen: (canvasRef: React.RefObject<HTMLCanvasElement>, isFS: boolean) => boolean;
 }
 
-export const GamePage: React.FC<GamePageProps> = ({ toggleFullscreen }) => {
+export const GamePage = ({ toggleFullscreen }: GamePageProps) => {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 

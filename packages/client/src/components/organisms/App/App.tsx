@@ -14,13 +14,10 @@ interface AppProps {
   router: ReturnType<typeof createBrowserRouter>;
 }
 
-export const App = (props: AppProps) => {
-  const { router } = props;
-  return (
-    <AuthProvider>
-      <ThemeProvider theme={'light'}>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </AuthProvider>
-  );
-};
+export const App = ({ router }: AppProps) => (
+  <AuthProvider>
+    <ThemeProvider theme='light'>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  </AuthProvider>
+);
