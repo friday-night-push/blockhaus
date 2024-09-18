@@ -3,11 +3,11 @@
 exports[`SignInPage matches snapshot 1`] = `
 <section
   class="g-box g-flex"
-  style="width: auto; min-height: 100vh; column-gap: 12px; row-gap: 12px; justify-content: center;"
+  style="width: auto; min-height: 100vh; flex-direction: column; column-gap: 12px; row-gap: 12px; align-items: center; justify-content: center;"
 >
   <section
     class="g-box g-flex"
-    style="width: 100%; min-height: 100vh; max-width: 380px; flex-direction: column; column-gap: 32px; row-gap: 32px; align-items: center; justify-content: center;"
+    style="width: 100%; max-width: 380px; flex-direction: column; flex-grow: 1; column-gap: 32px; row-gap: 32px; align-items: center; justify-content: center;"
   >
     <img
       alt="Blockhaus"

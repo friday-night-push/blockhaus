@@ -13,7 +13,7 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ThemeProvider theme={'light'}>
+    <ThemeProvider theme='light'>
       <OfflinePage />
     </ThemeProvider>
   </React.StrictMode>

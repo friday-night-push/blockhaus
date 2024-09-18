@@ -57,7 +57,7 @@ export const SignUpPage = () => {
               New here? Dive in! Just fill in the form and let the good times roll.
             </Text>
             <Form inputs={inputs} validationSchema={signUpValidationSchema} onSubmit={signup} errorMessage={error} />
-            <Button view={'flat'} isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
+            <Button view='flat' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
               Signed up already? Sign In
             </Button>
             <BackButton fallbackRoute={PAGE_ROUTES.MENU} />

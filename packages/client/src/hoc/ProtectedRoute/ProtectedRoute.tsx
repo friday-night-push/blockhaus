@@ -26,7 +26,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   if (userIsLoading) {
     return (
       <Page>
-        <Loader size={'l'} qa={LOADER_ID} />
+        <Loader size='l' qa={LOADER_ID} />
       </Page>
     );
   }

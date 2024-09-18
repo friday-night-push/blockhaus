@@ -7,7 +7,7 @@ import { PAGE_ROUTES } from 'src/utils/constants';
 
 import { ForumPage, topicsLoader } from './ForumPage';
 
-test('renders topics links', async () => {
+test('renders topics correctly', async () => {
   const routes = [
     {
       path: PAGE_ROUTES.FORUM,
@@ -23,13 +23,19 @@ test('renders topics links', async () => {
   render(<RouterProvider router={router} />);
 
   await waitFor(() => {
-    const announcementLink = screen.getByText('Announcement');
-    const complaintsLink = screen.getByText('Complaints');
+    const generalDiscussion = screen.getByText('General Discussion');
+    expect(generalDiscussion).toBeInTheDocument();
 
-    expect(announcementLink).toBeInTheDocument();
-    expect(announcementLink.getAttribute('href')).toBe(`${PAGE_ROUTES.FORUM}/1/1`);
+    const announcements = screen.getByText('Announcements');
+    expect(announcements).toBeInTheDocument();
 
-    expect(complaintsLink).toBeInTheDocument();
-    expect(complaintsLink.getAttribute('href')).toBe(`${PAGE_ROUTES.FORUM}/2`);
+    const offTopic = screen.getByText('Off-Topic');
+    expect(offTopic).toBeInTheDocument();
+
+    const feedback = screen.getByText('Feedback & Suggestions');
+    expect(feedback).toBeInTheDocument();
+
+    const technicalSupport = screen.getByText('Technical Support');
+    expect(technicalSupport).toBeInTheDocument();
   });
 });

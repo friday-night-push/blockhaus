@@ -51,9 +51,9 @@ export const ErrorPage = () => {
 
   return (
     <Page isFullWidth withHeader>
-      <Container alignItems={'center'} gap={8} grow>
+      <Container alignItems='center' gap={8} grow>
         <Text variant='display-4'>{title}</Text>
-        <Container direction={'column'}>
+        <Container direction='column'>
           <Text variant='subheader-1'>{code}</Text>
           <Text variant='code-2'>{message}</Text>
         </Container>

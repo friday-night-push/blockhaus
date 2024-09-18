@@ -23,7 +23,7 @@ interface AllTheProvidersProps {
 const AllTheProviders = (props: AllTheProvidersProps) => {
   const { children, authState = { user: null, userIsLoading: false } } = props;
   return (
-    <ThemeProvider theme={'light'}>
+    <ThemeProvider theme='light'>
       <BrowserRouter>
         <AuthContext.Provider value={authState}>{children}</AuthContext.Provider>
       </BrowserRouter>

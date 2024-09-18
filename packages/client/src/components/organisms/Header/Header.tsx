@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { ArrowLeft } from '@gravity-ui/icons';
-import { Icon } from '@gravity-ui/uikit';
+import { Icon, Text } from '@gravity-ui/uikit';
 
 import { Container } from 'src/components/atoms/Container';
 import { BackButton } from 'src/components/molecules/BackButton/BackButton';
@@ -10,26 +10,34 @@ import { AuthContext } from 'src/hoc/AuthProvider';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 export type HeaderProps = {
+  title?: string;
   hasBackButton?: boolean;
 };
 
-export const Header = ({ hasBackButton }: HeaderProps) => {
+export const Header = ({ title, hasBackButton }: HeaderProps) => {
   const { user, setUser, userIsLoading } = useContext(AuthContext);
 
   return (
     <Container
-      width={'100%'}
+      width='100%'
       justifyContent={hasBackButton ? 'space-between' : 'flex-end'}
-      alignItems={'center'}
-      minHeight={'80px'}
-      style={{ padding: '0 20px' }}>
-      {hasBackButton && (
-        <BackButton fallbackRoute={PAGE_ROUTES.MENU}>
-          <Icon data={ArrowLeft} />
-          Back
-        </BackButton>
-      )}
-      <User user={user} setUser={setUser} userIsLoading={userIsLoading} />
+      alignItems='center'
+      minHeight='80px'
+      spacing={{ px: 4 }}>
+      <Container width='300px'>
+        {hasBackButton && (
+          <BackButton fallbackRoute={PAGE_ROUTES.MENU}>
+            <Icon data={ArrowLeft} />
+            Back
+          </BackButton>
+        )}
+      </Container>
+      <Container grow justifyContent='center'>
+        {title && <Text variant='display-1'>{title}</Text>}
+      </Container>
+      <Container width='300px' justifyContent='flex-end'>
+        <User user={user} setUser={setUser} userIsLoading={userIsLoading} />
+      </Container>
     </Container>
   );
 };
