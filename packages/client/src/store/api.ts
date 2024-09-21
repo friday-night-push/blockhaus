@@ -1,13 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const api = createApi({
-  reducerPath: 'exampleApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  endpoints: builder => ({
-    getExample: builder.query<{ data: string }, void>({
-      query: () => 'example',
-    }),
-  }),
-});
+import { API_URL } from 'src/utils/constants';
 
-export const { useGetExampleQuery } = api;
+export const api = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: API_URL, credentials: 'include', mode: 'cors' }),
+  endpoints: () => ({}),
+});

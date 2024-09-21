@@ -11,7 +11,7 @@ import { authAPI } from 'src/hoc/AuthProvider';
 import type { Nullable } from 'src/shared/types/global';
 import type { TUser } from 'src/shared/types/user';
 
-import { BASE_API_URL, PAGE_ROUTES, RESOURCE_URL } from 'src/utils/constants';
+import { PAGE_ROUTES, RESOURCE_URL } from 'src/utils/constants';
 import Helpers from 'src/utils/helpers';
 
 export type UserProps = {
@@ -49,7 +49,7 @@ export const User = ({ user, setUser, userIsLoading, isFullSize = false }: UserP
             <UserComponent
               size='xl'
               avatar={{
-                imgUrl: user?.avatar && `${BASE_API_URL}/resources${user?.avatar}`,
+                imgUrl: user?.avatar && `${RESOURCE_URL}${user?.avatar}`,
                 text: user?.display_name || user?.first_name,
               }}
               name={user?.display_name || `${user?.first_name} ${user?.second_name}`}
