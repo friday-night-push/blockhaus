@@ -2,6 +2,9 @@ export const SERVER_HOST_URL = 'http://localhost:3001';
 export const API_URL = `${SERVER_HOST_URL}/api/v1`;
 export const YANDEX_URL = `${API_URL}/proxy`;
 
+// OAuth
+export const REDIRECT_URL = 'http://localhost:3000';
+
 export const RESOURCE_URL = YANDEX_URL + '/resources';
 
 export enum PAGE_ROUTES {
