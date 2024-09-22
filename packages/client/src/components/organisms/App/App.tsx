@@ -8,16 +8,12 @@ import '@gravity-ui/uikit/styles/styles.css';
 import type { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 
-import { AuthProvider } from 'src/hoc/AuthProvider';
-
 interface AppProps {
   router: ReturnType<typeof createBrowserRouter>;
 }
 
 export const App = ({ router }: AppProps) => (
-  <AuthProvider>
-    <ThemeProvider theme='light'>
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  </AuthProvider>
+  <ThemeProvider theme='light'>
+    <RouterProvider router={router} />
+  </ThemeProvider>
 );
