@@ -8,6 +8,7 @@ import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 
 import { useGetUserQuery, useLogoutMutation } from 'src/store/features';
+import { isFetchBaseQueryError } from 'src/utils/api-errors';
 import { PAGE_ROUTES, RESOURCE_URL } from 'src/utils/constants';
 
 export type UserProps = {
@@ -60,7 +61,7 @@ export const User = ({ isFullSize = false }: UserProps) => {
   }
 
   if (error) {
-    if ('status' in error && error.status === 401) {
+    if (isFetchBaseQueryError(error) && error.status === 401) {
       return (
         <Container alignItems='center'>
           <Button view='flat-action' type='button' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
