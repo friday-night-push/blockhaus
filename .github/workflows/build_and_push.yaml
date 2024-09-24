@@ -3,7 +3,7 @@ name: Push to GitHub Container Registry
 on:
   push:
     branches:
-      - fnp-88-action
+      - main
 
 jobs:
   build-and-push:
