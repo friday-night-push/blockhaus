@@ -17,7 +17,6 @@ RUN rm -rf /app/packages/client/dist/ && yarn build --scope=client
 
 
 FROM nginx:latest as production
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 WORKDIR /app
 
 COPY --from=builder /app/packages/client/dist/ /app/
