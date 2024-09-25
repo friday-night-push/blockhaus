@@ -5,5 +5,6 @@ export function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryEr
 }
 
 export function isErrorWithMessage(error: unknown): error is { message: string } {
+  // eslint-disable-next-line
   return typeof error === 'object' && error != null && 'message' in error && typeof (error as any).message === 'string';
 }
