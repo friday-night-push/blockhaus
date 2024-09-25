@@ -14,6 +14,7 @@ import { MenuItem } from 'src/components/atoms/MenuItem';
 import { Copyright } from 'src/components/molecules/Copyright';
 import { User } from 'src/components/molecules/User';
 import { Geolocation } from 'src/components/organisms';
+import { NotificationComponent } from 'src/components/organisms/NotificationComponent';
 import { Page } from 'src/components/organisms/Page';
 import { AuthContext } from 'src/hoc/AuthProvider';
 
@@ -35,6 +36,8 @@ export const GameMenuPage = () => {
 
   const [firstStart, setFirstStart] = useState(0);
 
+  const [lastLogin, setLastLogin] = useState<string | null>(null);
+  console.log('lastLogin', lastLogin);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -101,9 +104,20 @@ export const GameMenuPage = () => {
     setFirstStart(prev => prev++);
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      const currentTime: string = new Date().toISOString();
+      localStorage.setItem('lastLogin', currentTime);
+
+      const storedLastLogin: string | null = localStorage.getItem('lastLogin');
+      setLastLogin(storedLastLogin);
+    }
+  }, [user]);
+
   return (
     <Page>
       <Logo isFull size='auto' />
+      {lastLogin && user && <NotificationComponent lastLogin={lastLogin} />}
       <Menu size='xl'>
         <Container direction='column' alignItems='center'>
           {userIsLoading ? (
