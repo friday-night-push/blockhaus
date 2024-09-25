@@ -51,7 +51,7 @@ export const GameMenuPage = () => {
       <Menu size='xl'>
         <Container direction='column' alignItems='center'>
           {isLoading ? (
-            <Skeleton style={{ height: '50px' }} />
+            <Skeleton style={{ height: '50px' }} qa='skeleton' />
           ) : user && user.id ? (
             <Container direction='column' gap={2} alignItems='center'>
               <User isFullSize />

@@ -1,47 +1,32 @@
+import { waitFor } from '@testing-library/react';
+
 import { PAGE_ROUTES } from 'src/utils/constants';
 import { render, screen } from 'src/utils/tests';
 
-import { mockedUseNavigate, mockedUser } from 'src/utils/tests/mocks';
+import { unauthorizedHandlers } from 'src/utils/tests/mocks/handlers';
+import { server } from 'src/utils/tests/mocks/server';
 
-import { LOADER_ID, ProtectedRoute } from './ProtectedRoute';
+import { ProtectedRoute } from './ProtectedRoute';
 
 describe('ProtectedRoute', () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
   const testElement = <div>Test</div>;
 
-  it('show loading if user is loading', () => {
-    render(<ProtectedRoute element={testElement} />, {
-      authState: {
-        user: null,
-        userIsLoading: true,
-      },
-    });
-
-    expect(screen.getByTestId(LOADER_ID)).toBeInTheDocument();
+  it('shows loader when user is loading', () => {
+    render(<ProtectedRoute element={testElement} />);
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
-  it('navigate to sign in if user is not authenticated', () => {
-    render(<ProtectedRoute element={testElement} />, {
-      authState: {
-        user: null,
-        userIsLoading: false,
-      },
-    });
-
-    expect(mockedUseNavigate).toHaveBeenCalledWith(PAGE_ROUTES.SIGN_IN);
+  it('navigate to sign in if user is not authenticated', async () => {
+    server.use(...unauthorizedHandlers);
+    render(<ProtectedRoute element={testElement} />);
+    await waitFor(() => expect(screen.queryByTestId('loader')).not.toBeInTheDocument());
+    expect(location.href).toMatch(PAGE_ROUTES.SIGN_IN);
   });
 
-  it('renders the element if user is authenticated', () => {
-    render(<ProtectedRoute element={testElement} />, {
-      authState: {
-        user: mockedUser,
-        userIsLoading: false,
-      },
-    });
+  it('renders the element if user is authenticated', async () => {
+    render(<ProtectedRoute element={testElement} />);
 
+    await waitFor(() => expect(screen.queryByTestId('loader')).not.toBeInTheDocument());
     expect(screen.getByText('Test')).toBeInTheDocument();
   });
 });

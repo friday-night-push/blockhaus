@@ -74,7 +74,7 @@ export const User = ({ isFullSize = false }: UserProps) => {
 
   return (
     <Container alignItems='center'>
-      <Skeleton style={{ height: '50px', width: '200px' }} />
+      <Skeleton style={{ height: '50px', width: '200px' }} qa='skeleton' />
     </Container>
   );
 };
