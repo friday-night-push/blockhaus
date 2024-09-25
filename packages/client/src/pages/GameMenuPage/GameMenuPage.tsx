@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
+
 import { Menu, Skeleton } from '@gravity-ui/uikit';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Container } from 'src/components/atoms/Container';
 import { Logo } from 'src/components/atoms/Logo';
@@ -12,14 +14,14 @@ import { Geolocation } from 'src/components/organisms';
 import { Page } from 'src/components/organisms/Page';
 
 import { setGameType, useAppDispatch } from 'src/store';
-import { useGetUserQuery } from 'src/store/features';
+import { useGetUserQuery, useYaSignInUpMutation } from 'src/store/features';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 export const GameMenuPage = () => {
   const { data: user, isLoading } = useGetUserQuery();
-  // const [yaSignInUp] = useYaSignInUpMutation();
+  const [yaSignInUp] = useYaSignInUpMutation();
 
-  // const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useAppDispatch();
 
@@ -37,13 +39,13 @@ export const GameMenuPage = () => {
     { label: 'forum', href: PAGE_ROUTES.FORUM },
   ];
 
-  // TODO: 401 unauthorized at the moment, i think it's because of cookie is not set correctly
-  // useEffect(() => {
-  //   const code = searchParams.get('code');
-  //   if (code) {
-  //     yaSignInUp(code);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const code = searchParams.get('code');
+    if (code) {
+      yaSignInUp(code);
+      setSearchParams('');
+    }
+  }, []);
 
   return (
     <Page>
