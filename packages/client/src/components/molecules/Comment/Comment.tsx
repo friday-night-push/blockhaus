@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import { ArrowShapeTurnUpLeft } from '@gravity-ui/icons';
 import { Avatar, Card, Icon, Text } from '@gravity-ui/uikit';
@@ -6,8 +6,9 @@ import { Avatar, Card, Icon, Text } from '@gravity-ui/uikit';
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 import { CommentReply } from 'src/components/molecules/CommentReply';
-import { AuthContext } from 'src/hoc/AuthProvider';
 import type { Nullable } from 'src/shared/types/global';
+
+import { useGetUserQuery } from 'src/store/features';
 
 export type CommentProps = {
   id: number;
@@ -19,7 +20,7 @@ export type CommentProps = {
 };
 
 export const Comment = ({ id, content, time, parentCommentId }: CommentProps) => {
-  const { user } = useContext(AuthContext);
+  const { data: user } = useGetUserQuery();
 
   const [isReplying, setIsReplying] = useState(false);
 

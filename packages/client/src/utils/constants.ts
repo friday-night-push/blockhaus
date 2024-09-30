@@ -1,6 +1,11 @@
-export const BASE_API_URL = 'http://localhost:3001/api/v1/proxy';
+export const SERVER_HOST_URL = 'http://localhost:3001';
+export const API_URL = `${SERVER_HOST_URL}/api/v1`;
+export const YANDEX_URL = `${API_URL}/proxy`;
 
-export const RESOURCE_URL = BASE_API_URL + '/resources';
+// OAuth
+export const REDIRECT_URL = 'http://localhost:3000';
+
+export const RESOURCE_URL = YANDEX_URL + '/resources';
 
 export enum PAGE_ROUTES {
   MENU = '/',

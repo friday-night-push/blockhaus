@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { ArrowLeft } from '@gravity-ui/icons';
 import { Icon, Text } from '@gravity-ui/uikit';
@@ -6,7 +6,6 @@ import { Icon, Text } from '@gravity-ui/uikit';
 import { Container } from 'src/components/atoms/Container';
 import { BackButton } from 'src/components/molecules/BackButton/BackButton';
 import { User } from 'src/components/molecules/User';
-import { AuthContext } from 'src/hoc/AuthProvider';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 export type HeaderProps = {
@@ -15,8 +14,6 @@ export type HeaderProps = {
 };
 
 export const Header = ({ title, hasBackButton }: HeaderProps) => {
-  const { user, setUser, userIsLoading } = useContext(AuthContext);
-
   return (
     <Container
       width='100%'
@@ -36,7 +33,7 @@ export const Header = ({ title, hasBackButton }: HeaderProps) => {
         {title && <Text variant='display-1'>{title}</Text>}
       </Container>
       <Container width='300px' justifyContent='flex-end'>
-        <User user={user} setUser={setUser} userIsLoading={userIsLoading} />
+        <User />
       </Container>
     </Container>
   );

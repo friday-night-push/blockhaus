@@ -23,7 +23,11 @@ async function startServer() {
   const port = Number(process.env.SERVER_PORT) || 3001;
   const clientPort = Number(process.env.CLIENT_PORT) || 3000;
 
-  app.use(helmet());
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: 'same-site' },
+    })
+  );
   app.use(
     cors({
       origin: `http://localhost:${clientPort}`,

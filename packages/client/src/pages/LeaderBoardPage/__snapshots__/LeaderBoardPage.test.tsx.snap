@@ -73,17 +73,11 @@ exports[`LeaderBoardPage match snapshot 1`] = `
         class="g-box g-flex"
         style="column-gap: 12px; row-gap: 12px; align-items: center;"
       >
-        <a
-          aria-disabled="false"
-          class="g-button g-button_view_flat-action g-button_size_xl g-button_pin_brick-brick"
-          href="/sign-in"
-        >
-          <span
-            class="g-button__text"
-          >
-            Sign In
-          </span>
-        </a>
+        <div
+          class="g-skeleton"
+          data-qa="skeleton"
+          style="height: 50px; width: 200px;"
+        />
       </section>
     </section>
   </section>
