@@ -21,7 +21,7 @@ initPostgres();
 async function startServer() {
   const app = express();
   const port = Number(process.env.SERVER_PORT) || 3001;
-  const clientPort = Number(process.env.CLIENT_PORT) || 3000;
+  const clientPort = Number(process.env.CLIENT_PORT) || 8080;
 
   app.use(helmet());
   app.use(
