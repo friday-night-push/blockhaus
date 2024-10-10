@@ -1,9 +1,10 @@
-export const SERVER_HOST_URL = 'http://localhost:3001';
+export const HOST = import.meta.env.REDIRECT_URL;
+export const SERVER_HOST_URL = `${HOST}:3001`;
 export const API_URL = `${SERVER_HOST_URL}/api/v1`;
 export const YANDEX_URL = `${API_URL}/proxy`;
 
 // OAuth
-export const REDIRECT_URL = 'http://localhost:3000';
+export const REDIRECT_URL = `${HOST}:3000`;
 
 export const RESOURCE_URL = YANDEX_URL + '/resources';
 

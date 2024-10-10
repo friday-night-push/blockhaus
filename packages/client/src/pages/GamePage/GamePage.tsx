@@ -1,24 +1,38 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { Button, Modal } from '@gravity-ui/uikit';
 
 import { useSelector } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
 
+import LeaderboardAPI from 'src/services/api/leaderboard-api';
+
 import type { RootState } from 'src/store';
+
+import { useGetUserQuery } from 'src/store/features';
+
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 import Game from './Game';
 
+const lbApi = new LeaderboardAPI();
+
 let startTimer: NodeJS.Timeout;
 let isFullscreen = false;
 
-export interface GamePageProps {
+export type GamePageProps = {
   toggleFullscreen: (canvasRef: React.RefObject<HTMLCanvasElement>, isFS: boolean) => boolean;
-}
+};
 
-export const GamePage = ({ toggleFullscreen }: GamePageProps) => {
+export const GamePage: React.FC<GamePageProps> = (props: GamePageProps) => {
+  const [open, setOpen] = useState(false);
+  const [content, setContent] = useState('');
+
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const { data: user } = useGetUserQuery();
 
   let game: Game;
 
@@ -26,6 +40,7 @@ export const GamePage = ({ toggleFullscreen }: GamePageProps) => {
   let gameTypeState = useSelector((state: RootState) => state.example.gameType);
 
   useEffect(() => {
+    console.info('user', user);
     clearTimeout(startTimer);
     startTimer = setTimeout(Initialize, 100);
   }, []);
@@ -63,7 +78,7 @@ export const GamePage = ({ toggleFullscreen }: GamePageProps) => {
   }
 
   function toggleFS() {
-    isFullscreen = toggleFullscreen(canvasRef, isFullscreen);
+    isFullscreen = props.toggleFullscreen(canvasRef, isFullscreen);
     game.SetToggleIcon(isFullscreen);
   }
 
@@ -73,8 +88,35 @@ export const GamePage = ({ toggleFullscreen }: GamePageProps) => {
     localStorage.setItem('field', JSON.stringify(field));
   }
 
-  function gameOver(score: number) {
-    alert('Game over. Your score is ' + score);
+  async function addToLb(data: any) {
+    await lbApi.addToLeaderboard(
+      data,
+      () => {
+        console.info('---');
+      },
+      (err: Error) => {
+        console.error('addToLeaderboard', err);
+      }
+    );
+  }
+
+  function gameOver(score: number, type: number, diff: number) {
+    console.info('user', user);
+
+    let name = 'Y';
+    if (user && user.id) {
+      name = user?.display_name == null ? user?.first_name : user?.display_name;
+      name += ', y';
+
+      const data = { name, score, type, diff };
+      addToLb(data);
+    }
+
+    setContent(`Game over. ${name}our score is ${score}. Type: ${type}, difficult: ${diff}.`);
+    setOpen(true);
+  }
+
+  function closeGame() {
     localStorage.removeItem('scores');
     localStorage.removeItem('field');
     localStorage.removeItem('time');
@@ -83,5 +125,16 @@ export const GamePage = ({ toggleFullscreen }: GamePageProps) => {
     navigate(PAGE_ROUTES.MENU);
   }
 
-  return <canvas ref={canvasRef} className='canvas'></canvas>;
+  return (
+    <>
+      <canvas ref={canvasRef} className='canvas'></canvas>;
+      <Modal open={open} onClose={closeGame}>
+        <div style={{ padding: '20px' }}>
+          {content}
+          <hr />
+          <Button onClick={closeGame}>Ok</Button>
+        </div>
+      </Modal>
+    </>
+  );
 };

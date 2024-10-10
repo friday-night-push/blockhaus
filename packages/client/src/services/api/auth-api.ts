@@ -6,6 +6,8 @@ import { getResponseOrThrow } from 'src/utils/get-response-or-throw';
 
 import BaseAPI from './base-api';
 
+import { REDIRECT_URL } from '../../utils/constants';
+
 type TResp = (p: Response) => void;
 
 export default class AuthAPI extends BaseAPI {
@@ -45,7 +47,9 @@ export default class AuthAPI extends BaseAPI {
   }
 
   yaGetServiceId(cb: (d: TYandex) => void, errorCb: TErrorFn) {
-    return this.get('/oauth/yandex/service-id?redirect_uri=http://localhost:3000')
+    const url = `/oauth/yandex/service-id?redirect_uri=${REDIRECT_URL}`;
+    console.info(`Redirect url: ${url}`);
+    return this.get(url)
       .then(async response => await (await getResponseOrThrow(response)).json())
       .then(cb)
       .catch(errorCb);
