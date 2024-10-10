@@ -36,10 +36,10 @@ export const GameMenuPage = () => {
   };
 
   const MENU_ITEMS: MenuItemProps[] = [
-    { label: 'never-ending', onClick: () => goGame(0) },
-    { label: 'race the clock', onClick: () => goGame(1) },
-    { label: 'leaderboards', href: PAGE_ROUTES.LEADER_BOARD },
-    { label: 'forum', href: PAGE_ROUTES.FORUM },
+    { label: 'never-ending', onClick: () => goGame(0), isAuth: false },
+    { label: 'race the clock', onClick: () => goGame(1), isAuth: false },
+    { label: 'leaderboards', href: PAGE_ROUTES.LEADER_BOARD, isAuth: true },
+    { label: 'forum', href: PAGE_ROUTES.FORUM, isAuth: false },
   ];
 
   useEffect(() => {
@@ -76,9 +76,12 @@ export const GameMenuPage = () => {
           ) : (
             <MenuItem label='sign in' onClick={() => navigate(PAGE_ROUTES.SIGN_IN)} />
           )}
-          {MENU_ITEMS.map(item => (
-            <MenuItem key={item.label} {...item} />
-          ))}
+          {MENU_ITEMS.map(item => {
+            if (!item.isAuth || (item.isAuth && user && user.id)) {
+              return <MenuItem key={item.label} {...item} />;
+            }
+            return null;
+          })}
         </Container>
       </Menu>
       <Copyright />

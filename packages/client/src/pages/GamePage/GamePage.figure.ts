@@ -62,7 +62,7 @@ export class GpFigure {
     return figures;
   }
 
-  public static UpdateCoordFigures(centerWinX: number, figures: TFigure[]) {
+  public static UpdateCoordFigures(centerWinX: number, figures: TFigure[], yy = 0) {
     function rf(a: number, b: TFigure) {
       return a + b.width + 50;
     }
@@ -71,6 +71,7 @@ export class GpFigure {
     const figuresShift = (figures.reduce(rf, 0) - 50) / 2;
 
     figures.forEach((f: TFigure) => {
+      f.y = yy;
       f.x = centerWinX + l - figuresShift;
       l += f.width + 50;
 
@@ -163,6 +164,8 @@ export class GpFigure {
   }
 
   public static CheckFill(field: number[], figures: TFigure[]) {
+    console.info('CheckFill', figures.length);
+
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         if (field[i * 10 + j] == 0) {
@@ -174,7 +177,7 @@ export class GpFigure {
               if (CUBE_DATAS[figure.num][k] != 0) {
                 const sx = k % 3;
                 const sy = Math.floor(k / 3);
-                if (field[(i + sx) * 10 + (j + sy)] != 0) {
+                if (field[(i + sy) * 10 + (j + sx)] != 0) {
                   nasloi = true;
                 }
               }

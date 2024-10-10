@@ -6,6 +6,7 @@ export type MenuItemProps = {
   href?: string;
   theme?: 'normal' | 'danger';
   onClick?: () => void;
+  isAuth?: boolean;
 };
 
 export const MenuItem = ({ label, href, theme = 'normal', onClick }: MenuItemProps) => {
