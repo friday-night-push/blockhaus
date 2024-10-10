@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Text, TextArea } from '@gravity-ui/uikit';
 
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
 
-import { AuthContext } from 'src/hoc/AuthProvider';
 import type { Nullable } from 'src/shared/types/global';
 
+import { useGetUserQuery } from 'src/store/features';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 type CommentReplyProps = {
@@ -16,7 +16,7 @@ type CommentReplyProps = {
 };
 
 export const CommentReply: React.FC<CommentReplyProps> = ({ parentId, onCancel }) => {
-  const { user } = useContext(AuthContext);
+  const { data: user } = useGetUserQuery();
 
   const [replyContent, setReplyContent] = useState('');
 

@@ -1,10 +1,9 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 import { useDispatch } from 'react-redux';
 
-import { api } from './api';
+import { api } from './features';
 import exampleReducer from './slice';
 
 const rootReducer = combineReducers({

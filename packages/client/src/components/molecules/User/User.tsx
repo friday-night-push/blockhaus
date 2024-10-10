@@ -2,84 +2,79 @@ import React from 'react';
 
 import { ArrowRightFromSquare, Pencil } from '@gravity-ui/icons';
 import { Icon, Skeleton, User as UserComponent, UserLabel } from '@gravity-ui/uikit';
-
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from 'src/components/atoms/Button';
 import { Container } from 'src/components/atoms/Container';
-import { authAPI } from 'src/hoc/AuthProvider';
-import type { Nullable } from 'src/shared/types/global';
-import type { TUser } from 'src/shared/types/user';
 
-import { BASE_API_URL, PAGE_ROUTES, RESOURCE_URL } from 'src/utils/constants';
-import Helpers from 'src/utils/helpers';
+import { useGetUserQuery, useLogoutMutation } from 'src/store/features';
+import { isFetchBaseQueryError } from 'src/utils/api-errors';
+import { PAGE_ROUTES, RESOURCE_URL } from 'src/utils/constants';
 
 export type UserProps = {
-  user: Nullable<TUser>;
-  setUser?: (user: TUser) => void;
-  userIsLoading?: boolean;
   isFullSize?: boolean;
 };
 
-export const User = ({ user, setUser, userIsLoading, isFullSize = false }: UserProps) => {
+export const User = ({ isFullSize = false }: UserProps) => {
   const navigate = useNavigate();
 
-  const errorHandler = (err: Error) => {
-    Helpers.Log('ERROR', err);
+  const { data: user, error } = useGetUserQuery();
+  const [logout] = useLogoutMutation();
+
+  const onSignOut = async () => {
+    logout();
   };
 
-  const logoutHandler = () => {
-    if (setUser) {
-      setUser({} as TUser);
-      localStorage.removeItem('isAuth');
+  if (user) {
+    const name = user?.display_name || `${user?.first_name} ${user?.second_name}`;
+    const avatar = user?.avatar ? `${RESOURCE_URL}${user?.avatar}` : undefined;
+
+    return (
+      <Container alignItems='center'>
+        {isFullSize ? (
+          <UserComponent
+            size='xl'
+            avatar={{
+              imgUrl: avatar,
+              text: name,
+            }}
+            name={name}
+            description={user.email}
+          />
+        ) : (
+          <UserLabel size='xl' view='clear' avatar={avatar} onClick={() => navigate(PAGE_ROUTES.PROFILE)}>
+            {name}
+          </UserLabel>
+        )}
+        <Container gap={0}>
+          {isFullSize && (
+            <Button view='flat-secondary' size='xl' onClick={() => navigate(PAGE_ROUTES.PROFILE)} qa='edit-button'>
+              <Icon data={Pencil} />
+            </Button>
+          )}
+          <Button view='flat-danger' size='xl' onClick={onSignOut} qa='sign-out-button'>
+            <Icon data={ArrowRightFromSquare} />
+          </Button>
+        </Container>
+      </Container>
+    );
+  }
+
+  if (error) {
+    if (isFetchBaseQueryError(error) && error.status === 401) {
+      return (
+        <Container alignItems='center'>
+          <Button view='flat-action' type='button' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
+            Sign In
+          </Button>
+        </Container>
+      );
     }
-  };
-
-  const onSignOut = () => {
-    authAPI.logout(logoutHandler, errorHandler);
-  };
+  }
 
   return (
     <Container alignItems='center'>
-      {userIsLoading ? (
-        <Skeleton style={{ height: '50px', width: '200px' }} />
-      ) : user && user?.id ? (
-        <>
-          {isFullSize ? (
-            <UserComponent
-              size='xl'
-              avatar={{
-                imgUrl: user?.avatar && `${BASE_API_URL}/resources${user?.avatar}`,
-                text: user?.display_name || user?.first_name,
-              }}
-              name={user?.display_name || `${user?.first_name} ${user?.second_name}`}
-              description={user?.email && user?.email}
-            />
-          ) : (
-            <UserLabel
-              size='xl'
-              view='clear'
-              avatar={user?.avatar ? `${RESOURCE_URL}${user?.avatar}` : undefined}
-              onClick={() => navigate(PAGE_ROUTES.PROFILE)}>
-              {user?.display_name || `${user?.first_name} ${user?.second_name}`}
-            </UserLabel>
-          )}
-          <Container gap={0}>
-            {isFullSize && (
-              <Button view='flat-secondary' size='xl' onClick={() => navigate(PAGE_ROUTES.PROFILE)} qa='edit-button'>
-                <Icon data={Pencil} />
-              </Button>
-            )}
-            <Button view='flat-danger' size='xl' onClick={onSignOut} qa='sign-out-button'>
-              <Icon data={ArrowRightFromSquare} />
-            </Button>
-          </Container>
-        </>
-      ) : (
-        <Button view='flat-action' type='button' isNavigate navigateTo={PAGE_ROUTES.SIGN_IN}>
-          Sign In
-        </Button>
-      )}
+      <Skeleton style={{ height: '50px', width: '200px' }} qa='skeleton' />
     </Container>
   );
 };

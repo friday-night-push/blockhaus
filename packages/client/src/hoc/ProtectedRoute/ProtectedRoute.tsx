@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Loader } from '@gravity-ui/uikit';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-import { Page } from 'src/components/organisms/Page';
-import { useAuth } from 'src/hooks/use-auth';
+import { Page } from 'src/components/organisms';
+import { useGetUserQuery } from 'src/store/features';
+
+import { isFetchBaseQueryError } from 'src/utils/api-errors';
 import { PAGE_ROUTES } from 'src/utils/constants';
 
 interface ProtectedRouteProps {
@@ -14,22 +16,23 @@ interface ProtectedRouteProps {
 export const LOADER_ID = 'loader';
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
-  const { user, userIsLoading } = useAuth();
-  const navigate = useNavigate();
+  const { data: user, error } = useGetUserQuery();
 
-  useEffect(() => {
-    if (!userIsLoading && (!user || !user.id)) {
-      navigate(PAGE_ROUTES.SIGN_IN);
-    }
-  }, [user, userIsLoading, navigate]);
-
-  if (userIsLoading) {
-    return (
-      <Page>
-        <Loader size='l' qa={LOADER_ID} />
-      </Page>
-    );
+  if (user) {
+    return element;
   }
 
-  return user && user.id ? element : null;
+  if (error) {
+    if (isFetchBaseQueryError(error) && error.status === 401) {
+      return <Navigate to={PAGE_ROUTES.SIGN_IN} />;
+    } else {
+      throw error;
+    }
+  }
+
+  return (
+    <Page>
+      <Loader size='l' qa={LOADER_ID} />
+    </Page>
+  );
 };
