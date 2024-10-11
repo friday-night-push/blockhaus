@@ -30,7 +30,7 @@ async function startServer() {
   );
   app.use(
     cors({
-      origin: `http://localhost:${clientPort}`,
+      origin: `http://friday-night-push-blockhau-40.ya-praktikum.tech:${clientPort}`,
       credentials: true,
     })
   );

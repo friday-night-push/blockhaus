@@ -13,7 +13,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3001/api/v1',
+        url: 'http://friday-night-push-blockhau-40.ya-praktikum.tech:3001/api/v1',
       },
     ],
   },
