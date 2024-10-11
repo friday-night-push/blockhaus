@@ -23,6 +23,11 @@ export const GameDifficultPage = () => {
   const goGame = (gameDifficult: number) => {
     console.info('gameDifficult', gameDifficult);
     dispatch(setGameDifficult(gameDifficult));
+    localStorage.removeItem('scores');
+    localStorage.removeItem('field');
+    localStorage.removeItem('time');
+    localStorage.removeItem('type');
+    localStorage.removeItem('difficult');
     navigate(PAGE_ROUTES.GAME);
   };
 

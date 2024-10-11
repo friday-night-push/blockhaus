@@ -13,7 +13,6 @@ export default defineConfig({
   },
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
-    'import.meta.env.REDIRECT_URL': JSON.stringify('http://localhost'),
   },
   css: {
     modules: {

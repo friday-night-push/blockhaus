@@ -31,7 +31,7 @@ export default class LeaderboardAPI extends BaseAPI {
 
   addToLeaderboard(data: any, cb: TResp, errorCb: TErrorFn): Promise<unknown> {
     const body = { data, ratingFieldName: 'score', teamName };
-    console.info(body);
+    console.info(`addToLeaderboard ${JSON.stringify(body)}`);
 
     return this.post<any>('/leaderboard', body)
       .then(response => getResponseOrThrow(response))

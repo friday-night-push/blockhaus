@@ -164,11 +164,9 @@ export class GpFigure {
   }
 
   public static CheckFill(field: number[], figures: TFigure[]) {
-    console.info('CheckFill', figures.length);
-
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
-        if (field[i * 10 + j] == 0) {
+        if (field[j * 10 + i] == 0) {
           // находим пустую клетку
           for (let f = 0; f < figures.length; f++) {
             const figure = figures[f];
@@ -177,7 +175,7 @@ export class GpFigure {
               if (CUBE_DATAS[figure.num][k] != 0) {
                 const sx = k % 3;
                 const sy = Math.floor(k / 3);
-                if (field[(i + sy) * 10 + (j + sx)] != 0) {
+                if (field[(j + sx) * 10 + (i + sy)] != 0) {
                   nasloi = true;
                 }
               }

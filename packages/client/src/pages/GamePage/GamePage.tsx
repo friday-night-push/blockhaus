@@ -89,6 +89,7 @@ export const GamePage: React.FC<GamePageProps> = (props: GamePageProps) => {
   }
 
   async function addToLb(data: any) {
+    console.info(`addToLb ${JSON.stringify(data)}`);
     await lbApi.addToLeaderboard(
       data,
       () => {
@@ -103,16 +104,16 @@ export const GamePage: React.FC<GamePageProps> = (props: GamePageProps) => {
   function gameOver(score: number, type: number, diff: number) {
     console.info('user', user);
 
-    let name = 'Y';
+    let showname = 'Y';
     if (user && user.id) {
-      name = user?.display_name == null ? user?.first_name : user?.display_name;
-      name += ', y';
+      const name = user?.display_name == null ? user?.first_name : user?.display_name;
+      showname = name + ', y';
 
       const data = { name, score, type, diff };
       addToLb(data);
     }
 
-    setContent(`Game over. ${name}our score is ${score}. Type: ${type}, difficult: ${diff}.`);
+    setContent(`Game over. ${showname}our score is ${score}. Type: ${type}, difficult: ${diff}.`);
     setOpen(true);
   }
 
