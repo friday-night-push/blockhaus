@@ -1,4 +1,4 @@
-export const HOST = 'http://localhost';
+export const HOST = 'http://friday-night-push-blockhau-40.ya-praktikum.tech';
 export const SERVER_HOST_URL = `${HOST}:3001`;
 export const API_URL = `${SERVER_HOST_URL}/api/v1`;
 export const YANDEX_URL = `${API_URL}/proxy`;
